@@ -7,6 +7,11 @@ export interface IAuthState {
   role: string;
 }
 
+export interface IAuthPayload {
+  token: string;
+  role: string;
+}
+
 const initialState: IAuthState = {
   authState: false,
   token: "",
@@ -17,7 +22,7 @@ export const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
-    login: (state, action: PayloadAction<IAuthState>) => {
+    login: (state, action: PayloadAction<IAuthPayload>) => {
       state.authState = true;
       state.token = action.payload.token;
       state.role = action.payload.role;
