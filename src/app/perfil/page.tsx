@@ -3,15 +3,26 @@ import { Box, Heading, Text, Modal,
   ModalOverlay,
   ModalContent,
   ModalHeader,
-  ModalFooter,
   ModalBody,
   ModalCloseButton, useDisclosure } from "@chakra-ui/react";
-import React from "react";
+import React, {useState} from "react";
 import "@/styles/perfil/perfil.css";
 import Image from "next/image";
+import ModalComponent from "./modalComponent";
 
 function Perfil() {
-  const { isOpen, onOpen, onClose } = useDisclosure()
+  const [isOpen, setIsOpen] = useState(false);
+const [modalType, setModalType] = useState('');
+
+const openModal = (type: string) => {
+  setModalType(type);
+  setIsOpen(true);
+};
+
+const closeModal = () => {
+  setIsOpen(false);
+};
+
   return (
     <>
 {/* Header*/}
@@ -41,7 +52,7 @@ function Perfil() {
           width={80}
           height={80}
         />
-        <Heading as="h2" className="userName">
+        <Heading as="h2" fontSize="x-large" className="userName">
           Nombre Paciente
         </Heading>
       </Box>
@@ -59,7 +70,7 @@ function Perfil() {
               Alergias conocidas
             </Text>
           </Box>
-          <Box className="arrowItem" onClick={onOpen}>
+          <Box className="arrowItem" onClick={() => openModal('Alergias conocidas')}>
             <Image
               src="/perfil/arrowRight.png"
               alt="arrowRight"
@@ -78,7 +89,7 @@ function Perfil() {
               Grupo sanguíneo
             </Text>
           </Box>
-          <Box className="arrowItem">
+          <Box className="arrowItem" onClick={() => openModal('Grupo sanguíneo')}>
             <Image
               src="/perfil/arrowRight.png"
               alt="arrowRight"
@@ -102,7 +113,7 @@ function Perfil() {
               Peso y altura
             </Text>
           </Box>
-          <Box className="arrowItem">
+          <Box className="arrowItem" onClick={() => openModal('Peso y altura')}>
             <Image
               src="/perfil/arrowRight.png"
               alt="arrowRight"
@@ -126,7 +137,7 @@ function Perfil() {
               Enfermedades existentes
             </Text>
           </Box>
-          <Box className="arrowItem">
+          <Box className="arrowItem" onClick={() => openModal('Enfermedades existentes')}>
             <Image
               src="/perfil/arrowRight.png"
               alt="arrowRight"
@@ -150,7 +161,7 @@ function Perfil() {
               Número de teléfono
             </Text>
           </Box>
-          <Box className="arrowItem">
+          <Box className="arrowItem" onClick={() => openModal('Número de teléfono')}>
             <Image
               src="/perfil/arrowRight.png"
               alt="arrowRight"
@@ -174,7 +185,7 @@ function Perfil() {
               Dirección
             </Text>
           </Box>
-          <Box className="arrowItem">
+          <Box className="arrowItem" onClick={() => openModal('Dirección')}>
             <Image
               src="/perfil/arrowRight.png"
               alt="arrowRight"
@@ -185,16 +196,7 @@ function Perfil() {
         </Box>
         <Box className="dividerItem" />
       </Box>
-      <Modal isOpen={isOpen} onClose={onClose}>
-        <ModalOverlay />
-        <ModalContent>
-          <ModalHeader>Modal Title</ModalHeader>
-          <ModalCloseButton />
-          <ModalBody>
-            <Text>Hola</Text>
-          </ModalBody>
-        </ModalContent>
-      </Modal>
+      <ModalComponent isOpen={isOpen} onClose={closeModal} type={modalType} />
     </>
   );
 }

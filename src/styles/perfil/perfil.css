@@ -131,3 +131,11 @@
     height: 2px;  
     background-color: #AD8EB1;
 }
+
+.dividerModal{
+    width: 90vw; 
+    height: 2px;
+    background-color: #4F1964;
+    margin-top: -10px;
+    margin-bottom: 10px;
+}
