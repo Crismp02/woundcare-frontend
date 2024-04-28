@@ -49,7 +49,14 @@ function Login() {
     }
   };
   return (
-    <Box as="main" display="flex" flexDirection="column" minHeight="100vh">
+    <Box
+      as="main"
+      display="flex"
+      maxWidth="100vw"
+      overflowX="hidden"
+      flexDirection="column"
+      minHeight="100vh"
+    >
       <Image
         src={purpleTop}
         alt="purple decoration"
