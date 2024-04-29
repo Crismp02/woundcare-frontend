@@ -50,7 +50,7 @@ function navBar() {
           </DrawerHeader>
           <DrawerBody style={{ marginTop: "20px" }}>
             <Box className="navBarItem">
-              <Image src="/user.png" alt="user" width={35} height={25} />
+              <Image src="/perfil/user.png" alt="user" width={35} height={25} />
               <Heading as="h3" className="navBarMenu">Perfil</Heading>
             </Box>
             <Box className="navBarItem">

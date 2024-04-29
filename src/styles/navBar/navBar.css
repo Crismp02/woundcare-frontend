@@ -15,7 +15,7 @@
     background-color:#4F1964;
     display: flex;
     padding:20px;
-    height: 25vh
+    height: min-content
 }
 
 .divider{
