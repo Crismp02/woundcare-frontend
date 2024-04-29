@@ -22,8 +22,8 @@ export default function RootLayout({
     <html lang="es">
       <body className={inter.className}>
         <ReduxProvider>
+          <NavBar />
           <Providers>
-            <NavBar />
             {children}
             <ToastContainer />
           </Providers>
