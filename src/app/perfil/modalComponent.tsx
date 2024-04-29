@@ -14,6 +14,7 @@ import {
   Tag,
   TagCloseButton,
   Select,
+  Textarea,
 } from "@chakra-ui/react";
 import "@/styles/perfil/perfil.css";
 import React, { useState } from "react";
@@ -157,7 +158,7 @@ const ModalComponent: React.FC<ModalComponentProps> = ({
           ) : type === "Dirección" ? (
             <>
               <Text marginBottom="10px">Por favor, ingrese su dirección</Text>
-              <Input
+              <Textarea
                 backgroundColor="white"
                 placeholder="Dirección"
                 marginBottom="10px"

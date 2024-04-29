@@ -120,6 +120,10 @@
     cursor: pointer;
 }
 
+.arrowItem:hover {
+    background-color: #371145; 
+}
+
 .itemText{
     color: #3B3B3B;
     font-size: 18px;
