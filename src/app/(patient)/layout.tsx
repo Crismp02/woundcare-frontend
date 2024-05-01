@@ -2,6 +2,8 @@
 import { useAppSelector } from "@/store/store";
 import { useRoleRouter } from "@/hooks/useRoleRouter";
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import NavBar from "@/components/navBar";
 
 export default function RootLayout({
   children,
@@ -10,17 +12,29 @@ export default function RootLayout({
 }>) {
   const auth = useAppSelector((state) => state.auth);
   const roleRouter = useRoleRouter();
+  const router = useRouter();
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    if (auth.authState) {
+    if (!auth.authState) {
+      router.push("/login");
+    } else if (auth.role !== "PATIENT") {
       const redirectFunction = roleRouter.get(auth.role);
       if (redirectFunction) {
         redirectFunction();
+      } else {
+        router.push("/login");
       }
     }
     setIsLoading(false);
   }, []);
 
-  return isLoading ? <>Loading..</> : <>{children}</>;
+  return isLoading ? (
+    <>Loading...</>
+  ) : (
+    <>
+      <NavBar />
+      {children}
+    </>
+  );
 }

@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import NavBar from "@/components/navBar";
 import ReduxProvider from "@/store/reduxProvider";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -22,7 +21,6 @@ export default function RootLayout({
     <html lang="es">
       <body className={inter.className}>
         <ReduxProvider>
-          <NavBar />
           <Providers>
             {children}
             <ToastContainer />
