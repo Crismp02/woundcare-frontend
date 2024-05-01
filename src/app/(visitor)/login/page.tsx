@@ -6,11 +6,7 @@ import Image from "next/image";
 import React, { FormEvent, useState } from "react";
 import { toast } from "react-toastify";
 import { login as sliceLogin } from "@/store/authSlice";
-import handsHearth from "../../../public/login/handsHearth.png";
-import purpleStars from "../../../public/login/purpleStars.png";
-import purpleButtom from "../../../public/login/purpleBottom.png";
-import purpleTop from "../../../public/login/purpleTop.png";
-import { useRouter } from "next/navigation";
+import { useRoleRouter } from "@/hooks/useRoleRouter";
 
 function Login() {
   const [nationalId, setNationalId] = useState("");
@@ -18,14 +14,8 @@ function Login() {
   const [acceptTerms, setAcceptTerms] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  const roleMap = new Map();
-  roleMap.set("ADMIN", () => router.push("/homePage"));
-  roleMap.set("PATIENT", () => router.push("/homePage"));
-  roleMap.set("NURSE", () => router.push("/"));
-  roleMap.set("DOCTOR", () => router.push("/"));
-
   const dispatch = useAppDispatch();
-  const router = useRouter();
+  const roleRouter = useRoleRouter();
 
   const signIn = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -33,7 +23,7 @@ function Login() {
       setLoading(true);
       const { token, role } = await login(nationalId, password);
       dispatch(sliceLogin({ token, role }));
-      const redirectFunction = roleMap.get(role);
+      const redirectFunction = roleRouter.get(role);
       if (redirectFunction) {
         redirectFunction();
       }
@@ -58,14 +48,14 @@ function Login() {
       minHeight="100vh"
     >
       <Image
-        src={purpleTop}
+        src={"/login/purpleTop.png"}
         alt="purple decoration"
         width={60}
         height={60}
         style={{ marginBottom: "-40px" }}
       ></Image>
       <Image
-        src={purpleStars}
+        src={"/login/purpleStars.png"}
         alt="WoundCare Image"
         width={71}
         height={61}
@@ -75,7 +65,7 @@ function Login() {
         Bienvenido a WoundCare
       </Heading>
       <Image
-        src={purpleStars}
+        src={"/login/purpleStars.png"}
         alt="WoundCare Image"
         width={71}
         height={61}
@@ -92,9 +82,10 @@ function Login() {
         </Text>
       </Box>
       <Image
-        src={handsHearth}
+        src={"/login/handsHearth.png"}
         alt="WoundCare Image"
         width={153}
+        height={161}
         style={{ alignSelf: "center", marginBottom: "20px" }}
       ></Image>
       <Box
@@ -151,7 +142,7 @@ function Login() {
         </Button>
       </Box>
       <Image
-        src={purpleButtom}
+        src={"/login/purpleBottom.png"}
         alt="purple decoration"
         style={{ alignSelf: "flex-end" }}
         width={60}
