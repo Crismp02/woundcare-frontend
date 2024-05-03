@@ -13,10 +13,16 @@ import {
 import React, { useRef } from "react";
 import "@/styles/navBar/navBar.css";
 import Image from "next/image";
+import { useAppDispatch } from "@/store/store";
+import { logout } from "@/store/authSlice";
+import { useRouter } from "next/navigation";
 
 function navBar() {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const btnRef = useRef(null);
+
+  const dispatch = useAppDispatch();
+  const router = useRouter()
 
   return (
     <>
@@ -64,7 +70,12 @@ function navBar() {
             </Box>
             <Box className="navBarItem" style={{marginLeft:"3px"}}>
               <Image src="/logout.png" alt="Logout" width={35} height={25} />
-              <Heading as="h3" className="navBarMenu">Cerrar sesión</Heading>
+              <Heading as="h3" className="navBarMenu" onClick={
+                () => {
+                  dispatch(logout())
+                  router.push("/login")
+                }
+              }>Cerrar sesión</Heading>
             </Box>
           </DrawerBody>
         </DrawerContent>
