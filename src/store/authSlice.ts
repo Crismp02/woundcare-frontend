@@ -27,6 +27,11 @@ export const authSlice = createSlice({
       state.token = action.payload.token;
       state.role = action.payload.role;
     },
+    logout: (state) => {
+      state.authState = false;
+      state.token = "";
+      state.role = "";
+    },
   },
 });
 
