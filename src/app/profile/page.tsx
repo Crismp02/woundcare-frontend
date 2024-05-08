@@ -1,10 +1,5 @@
 "use client";
-import { Box, Heading, Text, Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalBody,
-  ModalCloseButton, useDisclosure } from "@chakra-ui/react";
+import { Box, Heading, Text } from "@chakra-ui/react";
 import React, {useState} from "react";
 import "@/styles/perfil/perfil.css";
 import Image from "next/image";
@@ -12,25 +7,25 @@ import ModalComponent from "./modalComponent";
 
 function Perfil() {
   const [isOpen, setIsOpen] = useState(false);
-const [modalType, setModalType] = useState('');
+  const [modalType, setModalType] = useState("");
 
-const openModal = (type: string) => {
-  setModalType(type);
-  setIsOpen(true);
-};
+  const openModal = (type: string) => {
+    setModalType(type);
+    setIsOpen(true);
+  };
 
-const closeModal = () => {
-  setIsOpen(false);
-};
+  const closeModal = () => {
+    setIsOpen(false);
+  };
 
   return (
     <>
-{/* Header*/}
+      {/* Header*/}
       <Box className="perfilHeader">
         <Box className="circle">
           <Box className="returnButton">
             <Image
-              src="/perfil/arrow.png"
+              src="/arrow.png"
               alt="arrow"
               width={36}
               height={36}
@@ -47,7 +42,7 @@ const closeModal = () => {
       </Box>
       <Box className="patientHeader">
         <Image
-          src="/perfil/female_user.png"
+          src="/profile/female_user.png"
           alt="female_user"
           width={80}
           height={80}
@@ -57,22 +52,21 @@ const closeModal = () => {
         </Heading>
       </Box>
       {/* Personal information*/}
-      <Text className="infoText">
-        Información personal:{" "}
-      </Text>
+      <Text className="infoText">Información personal: </Text>
       <Box className="containerItems">
         <Box className="infoItem">
           <Box className="itemsLine">
             <Box className="iconItem">
-              <Image src="/perfil/user.png" alt="user" width={35} height={25} />
+              <Image src="/profile/user.png" alt="user" width={35} height={25} />
             </Box>
-            <Text className="itemText">
-              Alergias conocidas
-            </Text>
+            <Text className="itemText">Alergias conocidas</Text>
           </Box>
-          <Box className="arrowItem" onClick={() => openModal('Alergias conocidas')}>
+          <Box
+            className="arrowItem"
+            onClick={() => openModal("Alergias conocidas")}
+          >
             <Image
-              src="/perfil/arrowRight.png"
+              src="/profile/arrowRight.png"
               alt="arrowRight"
               width={40}
               height={40}
@@ -83,15 +77,18 @@ const closeModal = () => {
         <Box className="infoItem">
           <Box className="itemsLine">
             <Box className="iconItem">
-              <Image src="/perfil/drop.png" alt="drop" width={35} height={25} />
+              <Image src="/profile/drop.png" alt="drop" width={35} height={25} />
             </Box>
             <Text as="h3" className="itemText">
               Grupo sanguíneo
             </Text>
           </Box>
-          <Box className="arrowItem" onClick={() => openModal('Grupo sanguíneo')}>
+          <Box
+            className="arrowItem"
+            onClick={() => openModal("Grupo sanguíneo")}
+          >
             <Image
-              src="/perfil/arrowRight.png"
+              src="/profile/arrowRight.png"
               alt="arrowRight"
               width={40}
               height={40}
@@ -103,7 +100,7 @@ const closeModal = () => {
           <Box className="itemsLine">
             <Box className="iconItem">
               <Image
-                src="/perfil/h&w.svg"
+                src="/profile/h&w.svg"
                 alt="height&weight"
                 width={30}
                 height={30}
@@ -113,9 +110,9 @@ const closeModal = () => {
               Peso y altura
             </Text>
           </Box>
-          <Box className="arrowItem" onClick={() => openModal('Peso y altura')}>
+          <Box className="arrowItem" onClick={() => openModal("Peso y altura")}>
             <Image
-              src="/perfil/arrowRight.png"
+              src="/profile/arrowRight.png"
               alt="arrowRight"
               width={40}
               height={40}
@@ -127,7 +124,7 @@ const closeModal = () => {
           <Box className="itemsLine">
             <Box className="iconItem">
               <Image
-                src="/perfil/health.png"
+                src="/profile/health.png"
                 alt="health"
                 width={30}
                 height={30}
@@ -137,9 +134,12 @@ const closeModal = () => {
               Enfermedades existentes
             </Text>
           </Box>
-          <Box className="arrowItem" onClick={() => openModal('Enfermedades existentes')}>
+          <Box
+            className="arrowItem"
+            onClick={() => openModal("Enfermedades existentes")}
+          >
             <Image
-              src="/perfil/arrowRight.png"
+              src="/profile/arrowRight.png"
               alt="arrowRight"
               width={40}
               height={40}
@@ -151,7 +151,7 @@ const closeModal = () => {
           <Box className="itemsLine">
             <Box className="iconItem">
               <Image
-                src="/perfil/phone.png"
+                src="/profile/phone.png"
                 alt="phone"
                 width={30}
                 height={30}
@@ -161,9 +161,12 @@ const closeModal = () => {
               Número de teléfono
             </Text>
           </Box>
-          <Box className="arrowItem" onClick={() => openModal('Número de teléfono')}>
+          <Box
+            className="arrowItem"
+            onClick={() => openModal("Número de teléfono")}
+          >
             <Image
-              src="/perfil/arrowRight.png"
+              src="/profile/arrowRight.png"
               alt="arrowRight"
               width={40}
               height={40}
@@ -175,7 +178,7 @@ const closeModal = () => {
           <Box className="itemsLine">
             <Box className="iconItem">
               <Image
-                src="/perfil/location.png"
+                src="/profile/location.png"
                 alt="location"
                 width={30}
                 height={30}
@@ -185,9 +188,9 @@ const closeModal = () => {
               Dirección
             </Text>
           </Box>
-          <Box className="arrowItem" onClick={() => openModal('Dirección')}>
+          <Box className="arrowItem" onClick={() => openModal("Dirección")}>
             <Image
-              src="/perfil/arrowRight.png"
+              src="/profile/arrowRight.png"
               alt="arrowRight"
               width={40}
               height={40}
