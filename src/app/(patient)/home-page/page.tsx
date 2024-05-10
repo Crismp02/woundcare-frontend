@@ -3,6 +3,7 @@ import MenuOptionCard from "@/components/MenuOptionCard";
 import NotificationCard from "@/components/NotificationCard";
 import { Notification } from "@/interfaces/notification/notification.interface";
 import { Box, Heading } from "@chakra-ui/react";
+import Link from "next/link";
 import React from "react";
 
 function HomePage() {
@@ -50,6 +51,12 @@ function HomePage() {
             Notificaciones
           </Heading>
           <NotificationCard notification={notification} />
+          <Link href={"/"} style={{
+            fontSize: 14,
+            fontWeight: 500,
+            color: "white",
+            alignSelf: "center",
+          }}>Ver más</Link>
         </Box>
         <Box
           as="section"
