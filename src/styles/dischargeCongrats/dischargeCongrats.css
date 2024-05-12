@@ -1,0 +1,22 @@
+.imageposition{
+   display: flex;
+   flex-direction: row;
+   justify-content: flex-end;
+   margin-top: -30px;
+}
+
+.congratsText{
+    font-weight: bold;
+    color: #4F1964;
+    font-size: xx-large;
+    margin-top: 1vh;
+    margin-bottom: 3vh;
+    text-align: center;
+}
+.Text{
+    font-weight: 600;
+    color: #3B3B3B;
+    font-size:large;
+    margin-top: 3vh;
+    text-align: center;
+}
