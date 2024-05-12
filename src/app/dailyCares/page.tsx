@@ -10,8 +10,12 @@ function DailyCares() {
     const [answer3, setAnswer3] = useState<string>('');
     const [answer4, setAnswer4] = useState<string>('');
     const [answer5, setAnswer5] = useState<string>('');
-
     const [files, setFiles] = useState<File[]>([]);
+
+    const allAnswersProvided =
+      answer1 && answer2 && answer3 && answer4 && answer5;
+    const allFilesUploaded = files.length > 0;
+    const canSubmit = allAnswersProvided && allFilesUploaded;
 
     const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const selectedFiles = Array.from(event.target.files as FileList);
@@ -164,7 +168,7 @@ function DailyCares() {
           </Tag>
         ))}
       </ul>
-      <button className='sendButton' onClick={handleSubmit}>Enviar</button>
+      <button className='sendButton' disabled={!canSubmit} onClick={handleSubmit}>Enviar</button>
       </Box>
     </>
   );
