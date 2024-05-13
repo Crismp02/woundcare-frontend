@@ -2,20 +2,27 @@
 import MenuOptionCard from "@/components/MenuOptionCard";
 import NotificationCard from "@/components/NotificationCard";
 import { Notification } from "@/interfaces/notification/notification.interface";
+import { getMyNotifications } from "@/services/notifications/notifications.service";
+import routes from "@/utils/routes";
 import { Box, Heading } from "@chakra-ui/react";
 import Link from "next/link";
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 
 function HomePage() {
-  const notification: Notification = {
-    id: 1,
-    message:
-      "Es hora de cambiar la venda, si no lo haces te vas a morir por favore mueve ese culo bobo o qu wtfd wtfd wtrf",
-    date: new Date("2022-01-01T00:00:00.000Z"),
-    userId: "user123",
-    type: "BANDAGE_CHANGE",
-    read: false,
-  };
+  const [notifications, setNotifications] = useState<Notification[]>([]);
+
+  useEffect(() => {
+    const fetchMyNotifications = async () => {
+      try {
+        const notifications = await getMyNotifications(1, 3);
+        setNotifications(notifications.items);
+      } catch (error) {
+        toast.error("No se pudieron cargar las notificaciones");
+      }
+    };
+    fetchMyNotifications();
+  }, []);
 
   return (
     <Box as="main" flexGrow={1} paddingY={10}>
@@ -33,11 +40,10 @@ function HomePage() {
           as="section"
           width={"100%"}
           maxWidth={"350px"}
-          height={"300px"}
           display={"flex"}
           flexDirection={"column"}
           alignItems={"center"}
-          gap={4}
+          gap={2}
           padding={4}
           backgroundColor={"rgba(97, 48, 116, 0.5)"}
           borderRadius={10}
@@ -50,13 +56,20 @@ function HomePage() {
           >
             Notificaciones
           </Heading>
-          <NotificationCard notification={notification} />
-          <Link href={"/"} style={{
-            fontSize: 14,
-            fontWeight: 500,
-            color: "white",
-            alignSelf: "center",
-          }}>Ver más</Link>
+          {notifications.map((notification) => (
+            <NotificationCard notification={notification} />
+          ))}
+          <Link
+            href={routes.notifications}
+            style={{
+              fontSize: 14,
+              fontWeight: 500,
+              color: "white",
+              alignSelf: "center",
+            }}
+          >
+            Ver más
+          </Link>
         </Box>
         <Box
           as="section"
@@ -68,17 +81,17 @@ function HomePage() {
         >
           <MenuOptionCard
             imageSrc="/homePage/medicines.svg"
-            src="/"
+            src={routes.patientMedicines}
             title="Medicamentos"
           />
           <MenuOptionCard
             imageSrc="/homePage/daily-cares.svg"
-            src="/"
+            src={routes.patientDailyCares}
             title="Cuidados diarios"
           />
           <MenuOptionCard
             imageSrc="/homePage/messages.svg"
-            src="/"
+            src={routes.patientMessages}
             title="Mensajes"
           />
         </Box>
