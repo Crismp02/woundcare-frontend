@@ -9,9 +9,9 @@ import {
   DrawerHeader,
   DrawerBody,
   Heading,
+  Flex,
 } from "@chakra-ui/react";
 import React, { useRef } from "react";
-import "@/styles/navBar/navBar.css";
 import Image from "next/image";
 import { useAppDispatch } from "@/store/store";
 import { logout } from "@/store/authSlice";
@@ -22,12 +22,23 @@ function navBar() {
   const btnRef = useRef(null);
 
   const dispatch = useAppDispatch();
-  const router = useRouter()
+  const router = useRouter();
 
   return (
     <>
-      <Box className="navBar">
-        <Heading as="h1" className="navBarTitle">WoundCare</Heading>
+      <Flex
+        w="100vw"
+        h="8vh"
+        align="flex-end"
+        justify="space-between"
+        p="10px"
+        pl="20px"
+        pr="20px"
+        bg="#4F1964"
+      >
+        <Heading as="h1" fontWeight="bold" color="white" fontSize="28px">
+          WoundCare
+        </Heading>
         <Image
           src="/menu.png"
           alt="menu"
@@ -36,7 +47,7 @@ function navBar() {
           onClick={onOpen}
           style={{ cursor: "pointer" }}
         />
-      </Box>
+      </Flex>
       <Drawer
         isOpen={isOpen}
         placement="right"
@@ -44,39 +55,72 @@ function navBar() {
         finalFocusRef={btnRef}
       >
         <DrawerOverlay />
-        <DrawerContent className="drawerContent">
+        <DrawerContent p="20px" bg="#4F1964" h="min-content">
           <DrawerCloseButton
             display="flex"
             alignSelf="flex-end"
             color="white"
           />
           <DrawerHeader>
-            <Heading as="h2" className="navBarTitle">WoundCare</Heading>
-            <Box className="divider" />
+            <Heading as="h2" fontWeight="bold" color="white" fontSize="28px">
+              WoundCare
+            </Heading>
+            <Box w="100%" h="2px" bg="white" />
           </DrawerHeader>
           <DrawerBody style={{ marginTop: "20px" }}>
-            <Box className="navBarItem">
+            <Flex direction="row" align="center" mb="10px">
               <Image src="/perfil/user.png" alt="user" width={35} height={25} />
-              <Heading as="h3" className="navBarMenu">Perfil</Heading>
-            </Box>
-            <Box className="navBarItem">
+              <Heading
+                as="h3"
+                fontWeight="bold"
+                color="white"
+                fontSize="large"
+                ml="5px"
+                cursor="pointer"
+              >
+                Perfil
+              </Heading>
+            </Flex>
+            <Flex direction="row" align="center" mb="10px">
               <Image
                 src="/FAQ.png"
                 alt="Preguntas Frecuentes"
                 width={35}
                 height={25}
               />
-              <Heading as="h3" className="navBarMenu">Preguntas Frecuentes</Heading>
-            </Box>
-            <Box className="navBarItem" style={{marginLeft:"3px"}}>
+              <Heading
+                as="h3"
+                fontWeight="bold"
+                color="white"
+                fontSize="large"
+                ml="5px"
+                cursor="pointer"
+              >
+                Preguntas Frecuentes
+              </Heading>
+            </Flex>
+            <Flex
+              direction="row"
+              align="center"
+              mb="10px"
+              style={{ marginLeft: "3px" }}
+            >
               <Image src="/logout.png" alt="Logout" width={35} height={25} />
-              <Heading as="h3" className="navBarMenu" onClick={
-                () => {
-                  dispatch(logout())
-                  router.push("/login")
-                }
-              }>Cerrar sesión</Heading>
-            </Box>
+              <Heading
+                as="h3"
+                fontWeight="bold"
+                color="white"
+                fontSize="large"
+                ml="5px"
+                cursor="pointer"
+                onClick={() => {
+                  dispatch(logout());
+                  router.push("/login");
+                }}
+              >
+                Cerrar sesión
+              </Heading>
+            </Flex>
           </DrawerBody>
         </DrawerContent>
       </Drawer>

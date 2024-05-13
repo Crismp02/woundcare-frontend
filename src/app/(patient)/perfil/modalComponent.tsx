@@ -16,7 +16,6 @@ import {
   Select,
   Textarea,
 } from "@chakra-ui/react";
-import "@/styles/perfil/perfil.css";
 import React, { useState } from "react";
 
 interface ModalComponentProps {
@@ -52,7 +51,7 @@ const ModalComponent: React.FC<ModalComponentProps> = ({
         <ModalHeader>{type}</ModalHeader>
         <ModalCloseButton />
         <ModalBody>
-          <Box className="dividerModal" />
+          <Box w="90vw" h="2px" bg="#4F1964" mt="-10px" mb="10px" />
           {type === "Alergias conocidas" ? (
             <>
               <Text marginBottom="10px">
