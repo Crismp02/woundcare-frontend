@@ -4,6 +4,7 @@ import { useRoleRouter } from "@/hooks/useRoleRouter";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import NavBar from "@/components/navBar";
+import { Box } from "@chakra-ui/react";
 
 export default function RootLayout({
   children,
@@ -32,9 +33,14 @@ export default function RootLayout({
   return isLoading ? (
     <>Loading...</>
   ) : (
-    <>
+    <Box
+      display={"flex"}
+      flexDirection={"column"}
+      minHeight={"100vh"}
+      width={"100vw"}
+    >
       <NavBar />
       {children}
-    </>
+    </Box>
   );
 }
