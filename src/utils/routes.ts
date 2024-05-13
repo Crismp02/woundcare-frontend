@@ -4,11 +4,12 @@ const routes = {
   //Patient routes
   patientHomePage: "/home-page",
   postBandageChangeForm: "/",
-  monitoringSignsAndSymptomsForm: "/",
-  dischargeForm: "/",
+  monitoringSignsAndSymptomsForm: "/dailyCares",
+  dischargeForm: "/discharge",
   patientMedicines: "/",
-  patientDailyCares: "/",
+  patientDailyCares: "/dailyCares",
   patientMessages: "/",
+  patientDischargeCongrats: "/dischargeCongrats",
   //Loged routes
   notifications: "/",
 };
