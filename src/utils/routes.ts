@@ -6,7 +6,7 @@ const routes = {
   postBandageChangeForm: "/",
   monitoringSignsAndSymptomsForm: "/dailyCares",
   dischargeForm: "/discharge",
-  patientMedicines: "/",
+  patientMedicines: "/medicines",
   patientDailyCares: "/dailyCares",
   patientMessages: "/",
   patientDischargeCongrats: "/dischargeCongrats",
