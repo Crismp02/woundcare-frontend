@@ -1,0 +1,34 @@
+type PatientStatus = 'ACTIVE' | 'INACTIVE';
+
+type BloodType = 
+  | "A_POSITIVE"
+  | "A_NEGATIVE"
+  | "B_POSITIVE"
+  | "B_NEGATIVE"
+  | "AB_POSITIVE"
+  | "AB_NEGATIVE"
+  | "O_POSITIVE"
+  | "O_NEGATIVE";
+
+type Genre = "MALE" | "FEMALE";
+
+interface User {
+    fullname: string;
+  }
+  
+  export interface Patient {
+    nationalId: string;
+    genre: Genre;
+    birthDate: string;
+    address: string;
+    phoneNumber: string;
+    cellPhoneNumber: string;
+    photo: string;
+    bloodType: BloodType;
+    weight: number;
+    height: number;
+    status: PatientStatus;
+    allergies: string[];
+    medicalRecords: string[];
+    user: User;
+  }

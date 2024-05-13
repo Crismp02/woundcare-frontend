@@ -1,12 +1,16 @@
 "use client";
 import { Box, Flex, Heading, Text } from "@chakra-ui/react";
-import React, {useState} from "react";
+import React, {useState, useEffect, use} from "react";
 import Image from "next/image";
 import ModalComponent from "./modalComponent";
+import { getPatientMe } from "@/services/patient/patient.service";
+import { Patient } from "@/interfaces/patient/patient.interface";
+import { toast } from "react-toastify";
 
 function Perfil() {
   const [isOpen, setIsOpen] = useState(false);
   const [modalType, setModalType] = useState("");
+  const [patient, setPatient] = useState({} as Patient);
 
   const openModal = (type: string) => {
     setModalType(type);
@@ -16,6 +20,20 @@ function Perfil() {
   const closeModal = () => {
     setIsOpen(false);
   };
+
+  useEffect(() => {
+    const fetchMe = async () => {
+      try {
+        const data = await getPatientMe();
+        setPatient(data);
+        console.log(data);
+      } catch (error) {
+        toast.error("Error al cargar la información del paciente");
+        console.log(error);
+      }
+    }
+    fetchMe();
+  }, [])
 
   return (
     <>
@@ -69,7 +87,7 @@ function Perfil() {
           height={80}
         />
         <Heading as="h2" fontSize="x-large" fontWeight="bold" color="#4F1964" ml="10px">
-          Nombre Paciente Apellido
+         {patient.user?.fullname}
         </Heading>
       </Flex>
       {/* Personal information*/}
@@ -220,7 +238,7 @@ function Perfil() {
         </Flex>
         <Box w="100%" h="2px" bg="#AD8EB1" />
       </Flex>
-      <ModalComponent isOpen={isOpen} onClose={closeModal} type={modalType} />
+      <ModalComponent patient={patient} isOpen={isOpen} onClose={closeModal} type={modalType}/>
     </>
   );
 }

@@ -1,3 +1,4 @@
+import { Patient } from "@/interfaces/patient/patient.interface";
 import {
   Modal,
   ModalOverlay,
@@ -22,12 +23,14 @@ interface ModalComponentProps {
   isOpen: boolean;
   onClose: () => void;
   type: string;
+  patient: Patient;
 }
 
 const ModalComponent: React.FC<ModalComponentProps> = ({
   isOpen,
   onClose,
   type,
+  patient,
 }) => {
   const [inputValue, setInputValue] = useState("");
   const [allergies, setAllergies] = useState<string[]>([]);
@@ -55,7 +58,7 @@ const ModalComponent: React.FC<ModalComponentProps> = ({
           {type === "Alergias conocidas" ? (
             <>
               <Text marginBottom="10px">
-                Por favor, liste sus alergias conocidas
+                Por favor, liste sus alergias conocidas 
               </Text>
               <HStack spacing={4}>
                 <Input
@@ -69,7 +72,7 @@ const ModalComponent: React.FC<ModalComponentProps> = ({
                 </Button>
               </HStack>
               <HStack spacing={4} align="start" marginTop="20px">
-                {allergies.map((value, index) => (
+                {patient.allergies.map((value, index) => (
                   <Tag backgroundColor="#AD8EB1" key={index}>
                     {value}
                     <TagCloseButton
@@ -84,21 +87,8 @@ const ModalComponent: React.FC<ModalComponentProps> = ({
           ) : type === "Grupo sanguíneo" ? (
             <>
               <Text marginBottom="10px">
-                Por favor, seleccione su grupo sanguíneo
+                Su grupo sanguíneo es: {patient.bloodType}
               </Text>
-              <Select
-                backgroundColor="white"
-                placeholder="Selecciona un grupo sanguíneo"
-              >
-                <option value="option1">A+</option>
-                <option value="option2">A-</option>
-                <option value="option3">B+</option>
-                <option value="option4">B-</option>
-                <option value="option5">AB+</option>
-                <option value="option6">AB-</option>
-                <option value="option7">O+</option>
-                <option value="option8">O-</option>
-              </Select>
             </>
           ) : type === "Peso y altura" ? (
             <>
@@ -109,8 +99,9 @@ const ModalComponent: React.FC<ModalComponentProps> = ({
                 backgroundColor="white"
                 placeholder="Peso"
                 marginBottom="10px"
+                defaultValue={patient.weight}
               />
-              <Input backgroundColor="white" placeholder="Altura" />
+              <Input backgroundColor="white" placeholder="Altura" defaultValue={patient.height}/>
             </>
           ) : type === "Enfermedades existentes" ? (
             <>
@@ -130,7 +121,7 @@ const ModalComponent: React.FC<ModalComponentProps> = ({
                 </Button>
               </HStack>
               <HStack spacing={4} align="start" marginTop="20px">
-                {diseases.map((value, index) => (
+                {patient.medicalRecords.map((value, index) => (
                   <Tag backgroundColor="#AD8EB1" key={index}>
                     {value}
                     <TagCloseButton
@@ -152,6 +143,7 @@ const ModalComponent: React.FC<ModalComponentProps> = ({
                 backgroundColor="white"
                 placeholder="Número de teléfono"
                 marginBottom="10px"
+                defaultValue={patient.cellPhoneNumber}
               />
             </>
           ) : type === "Dirección" ? (
@@ -161,6 +153,7 @@ const ModalComponent: React.FC<ModalComponentProps> = ({
                 backgroundColor="white"
                 placeholder="Dirección"
                 marginBottom="10px"
+                defaultValue={patient.address}
               />
             </>
           ) : null}
