@@ -18,8 +18,9 @@ export default function RootLayout({
       if (redirectFunction) {
         redirectFunction();
       }
+    } else {
+      setIsLoading(false);
     }
-    setIsLoading(false);
   }, []);
 
   return isLoading ? <>Loading..</> : <>{children}</>;
