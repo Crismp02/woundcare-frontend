@@ -24,8 +24,9 @@ export default function RootLayout({
       } else {
         router.push("/login");
       }
+    } else {
+      setIsLoading(false);
     }
-    setIsLoading(false);
   }, []);
 
   return isLoading ? <>Loading...</> : <>{children}</>;
