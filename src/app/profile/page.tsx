@@ -1,7 +1,6 @@
 "use client";
-import { Box, Heading, Text } from "@chakra-ui/react";
+import { Box, Flex, Heading, Text } from "@chakra-ui/react";
 import React, {useState} from "react";
-import "@/styles/perfil/perfil.css";
 import Image from "next/image";
 import ModalComponent from "./modalComponent";
 
@@ -21,9 +20,24 @@ function Perfil() {
   return (
     <>
       {/* Header*/}
-      <Box className="perfilHeader">
-        <Box className="circle">
-          <Box className="returnButton">
+      <Flex w="100vw" h="13vh" justify="space-between" pr="3vh">
+      <Box
+          w="18vh"
+          h="18vh"
+          bg="#AD8EB1"
+          pt="2vh"
+          pl="2vh"
+          sx={{ clipPath: "circle(66.4% at 1% 1%)" }}
+        >
+          <Box
+            w="5vh"
+            h="5vh"
+            borderRadius="35px"
+            bg="white"
+            p="5px"
+            boxShadow="0px 4px 4px rgba(0, 0, 0, 0.25)"
+            justifyContent="center"
+          >
             <Image
               src="/arrow.png"
               alt="arrow"
@@ -33,36 +47,43 @@ function Perfil() {
             />
           </Box>
         </Box>
-        <Box className="headerContent">
-          <Heading as="h1" className="perfilTitle">
+        <Flex w="65vw" direction="column" align="flex-end" justify="center">
+        <Heading
+            fontWeight="bold"
+            color="#4F1964"
+            fontSize="30px"
+            mt="6vh"
+            mb="1vh"
+            mr="10px"
+          >
             Perfil
           </Heading>
-          <Box className="divider" />
-        </Box>
-      </Box>
-      <Box className="patientHeader">
+          <Box  w="55vw" h="2px" bg="#AD8EB1" />
+        </Flex>
+      </Flex>
+      <Flex w="100vw" h="13vh" justify="space-between" align="center" pr="6vw" pl="6vw">
         <Image
           src="/profile/female_user.png"
           alt="female_user"
           width={80}
           height={80}
         />
-        <Heading as="h2" fontSize="x-large" className="userName">
-          Nombre Paciente
+        <Heading as="h2" fontSize="x-large" fontWeight="bold" color="#4F1964" ml="10px">
+          Nombre Paciente Apellido
         </Heading>
-      </Box>
+      </Flex>
       {/* Personal information*/}
-      <Text className="infoText">Información personal: </Text>
-      <Box className="containerItems">
-        <Box className="infoItem">
-          <Box className="itemsLine">
-            <Box className="iconItem">
+      <Text fontWeight="bold" color="#3B3B3B" fontSize="20px" ml="25px" mt="10px">Información personal: </Text>
+      <Flex direction="column" w="100vw" h="auto" pl="25px" pr="25px">
+      <Flex direction="row" justify="space-between" align="center" w="88vw" h="8vh">
+      <Flex direction="row" align="center">
+            <Box  w="5vh" h="5vh" bg="#4F1964" borderRadius="10px" p="5px" display="flex" justifyContent="center" alignItems="center">
               <Image src="/profile/user.png" alt="user" width={35} height={25} />
             </Box>
-            <Text className="itemText">Alergias conocidas</Text>
-          </Box>
+            <Text color="#3B3B3B" fontSize="18px" ml="10px">Alergias conocidas</Text>
+          </Flex>
           <Box
-            className="arrowItem"
+            w="4vh" h="4vh" bg="#4F1964" p="8px" borderRadius="10px" boxShadow="0px 4px 4px rgba(0, 0, 0, 0.25)" cursor="pointer" _hover={{ bg: "#371145" }}
             onClick={() => openModal("Alergias conocidas")}
           >
             <Image
@@ -72,19 +93,19 @@ function Perfil() {
               height={40}
             />
           </Box>
-        </Box>
-        <Box className="dividerItem" />
-        <Box className="infoItem">
-          <Box className="itemsLine">
-            <Box className="iconItem">
+        </Flex>
+        <Box w="100%" h="2px" bg="#AD8EB1"/>
+        <Flex direction="row" justify="space-between" align="center" w="88vw" h="8vh">
+          <Flex direction="row" align="center">
+            <Box  w="5vh" h="5vh" bg="#4F1964" borderRadius="10px" p="5px" display="flex" justifyContent="center" alignItems="center">
               <Image src="/profile/drop.png" alt="drop" width={35} height={25} />
             </Box>
-            <Text as="h3" className="itemText">
+            <Text as="h3" color="#3B3B3B" fontSize="18px" ml="10px">
               Grupo sanguíneo
             </Text>
-          </Box>
+          </Flex>
           <Box
-            className="arrowItem"
+            w="4vh" h="4vh" bg="#4F1964" p="8px" borderRadius="10px" boxShadow="0px 4px 4px rgba(0, 0, 0, 0.25)" cursor="pointer" _hover={{ bg: "#371145" }}
             onClick={() => openModal("Grupo sanguíneo")}
           >
             <Image
@@ -94,11 +115,11 @@ function Perfil() {
               height={40}
             />
           </Box>
-        </Box>
-        <Box className="dividerItem" />
-        <Box className="infoItem">
-          <Box className="itemsLine">
-            <Box className="iconItem">
+        </Flex>
+        <Box w="100%" h="2px" bg="#AD8EB1" />
+        <Flex direction="row" justify="space-between" align="center" w="88vw" h="8vh">
+          <Flex direction="row" align="center">
+            <Box  w="5vh" h="5vh" bg="#4F1964" borderRadius="10px" p="5px" display="flex" justifyContent="center" alignItems="center">
               <Image
                 src="/profile/h&w.svg"
                 alt="height&weight"
@@ -106,11 +127,11 @@ function Perfil() {
                 height={30}
               />
             </Box>
-            <Text as="h3" className="itemText">
+            <Text as="h3" color="#3B3B3B" fontSize="18px" ml="10px">
               Peso y altura
             </Text>
-          </Box>
-          <Box className="arrowItem" onClick={() => openModal("Peso y altura")}>
+          </Flex>
+          <Box w="4vh" h="4vh" bg="#4F1964" p="8px" borderRadius="10px" boxShadow="0px 4px 4px rgba(0, 0, 0, 0.25)" cursor="pointer" _hover={{ bg: "#371145" }} onClick={() => openModal("Peso y altura")}>
             <Image
               src="/profile/arrowRight.png"
               alt="arrowRight"
@@ -118,11 +139,11 @@ function Perfil() {
               height={40}
             />
           </Box>
-        </Box>
-        <Box className="dividerItem" />
-        <Box className="infoItem">
-          <Box className="itemsLine">
-            <Box className="iconItem">
+        </Flex>
+        <Box w="100%" h="2px" bg="#AD8EB1" />
+        <Flex direction="row" justify="space-between" align="center" w="88vw" h="8vh">
+          <Flex direction="row" align="center">
+            <Box  w="5vh" h="5vh" bg="#4F1964" borderRadius="10px" p="5px" display="flex" justifyContent="center" alignItems="center">
               <Image
                 src="/profile/health.png"
                 alt="health"
@@ -130,12 +151,12 @@ function Perfil() {
                 height={30}
               />
             </Box>
-            <Text as="h3" className="itemText">
+            <Text as="h3" color="#3B3B3B" fontSize="18px" ml="10px">
               Enfermedades existentes
             </Text>
-          </Box>
+          </Flex>
           <Box
-            className="arrowItem"
+            w="4vh" h="4vh" bg="#4F1964" p="8px" borderRadius="10px" boxShadow="0px 4px 4px rgba(0, 0, 0, 0.25)" cursor="pointer" _hover={{ bg: "#371145" }}
             onClick={() => openModal("Enfermedades existentes")}
           >
             <Image
@@ -145,11 +166,11 @@ function Perfil() {
               height={40}
             />
           </Box>
-        </Box>
-        <Box className="dividerItem" />
-        <Box className="infoItem">
-          <Box className="itemsLine">
-            <Box className="iconItem">
+        </Flex>
+        <Box w="100%" h="2px" bg="#AD8EB1" />
+        <Flex direction="row" justify="space-between" align="center" w="88vw" h="8vh">
+          <Flex direction="row" align="center">
+            <Box  w="5vh" h="5vh" bg="#4F1964" borderRadius="10px" p="5px" display="flex" justifyContent="center" alignItems="center">
               <Image
                 src="/profile/phone.png"
                 alt="phone"
@@ -157,12 +178,12 @@ function Perfil() {
                 height={30}
               />
             </Box>
-            <Text as="h3" className="itemText">
+            <Text as="h3" color="#3B3B3B" fontSize="18px" ml="10px">
               Número de teléfono
             </Text>
-          </Box>
+          </Flex>
           <Box
-            className="arrowItem"
+            w="4vh" h="4vh" bg="#4F1964" p="8px" borderRadius="10px" boxShadow="0px 4px 4px rgba(0, 0, 0, 0.25)" cursor="pointer" _hover={{ bg: "#371145" }}
             onClick={() => openModal("Número de teléfono")}
           >
             <Image
@@ -172,11 +193,11 @@ function Perfil() {
               height={40}
             />
           </Box>
-        </Box>
-        <Box className="dividerItem" />
-        <Box className="infoItem">
-          <Box className="itemsLine">
-            <Box className="iconItem">
+        </Flex>
+        <Box w="100%" h="2px" bg="#AD8EB1" />
+        <Flex direction="row" justify="space-between" align="center" w="88vw" h="8vh">
+          <Flex direction="row" align="center">
+            <Box  w="5vh" h="5vh" bg="#4F1964" borderRadius="10px" p="5px" display="flex" justifyContent="center" alignItems="center">
               <Image
                 src="/profile/location.png"
                 alt="location"
@@ -184,11 +205,11 @@ function Perfil() {
                 height={30}
               />
             </Box>
-            <Text as="h3" className="itemText">
+            <Text as="h3" color="#3B3B3B" fontSize="18px" ml="10px">
               Dirección
             </Text>
-          </Box>
-          <Box className="arrowItem" onClick={() => openModal("Dirección")}>
+          </Flex>
+          <Box w="4vh" h="4vh" bg="#4F1964" p="8px" borderRadius="10px" boxShadow="0px 4px 4px rgba(0, 0, 0, 0.25)" cursor="pointer" _hover={{ bg: "#371145" }} onClick={() => openModal("Dirección")}>
             <Image
               src="/profile/arrowRight.png"
               alt="arrowRight"
@@ -196,9 +217,9 @@ function Perfil() {
               height={40}
             />
           </Box>
-        </Box>
-        <Box className="dividerItem" />
-      </Box>
+        </Flex>
+        <Box w="100%" h="2px" bg="#AD8EB1" />
+      </Flex>
       <ModalComponent isOpen={isOpen} onClose={closeModal} type={modalType} />
     </>
   );
