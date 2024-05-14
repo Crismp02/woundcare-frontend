@@ -11,8 +11,14 @@ const routes = {
   patientMessages: "/",
   patientDischargeCongrats: "/dischargeCongrats",
   //Loged routes
-  notifications: "/",
+  notifications: "/notifications",
   //General routes
   termsAndConditions: "/terms-&-conditions",
+  //Admin routes
+  adminHomePage: "/adminHomePage",
+  //Nurse routes
+  nurseHomePage: "/",
+  //Doctor routes
+  doctorHomePage: "/",
 };
 export default routes;
