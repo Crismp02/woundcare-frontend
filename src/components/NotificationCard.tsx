@@ -11,7 +11,11 @@ import {
 import LinesEllipsis from "react-lines-ellipsis";
 import Image from "next/image";
 import Link from "next/link";
-import { notificationImages, notificationRoutes } from "@/hooks/notification";
+import {
+  notificationImages,
+  notificationRoutes,
+  notificationTitles,
+} from "@/hooks/notification";
 import { useState } from "react";
 import { timeAgo } from "@/utils/timeAgo";
 
@@ -30,7 +34,7 @@ function NotificationCard({ notification }: { notification: Notification }) {
     "MONITORING_SIGNS_AND_SYMPTOMS",
     "DISCHARGE",
   ].includes(notification.type) ? (
-    <Link style={{ height: 70, width: "100%" }} href={link}>
+    <Link style={{ maxHeight: "85px", width: "100%" }} href={link}>
       <Card
         height={"100%"}
         width={"100%"}
@@ -44,6 +48,7 @@ function NotificationCard({ notification }: { notification: Notification }) {
         justifyContent={"space-between"}
         paddingX={2}
         paddingY={2}
+        backgroundColor={notification.read ? "#F9EDEF" : "white"}
       >
         <CardHeader
           height={"40px"}
@@ -68,8 +73,8 @@ function NotificationCard({ notification }: { notification: Notification }) {
           paddingY={0}
           width={"100%"}
         >
-          <Heading as={"h3"} fontSize={16}>
-            {notification.type}
+          <Heading as={"h3"} fontSize={14}>
+            {notificationTitles.get(notification.type)}
           </Heading>
           <LinesEllipsis
             text={notification.message}
@@ -100,7 +105,7 @@ function NotificationCard({ notification }: { notification: Notification }) {
     </Link>
   ) : (
     <Card
-      height={isExpanded ? "" : 70}
+      maxHeight={isExpanded ? "" : "85px"}
       width={"100%"}
       _hover={{
         boxShadow: "0 0 10px 2px #4F1964",
@@ -114,6 +119,7 @@ function NotificationCard({ notification }: { notification: Notification }) {
       paddingY={2}
       onClick={handleExpandedClick}
       cursor={"pointer"}
+      backgroundColor={notification.read ? "#F9EDEF" : "white"}
     >
       <CardHeader
         height={"40px"}
@@ -138,8 +144,8 @@ function NotificationCard({ notification }: { notification: Notification }) {
         paddingY={0}
         width={"100%"}
       >
-        <Heading as={"h3"} fontSize={16}>
-          {notification.type}
+        <Heading as={"h3"} fontSize={14}>
+          {notificationTitles.get(notification.type)}
         </Heading>
         {isExpanded ? (
           <Text fontSize={"11px"} color={"#3B3B3B"} width={"100%"}>
