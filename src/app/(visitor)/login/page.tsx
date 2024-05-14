@@ -7,6 +7,8 @@ import React, { FormEvent, useState } from "react";
 import { toast } from "react-toastify";
 import { login as sliceLogin } from "@/store/authSlice";
 import { useRoleRouter } from "@/hooks/useRoleRouter";
+import Link from "next/link";
+import routes from "@/utils/routes";
 
 function Login() {
   const [nationalId, setNationalId] = useState("");
@@ -118,14 +120,27 @@ function Login() {
           border="none"
           focusBorderColor="transparent"
         />
-        <Checkbox
-          colorScheme="purple"
-          onChange={() => setAcceptTerms(!acceptTerms)}
-        >
+        <Box display="flex" gap={1}>
+          <Checkbox
+            colorScheme="purple"
+            onChange={() => setAcceptTerms(!acceptTerms)}
+          ></Checkbox>
           <Text color="#8E8E8E" fontSize="smaller">
-            Estoy de acuerdo con los términos y condiciones
+            Estoy de acuerdo con los{" "}
+            <Link
+              href={routes.termsAndConditions}
+              target="_blank"
+              style={{
+                textDecoration: "underline",
+                cursor: "pointer",
+                fontWeight: 600,
+              }}
+            >
+              términos y condiciones
+            </Link>
           </Text>
-        </Checkbox>
+        </Box>
+
         <Button
           maxWidth="311px"
           width="80%"

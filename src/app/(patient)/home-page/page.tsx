@@ -2,7 +2,10 @@
 import MenuOptionCard from "@/components/MenuOptionCard";
 import NotificationCard from "@/components/NotificationCard";
 import { Notification } from "@/interfaces/notification/notification.interface";
-import { getMyNotifications } from "@/services/notifications/notifications.service";
+import {
+  getMyNotifications,
+  readNotification,
+} from "@/services/notifications/notifications.service";
 import routes from "@/utils/routes";
 import { Box, Heading } from "@chakra-ui/react";
 import Link from "next/link";
@@ -23,6 +26,21 @@ function HomePage() {
     };
     fetchMyNotifications();
   }, []);
+
+  const readOneNotification = async (notificationId: number) => {
+    try {
+      const notification = await readNotification(notificationId);
+      setNotifications((prevNotifications) =>
+        prevNotifications.map((prevNotification) =>
+          prevNotification.id === notification.id
+            ? notification
+            : prevNotification
+        )
+      );
+    } catch (error) {
+      toast.error("No se pudo marcar la notificación como leída");
+    }
+  };
 
   return (
     <Box as="main" flexGrow={1} paddingY={10}>
@@ -57,7 +75,14 @@ function HomePage() {
             Notificaciones
           </Heading>
           {notifications.map((notification) => (
-            <NotificationCard notification={notification} />
+            <Box
+              key={notification.id}
+              onClick={() => {
+                if (!notification.read) readOneNotification(notification.id);
+              }}
+            >
+              <NotificationCard notification={notification} />
+            </Box>
           ))}
           <Link
             href={routes.notifications}
