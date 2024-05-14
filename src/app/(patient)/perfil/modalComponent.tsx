@@ -1,22 +1,27 @@
 import { Patient } from "@/interfaces/patient/patient.interface";
 import {
+  editAddress,
+  editCellPhoneNumber,
+  editWeight_Height,
+} from "@/services/patient/patient.service";
+import {
   Modal,
   ModalOverlay,
   ModalContent,
   ModalHeader,
-  ModalCloseButton,
   ModalBody,
   ModalFooter,
   Button,
   Text,
   Box,
   Input,
-  HStack,
-  Tag,
-  TagCloseButton,
   Textarea,
+  Flex,
 } from "@chakra-ui/react";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import AllergyList from "./modalTypes/AllergyList";
+import BloodTypeList from "./modalTypes/BloodTypeList";
+import MedicalRecordsList from "./modalTypes/MedicalRecordsList";
 
 interface ModalComponentProps {
   isOpen: boolean;
@@ -31,63 +36,51 @@ const ModalComponent: React.FC<ModalComponentProps> = ({
   type,
   patient,
 }) => {
-  const [inputValue, setInputValue] = useState("");
   const [allergies, setAllergies] = useState<string[]>([]);
   const [diseases, setDiseases] = useState<string[]>([]);
+  const [weight, setWeight] = useState<number>(patient.weight);
+  const [height, setHeight] = useState<number>(patient.height);
+  const [cellPhoneNumber, setCellPhoneNumber] = useState<string>(patient.cellPhoneNumber);
+  const [address, setAddress] = useState<string>(patient.address);
 
-  const handleAddClick = () => {
-    if (inputValue.trim() !== "") {
-      if (type === "Alergias conocidas") {
-        setAllergies((prevAllergies) => [...prevAllergies, inputValue]);
-      } else if (type === "Enfermedades existentes") {
-        setDiseases((prevDiseases) => [...prevDiseases, inputValue]);
-      }
-      setInputValue("");
+  const handleSubmit = async () => {
+    if (type === "Peso y altura"){
+      editWeight_Height(weight, height);
+      onClose();
+    } else if (type === "Número de teléfono"){
+      editCellPhoneNumber(cellPhoneNumber);
+      onClose();
+    } else if (type === "Dirección"){
+      editAddress(address);
+      onClose();
     }
+  }
+
+  useEffect(() => {
+    const fetchPatientData = async () => {
+    setAllergies(patient.allergies);
+    setDiseases(patient.medicalRecords);
+    setWeight(patient.weight);
+    setHeight(patient.height);
+    setCellPhoneNumber(patient.cellPhoneNumber);
   };
+  fetchPatientData();
+  }, [patient.allergies, patient.medicalRecords]);
 
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />
       <ModalContent style={{ backgroundColor: "#F9EDEF" }}>
         <ModalHeader>{type}</ModalHeader>
-        <ModalCloseButton />
         <ModalBody>
           <Box w="90vw" h="2px" bg="#4F1964" mt="-10px" mb="10px" />
           {type === "Alergias conocidas" ? (
             <>
-              <Text marginBottom="10px">
-                Por favor, liste sus alergias conocidas 
-              </Text>
-              <HStack spacing={4}>
-                <Input
-                  value={inputValue}
-                  onChange={(e) => setInputValue(e.target.value)}
-                  backgroundColor="white"
-                  placeholder="Alergia"
-                />
-                <Button bg="#4F1964" color="white" onClick={handleAddClick}>
-                  +
-                </Button>
-              </HStack>
-              <HStack spacing={4} align="start" marginTop="20px">
-                {patient.allergies.map((value, index) => (
-                  <Tag backgroundColor="#AD8EB1" key={index}>
-                    {value}
-                    <TagCloseButton
-                      onClick={() => {
-                        setAllergies(allergies.filter((_, i) => i !== index));
-                      }}
-                    />
-                  </Tag>
-                ))}
-              </HStack>
+              <AllergyList allergies={allergies} setAllergies={setAllergies} />
             </>
           ) : type === "Grupo sanguíneo" ? (
             <>
-              <Text marginBottom="10px">
-                Su grupo sanguíneo es: {patient.bloodType}
-              </Text>
+              <BloodTypeList bloodType={patient.bloodType} />
             </>
           ) : type === "Peso y altura" ? (
             <>
@@ -98,39 +91,30 @@ const ModalComponent: React.FC<ModalComponentProps> = ({
                 backgroundColor="white"
                 placeholder="Peso"
                 marginBottom="10px"
-                defaultValue={patient.weight}
+                value={weight}
+                onChange={(e) => setWeight(Number(e.target.value))}
               />
-              <Input backgroundColor="white" placeholder="Altura" defaultValue={patient.height}/>
+              <Input
+                backgroundColor="white"
+                placeholder="Altura"
+                value={height}
+                onChange={(e) => setHeight(Number(e.target.value))}
+              />
+              <Flex direction="row" justify="flex-end">
+                <Button
+                  mt={5}
+                  bg="#4F1964"
+                  color="white"
+                  mr={3}
+                  onClick={handleSubmit}
+                >
+                  Guardar
+                </Button>
+              </Flex>
             </>
           ) : type === "Enfermedades existentes" ? (
             <>
-              {" "}
-              <Text marginBottom="10px">
-                Por favor, liste sus enfermedades existentes
-              </Text>
-              <HStack spacing={4}>
-                <Input
-                  value={inputValue}
-                  onChange={(e) => setInputValue(e.target.value)}
-                  backgroundColor="white"
-                  placeholder="Enfermedad"
-                />
-                <Button bg="#4F1964" color="white" onClick={handleAddClick}>
-                  +
-                </Button>
-              </HStack>
-              <HStack spacing={4} align="start" marginTop="20px">
-                {patient.medicalRecords.map((value, index) => (
-                  <Tag backgroundColor="#AD8EB1" key={index}>
-                    {value}
-                    <TagCloseButton
-                      onClick={() => {
-                        setDiseases(diseases.filter((_, i) => i !== index));
-                      }}
-                    />
-                  </Tag>
-                ))}
-              </HStack>
+            <MedicalRecordsList diseases={diseases} setDiseases={setDiseases} />
             </>
           ) : type === "Número de teléfono" ? (
             <>
@@ -142,8 +126,20 @@ const ModalComponent: React.FC<ModalComponentProps> = ({
                 backgroundColor="white"
                 placeholder="Número de teléfono"
                 marginBottom="10px"
-                defaultValue={patient.cellPhoneNumber}
+                value={cellPhoneNumber}
+                onChange={(e) => setCellPhoneNumber(String(e.target.value))}
               />
+              <Flex direction="row" justify="flex-end">
+                <Button
+                  mt={5}
+                  bg="#4F1964"
+                  color="white"
+                  mr={3}
+                  onClick={handleSubmit}
+                >
+                  Guardar
+                </Button>
+              </Flex>
             </>
           ) : type === "Dirección" ? (
             <>
@@ -152,8 +148,20 @@ const ModalComponent: React.FC<ModalComponentProps> = ({
                 backgroundColor="white"
                 placeholder="Dirección"
                 marginBottom="10px"
-                defaultValue={patient.address}
+                value={address}
+                onChange={(e) => setAddress(String(e.target.value))}
               />
+              <Flex direction="row" justify="flex-end">
+                <Button
+                  mt={5}
+                  bg="#4F1964"
+                  color="white"
+                  mr={3}
+                  onClick={handleSubmit}
+                >
+                  Guardar
+                </Button>
+              </Flex>
             </>
           ) : null}
         </ModalBody>
@@ -166,10 +174,7 @@ const ModalComponent: React.FC<ModalComponentProps> = ({
             mr={3}
             onClick={onClose}
           >
-            Cancelar
-          </Button>
-          <Button bg="#4F1964" color="white" mr={3} onClick={onClose}>
-            Guardar
+            Cerrar
           </Button>
         </ModalFooter>
       </ModalContent>
