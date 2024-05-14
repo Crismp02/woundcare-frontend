@@ -14,3 +14,21 @@ export const getMyNotifications = async (
   );
   return data;
 };
+
+export const readNotification = async (
+  notificationId: number,
+  read: boolean = true
+): Promise<Notification> => {
+  const data = await fetchAPI<Notification>(
+    `/notifications/${notificationId}/me`,
+    "PATCH",
+    { read }
+  );
+  return data;
+};
+
+export const readAllNotifications = async (
+  read: boolean = true
+): Promise<void> => {
+  await fetchAPI<void>(`/notifications/me`, "PATCH", { read });
+};
