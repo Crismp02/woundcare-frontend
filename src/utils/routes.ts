@@ -12,5 +12,7 @@ const routes = {
   patientDischargeCongrats: "/dischargeCongrats",
   //Loged routes
   notifications: "/",
+  //General routes
+  termsAndConditions: "/terms-&-conditions",
 };
 export default routes;
