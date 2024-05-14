@@ -5,7 +5,7 @@ export function useRoleRouter() {
 
   const roleRoute = new Map();
   roleRoute.set("ADMIN", () => router.push("/adminHomePage"));
-  roleRoute.set("PATIENT", () => router.push("/homePage"));
+  roleRoute.set("PATIENT", () => router.push("/home-page"));
   roleRoute.set("NURSE", () => router.push("/"));
   roleRoute.set("DOCTOR", () => router.push("/"));
 
