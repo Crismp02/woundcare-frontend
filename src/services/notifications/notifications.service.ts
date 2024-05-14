@@ -6,11 +6,11 @@ export const getMyNotifications = async (
   page?: number,
   perPage?: number
 ): Promise<PaginatedResponse<Notification>> => {
-  const data = await fetchAPI(
+  const data = await fetchAPI<PaginatedResponse<Notification>>(
     `/notifications/me?${page ? `page=${page}&` : ""}${
       perPage ? `perPage=${perPage}` : ""
     }`,
     "GET"
   );
-  return data as PaginatedResponse<Notification>;
+  return data;
 };
