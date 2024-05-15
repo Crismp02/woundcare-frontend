@@ -16,6 +16,8 @@ import Image from "next/image";
 import { useAppDispatch } from "@/store/store";
 import { logout } from "@/store/authSlice";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
+import routes from "@/utils/routes";
 
 function navBar() {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -68,6 +70,7 @@ function navBar() {
             <Box w="100%" h="2px" bg="white" />
           </DrawerHeader>
           <DrawerBody style={{ marginTop: "20px" }}>
+          <Link href={routes.patientProfile}>
             <Flex direction="row" align="center" mb="10px">
               <Image src="/perfil/user.png" alt="user" width={35} height={25} />
               <Heading
@@ -81,6 +84,8 @@ function navBar() {
                 Perfil
               </Heading>
             </Flex>
+            </Link>
+            <Link href={routes.patientFrequentlyAskedQuestions}>
             <Flex direction="row" align="center" mb="10px">
               <Image
                 src="/FAQ.png"
@@ -99,6 +104,7 @@ function navBar() {
                 Preguntas Frecuentes
               </Heading>
             </Flex>
+            </Link>
             <Flex
               direction="row"
               align="center"

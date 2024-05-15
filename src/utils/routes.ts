@@ -3,6 +3,7 @@ const routes = {
   login: "/login",
   //Patient routes
   patientHomePage: "/home-page",
+  patientProfile: "/perfil",
   postBandageChangeForm: "/",
   monitoringSignsAndSymptomsForm: "/dailyCares",
   dischargeForm: "/discharge",
