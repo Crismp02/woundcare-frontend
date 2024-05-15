@@ -36,7 +36,7 @@ export const editCellPhoneNumber = async (cellPhoneNumber: string) => {
     return data;
 }
 
-export const editAddress = async (address: string) => {
-    const data = await fetchAPI<Patient>("/patient/me", "PATCH",  { address } );
+export const editAddress = async (adress: string) => {
+    const data = await fetchAPI<Patient>("/patient/me", "PATCH",  { adress } );
     return data;
 }

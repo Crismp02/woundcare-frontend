@@ -63,6 +63,7 @@ const ModalComponent: React.FC<ModalComponentProps> = ({
     setWeight(patient.weight);
     setHeight(patient.height);
     setCellPhoneNumber(patient.cellPhoneNumber);
+    setAddress(patient.address);
   };
   fetchPatientData();
   }, [patient.allergies, patient.medicalRecords]);
