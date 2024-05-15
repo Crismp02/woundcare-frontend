@@ -13,6 +13,7 @@ import {
   Text,
 } from "@chakra-ui/react";
 import Image from "next/image";
+import Arrow from "@/components/Arrow";
 
 function DailyCares() {
   const [answer1, setAnswer1] = useState<string>("");
@@ -50,32 +51,7 @@ function DailyCares() {
   return (
     <>
       <Flex w="100vw" h="13vh" justify="space-between" pr="3vh">
-        <Box
-          w="18vh"
-          h="18vh"
-          bg="#AD8EB1"
-          pt="2vh"
-          pl="2vh"
-          sx={{ clipPath: "circle(66.4% at 1% 1%)" }}
-        >
-          <Box
-            w="5vh"
-            h="5vh"
-            borderRadius="35px"
-            bg="white"
-            p="5px"
-            boxShadow="0px 4px 4px rgba(0, 0, 0, 0.25)"
-            justifyContent="center"
-          >
-            <Image
-              src="/arrow.png"
-              alt="arrow"
-              width={36}
-              height={36}
-              style={{ cursor: "pointer" }}
-            />
-          </Box>
-        </Box>
+        <Arrow/>
         <Flex w="65vw" direction="column" align="flex-end" justify="center">
           <Heading
             fontWeight="bold"

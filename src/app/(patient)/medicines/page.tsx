@@ -3,6 +3,7 @@ import { Box, Flex, Heading, Image, Text } from "@chakra-ui/react";
 import React, {useEffect, useState} from "react";
 import { getPrescriptions } from "@/services/patient/patient.service";
 import { Prescription } from "@/interfaces/patient/patient.interface";
+import Arrow from "@/components/Arrow";
 
 function Medicines() {
   const [prescriptions, setPrescriptions] = useState<Prescription | null>(null);
@@ -19,32 +20,7 @@ useEffect(() => {
   return (
     <>
       <Flex w="100vw" h="13vh" justify="space-between" pr="3vh" mb="30px">
-        <Box
-          w="18vh"
-          h="18vh"
-          bg="#AD8EB1"
-          pt="2vh"
-          pl="2vh"
-          sx={{ clipPath: "circle(66.4% at 1% 1%)" }}
-        >
-          <Box
-            w="5vh"
-            h="5vh"
-            borderRadius="35px"
-            bg="white"
-            p="5px"
-            boxShadow="0px 4px 4px rgba(0, 0, 0, 0.25)"
-            justifyContent="center"
-          >
-            <Image
-              src="/arrow.png"
-              alt="arrow"
-              width={10}
-              height={10}
-              style={{ cursor: "pointer" }}
-            />
-          </Box>
-        </Box>
+        <Arrow/>
         <Flex w="65vw" direction="column" align="flex-end" justify="center">
           <Heading
             fontWeight="bold"

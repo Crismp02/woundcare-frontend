@@ -1,4 +1,5 @@
 "use client";
+import Arrow from "@/components/Arrow";
 import NotificationCard from "@/components/NotificationCard";
 import PaginationLoader from "@/components/PaginationLoader";
 import { Notification } from "@/interfaces/notification/notification.interface";
@@ -66,34 +67,7 @@ function NotificationsPage() {
   }, [inView]);
   return (
     <Box as="main" flex={1}>
-      <Box
-        w="18vh"
-        h="18vh"
-        bg="#AD8EB1"
-        pt="2vh"
-        pl="2vh"
-        sx={{ clipPath: "circle(66.4% at 1% 1%)" }}
-      >
-        <Box
-          w="5vh"
-          h="5vh"
-          borderRadius="35px"
-          bg="white"
-          p="5px"
-          boxShadow="0px 4px 4px rgba(0, 0, 0, 0.25)"
-          justifyContent="center"
-        >
-          <Link href={routes.patientHomePage}>
-            <Image
-              src="/arrow.png"
-              alt="arrow"
-              width={36}
-              height={36}
-              style={{ cursor: "pointer" }}
-            />
-          </Link>
-        </Box>
-      </Box>
+      <Arrow/>
       <Flex
         marginTop={-16}
         marginRight={6}

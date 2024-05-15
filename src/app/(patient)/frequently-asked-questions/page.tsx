@@ -11,37 +11,13 @@ import {
 } from "@chakra-ui/react";
 import React from "react";
 import FAQ from "./FAQ"
+import Arrow from "@/components/Arrow";
 
 function FrequentlyAskedQuestions() {
   return (
     <>
       <Box as="main" flex={1}>
-        <Box
-          w="18vh"
-          h="18vh"
-          bg="#AD8EB1"
-          pt="2vh"
-          pl="2vh"
-          sx={{ clipPath: "circle(66.4% at 1% 1%)" }}
-        >
-          <Box
-            w="5vh"
-            h="5vh"
-            borderRadius="35px"
-            bg="white"
-            p="5px"
-            boxShadow="0px 4px 4px rgba(0, 0, 0, 0.25)"
-            justifyContent="center"
-          >
-            <Image
-              src="/arrow.png"
-              alt="arrow"
-              width={10}
-              height={10}
-              style={{ cursor: "pointer" }}
-            />
-          </Box>
-        </Box>
+        <Arrow/>
         <Flex
           marginTop={-16}
           marginRight={6}
