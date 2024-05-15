@@ -1,5 +1,3 @@
-import exp from "constants";
-
 const medicinesData = [
     {
         id: 1,

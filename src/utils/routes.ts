@@ -10,6 +10,7 @@ const routes = {
   patientDailyCares: "/dailyCares",
   patientMessages: "/",
   patientDischargeCongrats: "/dischargeCongrats",
+  patientFrequentlyAskedQuestions: "/frequently-asked-questions",
   //Loged routes
   notifications: "/notifications",
   //General routes
