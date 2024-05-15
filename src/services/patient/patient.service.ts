@@ -1,4 +1,4 @@
-import { Patient } from "@/interfaces/patient/patient.interface";
+import { Patient, Prescription } from "@/interfaces/patient/patient.interface";
 import { fetchAPI } from "@/utils/api";
 
 export const getPatientMe = async () =>{
@@ -38,5 +38,10 @@ export const editCellPhoneNumber = async (cellPhoneNumber: string) => {
 
 export const editAddress = async (adress: string) => {
     const data = await fetchAPI<Patient>("/patient/me", "PATCH",  { adress } );
+    return data;
+}
+
+export const getPrescriptions = async () => {
+    const data = await fetchAPI<Prescription>("/prescription/me", "GET");
     return data;
 }

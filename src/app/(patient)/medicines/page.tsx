@@ -1,8 +1,21 @@
+"use client"
 import { Box, Flex, Heading, Image, Text } from "@chakra-ui/react";
-import React from "react";
-import medicinesData from "./medicinesData";
+import React, {useEffect, useState} from "react";
+import { getPrescriptions } from "@/services/patient/patient.service";
+import { Prescription } from "@/interfaces/patient/patient.interface";
 
 function Medicines() {
+  const [prescriptions, setPrescriptions] = useState<Prescription | null>(null);
+
+useEffect(() => {
+  const fetchPrescriptions = async () => {
+    const data = await getPrescriptions();
+    setPrescriptions(data);
+  };
+
+  fetchPrescriptions();
+}, []);
+
   return (
     <>
       <Flex w="100vw" h="13vh" justify="space-between" pr="3vh" mb="30px">
@@ -46,9 +59,9 @@ function Medicines() {
           <Box w="55vw" h="2px" bg="#AD8EB1" />
         </Flex>
       </Flex>
-      {medicinesData.map((medicine) => (
+      {prescriptions?.medicines?.map((medicine, index) => (
         <Flex
-          key={medicine.id}
+          key={index}
           w="100vw"
           pl="20px"
           pr="20px"
@@ -82,15 +95,15 @@ function Medicines() {
               </Flex>
               <Flex direction="column" ml="20px" color="#3B3B3B">
                 <Text fontWeight="bold" fontSize="large">
-                  {medicine.name}
+                  {medicine.medicine}
                 </Text>
                 <Text fontWeight="300" fontSize="large">
-                  {medicine.dosisPrescription}
+                  {medicine.dose} mg
                 </Text>
               </Flex>
             </Flex>
             <Text color="#8E8E8E" fontSize="large">
-              {medicine.frequency}
+               Cada {medicine.lapse} horas
             </Text>
           </Flex>
           <Box w="100%" h="2px" bg="#AD8EB1" mb="5px" />

@@ -32,3 +32,12 @@ interface User {
     medicalRecords: string[];
     user: User;
   }
+
+  export interface Medicine{
+    medicine: string;
+    dose: number;
+    lapse: number;
+  }
+  export interface Prescription{
+    medicines: Medicine[];
+  }
