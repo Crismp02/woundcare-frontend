@@ -104,7 +104,7 @@ function NotificationsPage() {
           gap={2}
           backgroundColor="rgba(97, 48, 116, 0.5)"
           borderRadius={10}
-          height="65vh"
+          maxHeight="65vh"
           overflowY="scroll"
         >
           {notifications.map((notification) => (
