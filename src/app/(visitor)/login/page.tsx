@@ -30,7 +30,6 @@ function Login() {
         redirectFunction();
       }
     } catch (error: any) {
-      console.log(error);
       if (error.status === 401) {
         toast.error("Credenciales incorrectas");
       } else {

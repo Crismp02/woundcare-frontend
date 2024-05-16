@@ -46,7 +46,7 @@ function DailyCares() {
       answer5: answer5,
       files: files,
     };
-    console.log(answers);
+
   };
   return (
     <>

@@ -31,7 +31,6 @@ function Discharge() {
       answer4: answer4,
       answer5: answer5,
     };
-    console.log(answers);
   };
 
   return (

@@ -40,7 +40,6 @@ const MedicalRecordsList: React.FC<MedicalRecordsListProps> = ({ diseases, setDi
     let diseaseToDelete = "";
       diseaseToDelete = diseases[index];
       setDiseases(diseases.filter((_, i) => i !== index));
-      console.log(diseaseToDelete);
       deleteMedicalRecords(diseaseToDelete);
   };
 

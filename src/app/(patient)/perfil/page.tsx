@@ -27,10 +27,8 @@ function Perfil() {
       try {
         const data = await getPatientMe();
         setPatient(data);
-        console.log(data);
       } catch (error) {
         toast.error("Error al cargar la información del paciente");
-        console.log(error);
       }
     }
     fetchMe();

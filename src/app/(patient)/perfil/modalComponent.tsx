@@ -38,8 +38,8 @@ const ModalComponent: React.FC<ModalComponentProps> = ({
   patient,
   setPatient
 }) => {
-  const [allergies, setAllergies] = useState<string[]>(patient.allergies);
-  const [diseases, setDiseases] = useState<string[]>(patient.medicalRecords);
+  const [allergies, setAllergies] = useState<string[]>([]);
+  const [diseases, setDiseases] = useState<string[]>([]);
   const [weight, setWeight] = useState<number>(patient.weight);
   const [height, setHeight] = useState<number>(patient.height);
   const [cellPhoneNumber, setCellPhoneNumber] = useState<string>(patient.cellPhoneNumber);
@@ -71,20 +71,20 @@ const ModalComponent: React.FC<ModalComponentProps> = ({
     setPhoneNumber(patient.phoneNumber);
   };
   fetchPatientData();
-  }, [onClose]);
+  }, [patient, onClose]);
 
   useEffect(() => {
     setAllergies(patient.allergies);
     setDiseases(patient.medicalRecords);
-  }, []);
+  }, [patient]);
 
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />
-      <ModalContent style={{ backgroundColor: "#F9EDEF" }}>
+      <ModalContent sx={{ backgroundColor: "#F9EDEF", maxW: "90vw", margin: "auto"}}>
         <ModalHeader>{type}</ModalHeader>
         <ModalBody>
-          <Box w="90vw" h="2px" bg="#4F1964" mt="-10px" mb="10px" />
+          <Box w="100%" h="2px" bg="#4F1964" mt="-10px" mb="10px" />
           {type === "Alergias conocidas" ? (
             <>
               <AllergyList allergies={allergies} setAllergies={setAllergies} />
