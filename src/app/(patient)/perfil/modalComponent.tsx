@@ -38,8 +38,8 @@ const ModalComponent: React.FC<ModalComponentProps> = ({
   patient,
   setPatient
 }) => {
-  const [allergies, setAllergies] = useState<string[]>([]);
-  const [diseases, setDiseases] = useState<string[]>([]);
+  const [allergies, setAllergies] = useState<string[]>(patient.allergies);
+  const [diseases, setDiseases] = useState<string[]>(patient.medicalRecords);
   const [weight, setWeight] = useState<number>(patient.weight);
   const [height, setHeight] = useState<number>(patient.height);
   const [cellPhoneNumber, setCellPhoneNumber] = useState<string>(patient.cellPhoneNumber);
@@ -64,8 +64,6 @@ const ModalComponent: React.FC<ModalComponentProps> = ({
 
   useEffect(() => {
     const fetchPatientData = async () => {
-    setAllergies(patient.allergies);
-    setDiseases(patient.medicalRecords);
     setWeight(patient.weight);
     setHeight(patient.height);
     setCellPhoneNumber(patient.cellPhoneNumber);
@@ -73,7 +71,12 @@ const ModalComponent: React.FC<ModalComponentProps> = ({
     setPhoneNumber(patient.phoneNumber);
   };
   fetchPatientData();
-  }, [patient.allergies, patient.medicalRecords, onClose]);
+  }, [onClose]);
+
+  useEffect(() => {
+    setAllergies(patient.allergies);
+    setDiseases(patient.medicalRecords);
+  }, []);
 
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
