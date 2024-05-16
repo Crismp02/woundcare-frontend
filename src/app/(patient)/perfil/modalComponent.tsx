@@ -28,6 +28,7 @@ interface ModalComponentProps {
   onClose: () => void;
   type: string;
   patient: Patient;
+  setPatient: React.Dispatch<React.SetStateAction<Patient>>;
 }
 
 const ModalComponent: React.FC<ModalComponentProps> = ({
@@ -35,23 +36,28 @@ const ModalComponent: React.FC<ModalComponentProps> = ({
   onClose,
   type,
   patient,
+  setPatient
 }) => {
   const [allergies, setAllergies] = useState<string[]>([]);
   const [diseases, setDiseases] = useState<string[]>([]);
   const [weight, setWeight] = useState<number>(patient.weight);
   const [height, setHeight] = useState<number>(patient.height);
   const [cellPhoneNumber, setCellPhoneNumber] = useState<string>(patient.cellPhoneNumber);
+  const [phoneNumber, setPhoneNumber] = useState<string>(patient.cellPhoneNumber);
   const [address, setAddress] = useState<string>(patient.address);
 
   const handleSubmit = async () => {
     if (type === "Peso y altura"){
-      editWeight_Height(weight, height);
+      await editWeight_Height(weight, height);
+      setPatient({...patient, weight, height});
       onClose();
     } else if (type === "Número de teléfono"){
-      editCellPhoneNumber(cellPhoneNumber);
+      await editCellPhoneNumber(cellPhoneNumber, phoneNumber);
+      setPatient({...patient, cellPhoneNumber, phoneNumber});
       onClose();
     } else if (type === "Dirección"){
-      editAddress(address);
+      await editAddress(address);
+      setPatient({...patient, address});
       onClose();
     }
   }
@@ -64,9 +70,10 @@ const ModalComponent: React.FC<ModalComponentProps> = ({
     setHeight(patient.height);
     setCellPhoneNumber(patient.cellPhoneNumber);
     setAddress(patient.address);
+    setPhoneNumber(patient.phoneNumber);
   };
   fetchPatientData();
-  }, [patient.allergies, patient.medicalRecords]);
+  }, [patient.allergies, patient.medicalRecords, onClose]);
 
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
@@ -120,7 +127,7 @@ const ModalComponent: React.FC<ModalComponentProps> = ({
           ) : type === "Número de teléfono" ? (
             <>
               <Text marginBottom="10px">
-                Por favor, ingrese su numero de teléfono
+                Por favor, ingrese su numero de teléfono celular
               </Text>
               <Input
                 type="tel"
@@ -129,6 +136,17 @@ const ModalComponent: React.FC<ModalComponentProps> = ({
                 marginBottom="10px"
                 value={cellPhoneNumber}
                 onChange={(e) => setCellPhoneNumber(String(e.target.value))}
+              />
+              <Text marginBottom="10px">
+                Por favor, ingrese su numero de teléfono fijo
+              </Text>
+              <Input
+                type="tel"
+                backgroundColor="white"
+                placeholder="Número de teléfono"
+                marginBottom="10px"
+                value={phoneNumber}
+                onChange={(e) => setPhoneNumber(String(e.target.value))}
               />
               <Flex direction="row" justify="flex-end">
                 <Button

@@ -31,8 +31,8 @@ export const deleteMedicalRecords = async (description: string) => {
     return data;
 }
 
-export const editCellPhoneNumber = async (cellPhoneNumber: string) => {
-    const data = await fetchAPI<Patient>("/patient/me", "PATCH",  { cellPhoneNumber } );
+export const editCellPhoneNumber = async (cellPhoneNumber: string, phoneNumber: string) => {
+    const data = await fetchAPI<Patient>("/patient/me", "PATCH",  { cellPhoneNumber, phoneNumber } );
     return data;
 }
 

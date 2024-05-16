@@ -70,7 +70,7 @@ function navBar() {
             <Box w="100%" h="2px" bg="white" />
           </DrawerHeader>
           <DrawerBody style={{ marginTop: "20px" }}>
-          <Link href={routes.patientProfile}>
+          <Link href={routes.patientProfile} onClick={onClose}>
             <Flex direction="row" align="center" mb="10px">
               <Image src="/perfil/user.png" alt="user" width={35} height={25} />
               <Heading
@@ -85,7 +85,7 @@ function navBar() {
               </Heading>
             </Flex>
             </Link>
-            <Link href={routes.patientFrequentlyAskedQuestions}>
+            <Link href={routes.patientFrequentlyAskedQuestions} onClick={onClose}>
             <Flex direction="row" align="center" mb="10px">
               <Image
                 src="/FAQ.png"

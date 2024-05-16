@@ -214,7 +214,7 @@ function Perfil() {
         </Flex>
         <Box w="100%" h="2px" bg="#AD8EB1" />
       </Flex>
-      <ModalComponent patient={patient} isOpen={isOpen} onClose={closeModal} type={modalType}/>
+      <ModalComponent patient={patient} isOpen={isOpen} onClose={closeModal} type={modalType} setPatient={setPatient}/>
     </>
   );
 }
