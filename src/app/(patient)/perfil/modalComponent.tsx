@@ -63,19 +63,22 @@ const ModalComponent: React.FC<ModalComponentProps> = ({
   }
 
   useEffect(() => {
-    const fetchPatientData = async () => {
+    const fetchPatientData = () => {
     setWeight(patient.weight);
     setHeight(patient.height);
     setCellPhoneNumber(patient.cellPhoneNumber);
     setAddress(patient.address);
     setPhoneNumber(patient.phoneNumber);
   };
-  fetchPatientData();
+  if(patient)
+    fetchPatientData();
   }, [patient, onClose]);
 
   useEffect(() => {
+  if(patient){
     setAllergies(patient.allergies);
     setDiseases(patient.medicalRecords);
+  }
   }, [patient]);
 
   return (
