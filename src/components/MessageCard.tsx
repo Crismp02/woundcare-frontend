@@ -1,14 +1,17 @@
 import { Box, Flex, Text } from "@chakra-ui/react";
+import Image from "next/image";
 import React from "react";
 
 function MessageCard({
   name,
   message,
+  messageImage,
   img,
   owner,
 }: {
   name: string;
-  message: string;
+  message: string | null;
+  messageImage: string | null;
   img: string;
   owner: boolean;
 }) {
@@ -25,21 +28,26 @@ function MessageCard({
         padding={2}
         borderRadius={10}
         maxWidth={"75%"}
+        width={messageImage ? "75%" : ""}
         wordBreak={"break-word"}
+        position={"relative"}
       >
-        <Text>
-          <strong>{name}: </strong>
-          {message}
-        </Text>
+        {messageImage && <img src={messageImage} alt="imagen" width={"100%"} />}
+        {message && (
+          <Text>
+            <strong>{name}: </strong>
+            {message}
+          </Text>
+        )}
       </Box>
       <Box
         width={12}
         height={12}
         borderRadius={100}
-        border={"#4F1964 solid 2px"}
         alignSelf={"flex-end"}
+        position={"relative"}
       >
-        <img src={img} alt="imagen" />
+        <Image src={img} alt="imagen" fill />
       </Box>
     </Flex>
   );
