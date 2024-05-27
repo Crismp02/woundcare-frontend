@@ -150,7 +150,7 @@ export const SelectComponent: React.FC<SelectComponentProps> = ({ label, placeho
   // SubmitButtonComponent.jsx
 export const SubmitButtonComponent: React.FC<SubmitButtonComponentProps> = ({ isFormValid, handleSubmit }) => (
     <Button
-      w="80vw"
+      w="100%"
       h="6vh"
       bg="#4F1964"
       borderRadius="15px"

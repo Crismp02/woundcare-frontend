@@ -21,6 +21,8 @@ const routes = {
   //Nurse routes
   nurseHomePage: "/",
   nurseRegisterPatient: "/register-patient",
+  nurseMedicalFilePatient: "/medical-file-patient",
+  nurseCreateMedicalFile: "/create-medical-file",
   //Doctor routes
   doctorHomePage: "/",
 };

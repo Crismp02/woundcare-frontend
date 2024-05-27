@@ -33,6 +33,23 @@ interface User {
     user: User;
   }
 
+  export interface ThePatient {
+    nationalId: string;
+    genre: Genre;
+    birthDate: string;
+    address: string;
+    phoneNumber: string;
+    cellPhoneNumber: string;
+    photo: string;
+    bloodType: BloodType;
+    weight: number;
+    height: number;
+    status: PatientStatus;
+    allergies: string[];
+    medicalRecord: string[];
+    user: User;
+  }
+
   export interface Medicine{
     medicine: string;
     dose: number;

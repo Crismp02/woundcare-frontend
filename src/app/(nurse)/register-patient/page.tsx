@@ -7,20 +7,14 @@ import {
   Heading,
   Input,
   Text,
-  Select,
   Textarea,
-  HStack,
-  Button,
-  TagCloseButton,
-  Tag,
   FormControl,
   FormErrorMessage,
   useToast
 } from "@chakra-ui/react";
-import { create } from "domain";
-import { stat } from "fs";
 import React, { useState } from "react";
 import { AllergiesInputComponent, DiseasesInputComponent, SelectComponent, SubmitButtonComponent, TextFieldComponent, TextFieldComponent2 } from "./inputsForm";
+import { useRouter } from 'next/navigation'
 
 function RegisterPatient() {
   type Genre = 'MALE' | 'FEMALE';
@@ -35,6 +29,7 @@ function RegisterPatient() {
   | "O_NEGATIVE";
 
   type PatientStatus = 'ACTIVE' | 'INACTIVE';
+  const router = useRouter()
 
   //Constants
   const [id, setId] = useState("");
@@ -65,8 +60,8 @@ function RegisterPatient() {
     return !isNaN(date.getTime()) && date <= now;
   };
   const isBirthDateValid = isDateValid(birthDate);
-  const isPhoneNumberValid = /^[0-9]{7}$/.test(phoneNumber);
-  const isCellPhoneNumberValid = /^[0-9]{9}$/.test(cellPhoneNumber);
+  const isPhoneNumberValid = /^[0-9]{7,9}$/.test(phoneNumber);
+  const isCellPhoneNumberValid = /^\+?[0-9]{10,13}$/.test(cellPhoneNumber);
   const isWeightValid = (weight: string) => {
     const weightNumber = Number(weight);
     return !isNaN(weightNumber) && weightNumber > 0 && weightNumber < 500;
@@ -162,6 +157,7 @@ function RegisterPatient() {
           duration: 3000,
           isClosable: true,
         });
+        router.push(`/create-medical-file?id=${patient.nationalId}`);
       } catch (error: any) {
         if (error.response.status === 409) {
         toast({
@@ -210,289 +206,33 @@ function RegisterPatient() {
           </Heading>
         </Flex>
         <Flex display={"flex"} flexDirection={"column"} padding={"30px"}>
-          {/*<Text fontWeight="bold" color="#3B3B3B" fontSize="16px">
-            Cédula de identidad:
-          </Text>
-          <FormControl isInvalid={isSubmitted && !isIdValid}>
-            <Input
-              placeholder="Cédula de identidad"
-              marginBottom={"20px"}
-              backgroundColor="white"
-              value={id}
-              onChange={(e) => setId(e.target.value)}
-            />
-            {isSubmitted && !isIdValid && (
-              <FormErrorMessage marginTop={"-8px"}>
-                Por favor, introduce un número válido
-              </FormErrorMessage>
-            )}
-          </FormControl>
-          <Text fontWeight="bold" color="#3B3B3B" fontSize="16px">
-            Nombre Completo:
-          </Text>
-          <FormControl isInvalid={isSubmitted && !isFullNameValid}>
-            <Input
-              placeholder="Nombre completo"
-              marginBottom={"20px"}
-              backgroundColor="white"
-              value={fullname}
-              onChange={(e) => setFullName(e.target.value)}
-            />
-            {isSubmitted && !isFullNameValid && (
-              <FormErrorMessage marginTop={"-8px"}>
-                Por favor, introduce un nombre completo válido
-              </FormErrorMessage>
-            )}
-          </FormControl>
-          <Text fontWeight="bold" color="#3B3B3B" fontSize="16px">
-            Correo:
-          </Text>
-          <FormControl isInvalid={isSubmitted && !isEmailValid}>
-            <Input
-              placeholder="Correo electrónico"
-              marginBottom={"20px"}
-              backgroundColor="white"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            />
-            {isSubmitted && !isEmailValid && (
-              <FormErrorMessage marginTop={"-8px"}>
-                Por favor, introduce un correo electrónico válido
-              </FormErrorMessage>
-            )}
-          </FormControl>
-          <Text fontWeight="bold" color="#3B3B3B" fontSize="16px">
-            Contraseña:
-          </Text>
-          <Input
-            placeholder="Contraseña"
-            marginBottom={"20px"}
-            backgroundColor="white"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-          <Text fontWeight="bold" color="#3B3B3B" fontSize="16px">
-            Género:
-          </Text>
-          <Select
-            placeholder="Selecciona un género"
-            marginBottom={"20px"}
-            backgroundColor="white"
-            value={genre}
-            onChange={(e) => setGenre(e.target.value)}
-          >
-            <option value="MALE">Masculino</option>
-            <option value="FEMALE">Femenino</option>
-          </Select>
-          <Text fontWeight="bold" color="#3B3B3B" fontSize="16px">
-            Fecha de nacimiento:
-          </Text>
-          <FormControl isInvalid={isSubmitted && !isBirthDateValid}>
-            <Input
-              placeholder="Fecha de nacimiento"
-              marginBottom={"20px"}
-              backgroundColor="white"
-              type="date"
-              value={birthDate}
-              onChange={(e) => setbirthDate(e.target.value)}
-            />
-            {isSubmitted && !isBirthDateValid && (
-              <FormErrorMessage marginTop={"-8px"}>
-                Por favor, introduce una fecha de nacimiento válida
-              </FormErrorMessage>
-            )}
-          </FormControl>
-          <Text fontWeight="bold" color="#3B3B3B" fontSize="16px">
-            Dirección:
-          </Text>
-          <Textarea
-            placeholder="Dirección"
-            marginBottom={"20px"}
-            backgroundColor="white"
-            value={address}
-            onChange={(e) => setAddress(e.target.value)}
-          />
-          <Text fontWeight="bold" color="#3B3B3B" fontSize="16px">
-            Número de teléfono:
-          </Text>
-          <FormControl isInvalid={isSubmitted && !isPhoneNumberValid}>
-            <Input
-              placeholder="Número de teléfono"
-              marginBottom={"20px"}
-              backgroundColor="white"
-              value={phoneNumber}
-              onChange={(e) => setPhoneNumber(e.target.value)}
-            />
-            {isSubmitted && !isPhoneNumberValid && (
-              <FormErrorMessage marginTop={"-8px"}>
-                Por favor, introduce un número de teléfono válido
-              </FormErrorMessage>
-            )}
-          </FormControl>
-          <Text fontWeight="bold" color="#3B3B3B" fontSize="16px">
-            Teléfono celular:
-          </Text>
-          <FormControl isInvalid={isSubmitted && !isCellPhoneNumberValid}>
-            <Input
-              placeholder="Número de celular"
-              marginBottom={"20px"}
-              backgroundColor="white"
-              value={cellPhoneNumber}
-              onChange={(e) => setCellPhoneNumber(e.target.value)}
-            />
-            {isSubmitted && !isCellPhoneNumberValid && (
-              <FormErrorMessage marginTop={"-8px"}>
-                Por favor, introduce un número de celular válido
-              </FormErrorMessage>
-            )}
-          </FormControl>
-          <Text fontWeight="bold" color="#3B3B3B" fontSize="16px">
-            Tipo de sangre:
-          </Text>
-          <Select
-            placeholder="Selecciona un tipo de sangre"
-            marginBottom={"20px"}
-            backgroundColor="white"
-            value={bloodType}
-            onChange={(e) => setBloodType(e.target.value)}
-          >
-            <option value="A_POSITIVE">A+</option>
-            <option value="A_NEGATIVE">A-</option>
-            <option value="B_POSITIVE">B+</option>
-            <option value="B_NEGATIVE">B-</option>
-            <option value="AB_POSITIVE">AB+</option>
-            <option value="AB_NEGATIVE">AB-</option>
-            <option value="O_POSITIVE">O+</option>
-            <option value="O_NEGATIVE">O-</option>
-          </Select>
-          <Text fontWeight="bold" color="#3B3B3B" fontSize="16px">
-            Peso:
-          </Text>
-          <FormControl isInvalid={isSubmitted && !isWeightInputValid}>
-            <Input
-              placeholder="Peso"
-              marginBottom={"20px"}
-              backgroundColor="white"
-              value={weight}
-              onChange={(e) => setWeight(e.target.value)}
-            />
-            {isSubmitted && !isWeightInputValid && (
-              <FormErrorMessage marginTop={"-8px"}>
-                Por favor, introduce un peso válido
-              </FormErrorMessage>
-            )}
-          </FormControl>
-          <Text fontWeight="bold" color="#3B3B3B" fontSize="16px">
-            Altura:
-          </Text>
-          <FormControl isInvalid={isSubmitted && !isHeightInputValid}>
-            <Input
-              placeholder="Altura"
-              marginBottom={"20px"}
-              backgroundColor="white"
-              value={height}
-              onChange={(e) => setHeight(e.target.value)}
-            />
-            {isSubmitted && !isHeightInputValid && (
-              <FormErrorMessage marginTop={"-8px"}>
-                Por favor, introduce una altura válida
-              </FormErrorMessage>
-            )}
-          </FormControl>
-          <Text fontWeight="bold" color="#3B3B3B" fontSize="16px">
-            Alergias conocidas:
-          </Text>
-          <HStack spacing={4}>
-            <Input
-              value={inputValue}
-              onChange={(e) => setInputValue(e.target.value)}
-              backgroundColor="white"
-              placeholder="Alergia"
-            />
-            <Button bg="#4F1964" color="white" onClick={handleAddClick}>
-              +
-            </Button>
-          </HStack>
-          <HStack spacing={4} align="start" marginTop="20px" wrap="wrap">
-            {allergies.map((value, index) => (
-              <Tag backgroundColor="#AD8EB1" key={index}>
-                {value}
-                <TagCloseButton onClick={() => handleDeleteClick(index)} />
-              </Tag>
-            ))}
-          </HStack>
-          <Text
-            fontWeight="bold"
-            color="#3B3B3B"
-            fontSize="16px"
-            marginTop={"20px"}
-          >
-            Enfermedades existentes:
-          </Text>
-          <HStack spacing={4}>
-            <Input
-              value={inputDisease}
-              onChange={(e) => setInputDisease(e.target.value)}
-              backgroundColor="white"
-              placeholder="Enfermedad"
-            />
-            <Button bg="#4F1964" color="white" onClick={handleAddClickDisease}>
-              +
-            </Button>
-          </HStack>
-          <HStack spacing={4} align="start" marginTop="20px" wrap="wrap">
-            {medicalRecord.map((value, index) => (
-              <Tag backgroundColor="#AD8EB1" key={index}>
-                {value}
-                <TagCloseButton
-                  onClick={() => handleDeleteClickDisease(index)}
-                />
-              </Tag>
-            ))}
-          </HStack>
-          <Button
-            w="80vw"
-            h="6vh"
-            bg="#4F1964"
-            borderRadius="15px"
-            mt="20px"
-            color="white"
-            fontSize="24px"
-            fontWeight="bold"
-            boxShadow="0px 4px 4px rgba(0, 0, 0, 0.25)"
-            _disabled={{
-              bg: "#cccccc",
-              color: "#666666",
-              cursor: "not-allowed",
-            }}
-            isDisabled={!isFormValid}
-            onClick={handleSubmit}
-          >
-            Registrar paciente
-          </Button>*/}
           <TextFieldComponent
             label="Cédula de identidad:"
             placeholder="Cédula de identidad"
             isInvalid={isSubmitted && !isIdValid}
             value={id}
-            onChange={(e) => setId(e.target.value)}/>
+            onChange={(e) => setId(e.target.value)}
+          />
           <TextFieldComponent
             label="Nombre completo:"
             placeholder="Nombre completo"
             isInvalid={isSubmitted && !isFullNameValid}
             value={fullname}
-            onChange={(e) => setFullName(e.target.value)}/>
+            onChange={(e) => setFullName(e.target.value)}
+          />
           <TextFieldComponent
             label="Correo:"
             placeholder="Correo electrónico"
             isInvalid={isSubmitted && !isEmailValid}
             value={email}
-            onChange={(e) => setEmail(e.target.value)}/>
+            onChange={(e) => setEmail(e.target.value)}
+          />
           <TextFieldComponent2
             label="Contraseña:"
             placeholder="Contraseña"
             value={password}
-            onChange={(e) => setPassword(e.target.value)}/>  
+            onChange={(e) => setPassword(e.target.value)}
+          />
           <SelectComponent
             label="Género:"
             placeholder="Selecciona un género"
@@ -501,9 +241,10 @@ function RegisterPatient() {
             children={
               <>
                 <option value="MALE">Masculino</option>
-            <option value="FEMALE">Femenino</option>
+                <option value="FEMALE">Femenino</option>
               </>
-            }/>
+            }
+          />
           <Text fontWeight="bold" color="#3B3B3B" fontSize="16px">
             Fecha de nacimiento:
           </Text>
@@ -521,7 +262,7 @@ function RegisterPatient() {
                 Por favor, introduce una fecha de nacimiento válida
               </FormErrorMessage>
             )}
-          </FormControl> 
+          </FormControl>
           <Text fontWeight="bold" color="#3B3B3B" fontSize="16px">
             Dirección:
           </Text>
@@ -537,13 +278,15 @@ function RegisterPatient() {
             placeholder="Número de teléfono"
             isInvalid={isSubmitted && !isPhoneNumberValid}
             value={phoneNumber}
-            onChange={(e) => setPhoneNumber(e.target.value)}/>
-            <TextFieldComponent
+            onChange={(e) => setPhoneNumber(e.target.value)}
+          />
+          <TextFieldComponent
             label="Teléfono celular:"
             placeholder="Número de celular"
             isInvalid={isSubmitted && !isCellPhoneNumberValid}
             value={cellPhoneNumber}
-            onChange={(e) => setCellPhoneNumber(e.target.value)}/>
+            onChange={(e) => setCellPhoneNumber(e.target.value)}
+          />
           <SelectComponent
             label="Tipo de sangre:"
             placeholder="Selecciona un tipo de sangre"
@@ -552,42 +295,48 @@ function RegisterPatient() {
             children={
               <>
                 <option value="A_POSITIVE">A+</option>
-            <option value="A_NEGATIVE">A-</option>
-            <option value="B_POSITIVE">B+</option>
-            <option value="B_NEGATIVE">B-</option>
-            <option value="AB_POSITIVE">AB+</option>
-            <option value="AB_NEGATIVE">AB-</option>
-            <option value="O_POSITIVE">O+</option>
-            <option value="O_NEGATIVE">O-</option>
+                <option value="A_NEGATIVE">A-</option>
+                <option value="B_POSITIVE">B+</option>
+                <option value="B_NEGATIVE">B-</option>
+                <option value="AB_POSITIVE">AB+</option>
+                <option value="AB_NEGATIVE">AB-</option>
+                <option value="O_POSITIVE">O+</option>
+                <option value="O_NEGATIVE">O-</option>
               </>
-            }/>
+            }
+          />
           <TextFieldComponent
             label="Peso:"
             placeholder="Peso"
             isInvalid={isSubmitted && !isWeightInputValid}
             value={weight}
-            onChange={(e) => setWeight(e.target.value)}/>
-            <TextFieldComponent
+            onChange={(e) => setWeight(e.target.value)}
+          />
+          <TextFieldComponent
             label="Altura:"
             placeholder="Altura"
             isInvalid={isSubmitted && !isHeightInputValid}
             value={height}
-            onChange={(e) => setHeight(e.target.value)}/>
-            <AllergiesInputComponent
+            onChange={(e) => setHeight(e.target.value)}
+          />
+          <AllergiesInputComponent
             inputValue={inputValue}
             setInputValue={setInputValue}
             allergies={allergies}
             handleAddClick={handleAddClick}
-            handleDeleteClick={handleDeleteClick}/>
-            <DiseasesInputComponent
+            handleDeleteClick={handleDeleteClick}
+          />
+          <DiseasesInputComponent
             inputDisease={inputDisease}
             setInputDisease={setInputDisease}
             medicalRecord={medicalRecord}
             handleAddClickDisease={handleAddClickDisease}
-            handleDeleteClickDisease={handleDeleteClickDisease}/>
+            handleDeleteClickDisease={handleDeleteClickDisease}
+          />
           <SubmitButtonComponent
             isFormValid={!!isFormValid}
-            handleSubmit={handleSubmit}/>
+            handleSubmit={handleSubmit}
+          />
         </Flex>
       </Box>
     </>
