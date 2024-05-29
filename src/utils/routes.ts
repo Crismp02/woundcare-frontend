@@ -19,10 +19,13 @@ const routes = {
   //Admin routes
   adminHomePage: "/adminHomePage",
   //Nurse routes
-  nurseHomePage: "/",
+  nurseHomePage: "/nurse-home-page",
   nurseRegisterPatient: "/register-patient",
   nurseMedicalFilePatient: "/medical-file-patient",
   nurseCreateMedicalFile: "/create-medical-file",
+  nursePatientsList: "/nurse-home-page",
+  nurseDoctorsList: "/nurse-home-page",
+  nurseMessages: "/nurse-home-page",
   //Doctor routes
   doctorHomePage: "/",
 };
