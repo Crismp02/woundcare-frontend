@@ -4,7 +4,7 @@ const routes = {
   //Patient routes
   patientHomePage: "/home-page",
   patientProfile: "/perfil",
-  postBandageChangeForm: "/Register",
+  postBandageChangeForm: "/dailyCares",
   monitoringSignsAndSymptomsForm: "/dailyCares",
   dischargeForm: "/discharge",
   patientMedicines: "/medicines",
