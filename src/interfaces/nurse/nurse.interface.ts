@@ -38,3 +38,18 @@ type Genre = "MALE" | "FEMALE";
   export interface Prescription{
     medicines: Medicine[];
   }
+
+  interface User {
+    nationalId: string;
+    fullname: string;
+    email: string;
+    role: string;
+  }
+
+  export interface Nurse {
+    nationalId: string;
+    genre: string;
+    birthDate: string;
+    medicalCenter: string;
+    user: User;
+  }
