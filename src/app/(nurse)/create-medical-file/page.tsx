@@ -2,14 +2,25 @@
 import Arrow from '@/components/Arrow'
 import { Box, Button, Flex, Heading, Input, Text, Textarea } from '@chakra-ui/react'
 import React, {useState} from 'react'
-import { useRouter } from 'next/router';
+import { useRouter, useSearchParams } from 'next/navigation';
 
 function CreateMadicalFile() {
-  const router = useRouter();
-  const {id} = router.query;
+  const searchParams = useSearchParams()
+  const id = searchParams.get('id')
+
     const [textAreaCount, setTextAreaCount] = useState(1);
     const [textAreaCount2, setTextAreaCount2] = useState(1);
     const [textAreaCount3, setTextAreaCount3] = useState(1);
+    const [description, setDescription] = useState("");
+    const [medicalHistory, setMedicalHistory] = useState([{
+      id: 0,
+      text: ""
+    }]);
+    const [physicalExam, setPhysicalExam] = useState([]);
+    const [previousTreatment, setPreviousTreatment] = useState([]);
+    const [labResults, setLabResults] = useState([]);
+    const [carePlan, setCarePlan] = useState([]);
+
 
   return (
     <>
@@ -27,7 +38,7 @@ function CreateMadicalFile() {
             borderBottom={"2px solid #AD8EB1"}
             paddingX="10px"
           >
-            Crear historia médica {id}
+            Crear historia médica 
           </Heading>
         </Flex>
         <Flex
@@ -48,6 +59,8 @@ function CreateMadicalFile() {
             placeholder="Motivo de la consulta"
             marginBottom={"20px"}
             backgroundColor={"white"}
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
           />
           <Text
             fontWeight={"bold"}
@@ -67,7 +80,10 @@ function CreateMadicalFile() {
                 Cantidad de historias:
             </Text>    
             <Button
-              onClick={() => setTextAreaCount(textAreaCount + 1)}
+              onClick={() => setMedicalHistory([...medicalHistory, {
+                id: medicalHistory.length,
+                text: ""
+              }])}
               marginRight={"5px"}
               backgroundColor={"#4F1964"}
               color={"white"}
@@ -75,7 +91,9 @@ function CreateMadicalFile() {
               +
             </Button>
             <Button
-              onClick={() => setTextAreaCount(Math.max(1, textAreaCount - 1))}
+              onClick={() => {
+                if(medicalHistory.length > 1) setMedicalHistory(medicalHistory.slice(0, -1))
+                }}
               borderWidth={"2px"}
               backgroundColor={"transparent"}
               borderColor={"#4F1964"}
@@ -84,12 +102,17 @@ function CreateMadicalFile() {
               -
             </Button>
           </Flex>
-          {Array.from({ length: textAreaCount }, (_, index) => (
+          {medicalHistory.map((value, index) => (
             <Textarea
               key={index}
               placeholder="Historia de la enfermedad actual"
               marginBottom={"20px"}
               backgroundColor={"white"}
+              value={value.text}
+              onChange={(e) => setMedicalHistory(medicalHistory.map((value) => {
+                if(value.id === index)return {id: value.id, text: e.target.value}
+                return value
+              }))}
             />
           ))}
           <Text
