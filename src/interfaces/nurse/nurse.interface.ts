@@ -1,6 +1,6 @@
-type PatientStatus = 'ACTIVE' | 'INACTIVE';
+type PatientStatus = "ACTIVE" | "INACTIVE";
 
-type BloodType = 
+type BloodType =
   | "A_POSITIVE"
   | "A_NEGATIVE"
   | "B_POSITIVE"
@@ -12,66 +12,65 @@ type BloodType =
 
 type Genre = "MALE" | "FEMALE";
 
-  export interface User{
-    nationalId: string;
-    fullname: string;
-    email: string;
-    password: string;
-    role: string;
-  }
-  
-  export interface Patient {
-    nationalId: string;
-    fullname: string;
-    genre: Genre 
-    birthDate: string;
-    adress: string;
-    phoneNumber: string;
-    cellPhoneNumber: string;
-    bloodType:  BloodType ;
-    weight: number;
-    height: number;
-    status:  PatientStatus ; 
-    allergies: string[];
-    medicalRecord: string[];
-    photo: string;
-  }
+export interface User {
+  nationalId: string;
+  fullname: string;
+  email: string;
+  password: string;
+  role: string;
+}
 
-  export interface Nurse{
-    nationalId: string;
-    genre: Genre;
-    birthDate: string;
-    medicalCenter: string;
-    user: User;
-  }
+export interface Patient {
+  nationalId: string;
+  fullname: string;
+  genre: Genre;
+  birthDate: string;
+  adress: string;
+  phoneNumber: string;
+  cellPhoneNumber: string;
+  bloodType: BloodType;
+  weight: number;
+  height: number;
+  status: PatientStatus;
+  allergies: string[];
+  medicalRecord: string[];
+  photo: string;
+}
 
-  export interface Medicine{
-    medicine: string;
-    dose: number;
-    lapse: number;
-  }
-  export interface Prescription{
-    medicines: Medicine[];
-  }
+export interface Nurse {
+  nationalId: string;
+  genre: Genre;
+  birthDate: string;
+  medicalCenter: string;
+  user: User;
+}
 
-  export interface Doctor{
-    nationalId: string;
-    genre: Genre;
-    birthDate: string;
-    medicalCenter: string;
-    user: User;
-  }
+export interface Medicine {
+  medicine: string;
+  dose: number;
+  lapse: number;
+}
+export interface Prescription {
+  medicines: Medicine[];
+}
 
-  export interface MedicalFile{
-    patientId: string;
-    doctorId: string;
-    nurseId: string;
-    date: string;
-    description: string;
-    physicalExam: string[];
-    medicalHistory: string[];
-    previousTreatment: string[];
-    labResults: string[];
-    carePlan: string[];
-  }
+export interface Doctor {
+  nationalId: string;
+  genre: Genre;
+  birthDate: string;
+  medicalCenter: string;
+  user: User;
+}
 
+export interface MedicalFile {
+  patientId: string;
+  doctorId: string;
+  nurseId: string;
+  date: string;
+  description: string;
+  physicalExam: string[];
+  medicalHistory: string[];
+  previousTreatment: string[];
+  labResults: string[];
+  carePlan: string[];
+}

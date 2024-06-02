@@ -33,7 +33,7 @@ function MenuOptionCard({
           fontWeight={"bold"}
           color={"#4F1964"}
           fontSize={{ base: "large", sm: "larger" }}
-          isTruncated
+          whiteSpace={"normal"}
         >
           <Text>{title}</Text>
         </CardBody>

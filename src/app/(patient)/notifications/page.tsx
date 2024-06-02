@@ -9,7 +9,7 @@ import {
   readNotification,
 } from "@/services/notifications/notifications.service";
 import routes from "@/utils/routes";
-import { Box, Button, Flex, Heading } from "@chakra-ui/react";
+import { Box, Button, Flex, Heading, Text } from "@chakra-ui/react";
 import Image from "next/image";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
@@ -67,7 +67,7 @@ function NotificationsPage() {
   }, [inView]);
   return (
     <Box as="main" flex={1}>
-      <Arrow/>
+      <Arrow />
       <Flex
         marginTop={-16}
         marginRight={6}
@@ -122,6 +122,9 @@ function NotificationsPage() {
             <Box ref={ref}>
               <PaginationLoader />
             </Box>
+          )}
+          {!(notifications.length > 0) && (
+            <Text textColor={"white"}>No hay notificaciones</Text>
           )}
         </Flex>
       </Box>
