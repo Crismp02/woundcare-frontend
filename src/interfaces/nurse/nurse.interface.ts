@@ -12,6 +12,13 @@ type BloodType =
 
 type Genre = "MALE" | "FEMALE";
 
+  export interface User{
+    nationalId: string;
+    fullname: string;
+    email: string;
+    password: string;
+    role: string;
+  }
   
   export interface Patient {
     nationalId: string;
@@ -30,6 +37,14 @@ type Genre = "MALE" | "FEMALE";
     photo: string;
   }
 
+  export interface Nurse{
+    nationalId: string;
+    genre: Genre;
+    birthDate: string;
+    medicalCenter: string;
+    user: User;
+  }
+
   export interface Medicine{
     medicine: string;
     dose: number;
@@ -38,3 +53,25 @@ type Genre = "MALE" | "FEMALE";
   export interface Prescription{
     medicines: Medicine[];
   }
+
+  export interface Doctor{
+    nationalId: string;
+    genre: Genre;
+    birthDate: string;
+    medicalCenter: string;
+    user: User;
+  }
+
+  export interface MedicalFile{
+    patientId: string;
+    doctorId: string;
+    nurseId: string;
+    date: string;
+    description: string;
+    physicalExam: string[];
+    medicalHistory: string[];
+    previousTreatment: string[];
+    labResults: string[];
+    carePlan: string[];
+  }
+
