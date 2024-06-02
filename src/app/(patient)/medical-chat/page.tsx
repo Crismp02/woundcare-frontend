@@ -7,13 +7,12 @@ import { Conversation } from "@/interfaces/chat/conversation.interface";
 import { Message } from "@/interfaces/chat/messages.interface";
 import { getMyConversation } from "@/services/patient/conversation.service";
 import { getMessages } from "@/services/patient/messages.service";
-import { socket } from "@/socket";
+import { manager } from "@/socket";
 import { Box, Flex, Heading, Input } from "@chakra-ui/react";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import { useInView } from "react-intersection-observer";
 import { toast } from "react-toastify";
-import { text } from "stream/consumers";
 
 function MedicalChat() {
   const [message, setMessage] = useState("");
@@ -24,6 +23,13 @@ function MedicalChat() {
   const [conversation, setConversation] = useState<Conversation | null>(null);
   const [messages, setMessages] = useState<Message[]>([]);
   const [isConnected, setIsConnected] = useState(false);
+  const socket = manager.socket("/", {
+    auth: {
+      token: JSON.parse(
+        JSON.parse(localStorage.getItem("persist:auth") || "").token
+      ),
+    },
+  });
 
   const fetchConversation = async () => {
     try {
