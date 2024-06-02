@@ -18,7 +18,7 @@ function page() {
       if (id !== null) {
         const response = await getPatientMedicalFile(id); 
         setMedicalFile(response);
-        console.log(response)
+
       }
     };
     fetchMedicalFile();
@@ -29,7 +29,6 @@ function page() {
       if (id !== null) {
         const response = await getPatientInfo(id); 
         setPatientInfo(response);
-        console.log(response)
       }
     };
     fetchPatientInfo();
