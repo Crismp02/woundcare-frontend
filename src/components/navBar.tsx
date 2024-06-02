@@ -19,7 +19,7 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import routes from "@/utils/routes";
 
-function navBar() {
+function NavBar() {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const btnRef = useRef(null);
 
@@ -134,4 +134,4 @@ function navBar() {
   );
 }
 
-export default navBar;
+export default NavBar;

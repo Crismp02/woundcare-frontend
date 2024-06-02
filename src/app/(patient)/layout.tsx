@@ -3,7 +3,7 @@ import { useAppSelector } from "@/store/store";
 import { useRoleRouter } from "@/hooks/useRoleRouter";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import NavBar from "@/components/navBar";
+import NavBar from "@/components/NavBar";
 import { Box } from "@chakra-ui/react";
 import Loader from "@/components/Loader";
 
