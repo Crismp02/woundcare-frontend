@@ -119,7 +119,7 @@ function page() {
           </Flex>
           <Flex direction={"column"} marginBottom={"5px"}>
             <Text fontWeight={"500"}>Signos vitales:</Text>
-            <Text marginLeft={"5px"}>A bunch of shit I don't understand.</Text>
+            <Text marginLeft={"5px"}>A bunch of shit I don&apos;t understand.</Text>
           </Flex>
           <Flex direction={"column"} marginBottom={"5px"}>
             <Text fontWeight={"500"}>Herida:</Text>

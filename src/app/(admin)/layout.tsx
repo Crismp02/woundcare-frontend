@@ -3,8 +3,8 @@ import { useAppSelector } from "@/store/store";
 import { useRoleRouter } from "@/hooks/useRoleRouter";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import NavBar from "@/components/navBar";
 import { Box } from "@chakra-ui/react";
+import NavBarNurse from "@/components/NavBarNurse";
 import Loader from "@/components/Loader";
 
 export default function RootLayout({
@@ -38,7 +38,7 @@ export default function RootLayout({
     </Box>
   ) : (
     <>
-      <NavBar />
+      <NavBarNurse />
       {children}
     </>
   );

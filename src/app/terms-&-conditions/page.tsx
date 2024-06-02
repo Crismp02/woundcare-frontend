@@ -97,12 +97,13 @@ function termsAndConditions() {
             </Heading>
             <Text display="inline" fontWeight={400}>
               La aplicación de monitoreo de heridas y su contenido se
-              proporcionan "tal cual" y "según disponibilidad". No ofrecemos
-              garantías de ningún tipo, ya sean explícitas o implícitas,
-              respecto a la precisión, confiabilidad o idoneidad del contenido
-              para un propósito particular. En ningún caso seremos responsables
-              de cualquier daño directo, indirecto, incidental, especial o
-              consecuente derivado del uso de esta aplicación.
+              proporcionan &quot;tal cual&quot; y &quot;según
+              disponibilidad&quot;. No ofrecemos garantías de ningún tipo, ya
+              sean explícitas o implícitas, respecto a la precisión,
+              confiabilidad o idoneidad del contenido para un propósito
+              particular. En ningún caso seremos responsables de cualquier daño
+              directo, indirecto, incidental, especial o consecuente derivado
+              del uso de esta aplicación.
             </Text>
           </ListItem>
           <ListItem>

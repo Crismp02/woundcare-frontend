@@ -10,26 +10,33 @@ import {
   Textarea,
   FormControl,
   FormErrorMessage,
-  useToast
+  useToast,
 } from "@chakra-ui/react";
 import React, { useState } from "react";
-import { AllergiesInputComponent, DiseasesInputComponent, SelectComponent, SubmitButtonComponent, TextFieldComponent, TextFieldComponent2 } from "./inputsForm";
-import { useRouter } from 'next/navigation'
+import {
+  AllergiesInputComponent,
+  DiseasesInputComponent,
+  SelectComponent,
+  SubmitButtonComponent,
+  TextFieldComponent,
+  TextFieldComponent2,
+} from "./inputsForm";
+import { useRouter } from "next/navigation";
 
 function RegisterPatient() {
-  type Genre = 'MALE' | 'FEMALE';
-  type BloodType = 
-  | "A_POSITIVE"
-  | "A_NEGATIVE"
-  | "B_POSITIVE"
-  | "B_NEGATIVE"
-  | "AB_POSITIVE"
-  | "AB_NEGATIVE"
-  | "O_POSITIVE"
-  | "O_NEGATIVE";
+  type Genre = "MALE" | "FEMALE";
+  type BloodType =
+    | "A_POSITIVE"
+    | "A_NEGATIVE"
+    | "B_POSITIVE"
+    | "B_NEGATIVE"
+    | "AB_POSITIVE"
+    | "AB_NEGATIVE"
+    | "O_POSITIVE"
+    | "O_NEGATIVE";
 
-  type PatientStatus = 'ACTIVE' | 'INACTIVE';
-  const router = useRouter()
+  type PatientStatus = "ACTIVE" | "INACTIVE";
+  const router = useRouter();
 
   //Constants
   const [id, setId] = useState("");
@@ -121,31 +128,33 @@ function RegisterPatient() {
 
   const handleSubmit = () => {
     setIsSubmitted(true);
-    if (isFormValid && isIdValid &&
+    if (
+      isFormValid &&
+      isIdValid &&
       isFullNameValid &&
       isEmailValid &&
       isBirthDateValid &&
       isPhoneNumberValid &&
       isCellPhoneNumberValid &&
       isWeightInputValid &&
-      isHeightInputValid){
-
+      isHeightInputValid
+    ) {
       const patient = {
         nationalId: id,
         fullname,
         email,
         password,
-        genre: genre as Genre , 
+        genre: genre as Genre,
         birthDate: formattedBirthDate,
         adress: address,
         phoneNumber,
         cellPhoneNumber,
-        bloodType: bloodType as BloodType ,
+        bloodType: bloodType as BloodType,
         weight: Number(weight),
         height: Number(height),
         allergies,
         medicalRecord,
-        status:'ACTIVE' as PatientStatus ,
+        status: "ACTIVE" as PatientStatus,
         photo: "a",
       };
       try {
@@ -160,22 +169,23 @@ function RegisterPatient() {
         router.push(`/create-medical-file?id=${patient.nationalId}`);
       } catch (error: any) {
         if (error.response.status === 409) {
-        toast({
-          title: "Error",
-          description: "Ya existe un usuario con esa cédula de identidad",
-          status: "error",
-          duration: 3000,
-          isClosable: true,
-        })} else {
+          toast({
+            title: "Error",
+            description: "Ya existe un usuario con esa cédula de identidad",
+            status: "error",
+            duration: 3000,
+            isClosable: true,
+          });
+        } else {
           toast({
             title: "Error",
             description: "Ha ocurrido un error al registrar el paciente",
             status: "error",
             duration: 3000,
             isClosable: true,
-          });      
+          });
         }
-      }   
+      }
     } else {
       toast({
         title: "Error",
@@ -238,13 +248,10 @@ function RegisterPatient() {
             placeholder="Selecciona un género"
             value={genre}
             onChange={(e) => setGenre(e.target.value)}
-            children={
-              <>
-                <option value="MALE">Masculino</option>
-                <option value="FEMALE">Femenino</option>
-              </>
-            }
-          />
+          >
+            <option value="MALE">Masculino</option>
+            <option value="FEMALE">Femenino</option>
+          </SelectComponent>
           <Text fontWeight="bold" color="#3B3B3B" fontSize="16px">
             Fecha de nacimiento:
           </Text>
@@ -292,19 +299,16 @@ function RegisterPatient() {
             placeholder="Selecciona un tipo de sangre"
             value={bloodType}
             onChange={(e) => setBloodType(e.target.value)}
-            children={
-              <>
-                <option value="A_POSITIVE">A+</option>
-                <option value="A_NEGATIVE">A-</option>
-                <option value="B_POSITIVE">B+</option>
-                <option value="B_NEGATIVE">B-</option>
-                <option value="AB_POSITIVE">AB+</option>
-                <option value="AB_NEGATIVE">AB-</option>
-                <option value="O_POSITIVE">O+</option>
-                <option value="O_NEGATIVE">O-</option>
-              </>
-            }
-          />
+          >
+            <option value="A_POSITIVE">A+</option>
+            <option value="A_NEGATIVE">A-</option>
+            <option value="B_POSITIVE">B+</option>
+            <option value="B_NEGATIVE">B-</option>
+            <option value="AB_POSITIVE">AB+</option>
+            <option value="AB_NEGATIVE">AB-</option>
+            <option value="O_POSITIVE">O+</option>
+            <option value="O_NEGATIVE">O-</option>
+          </SelectComponent>
           <TextFieldComponent
             label="Peso:"
             placeholder="Peso"

@@ -29,7 +29,7 @@ interface User {
     height: number;
     status: PatientStatus;
     allergies: string[];
-    medicalRecord: string[];
+    medicalRecords: string[];
     user: User;
   }
 
