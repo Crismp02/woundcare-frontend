@@ -23,7 +23,7 @@ const routes = {
   nurseRegisterPatient: "/register-patient",
   nurseMedicalFilePatient: "/medical-file-patient",
   nurseCreateMedicalFile: "/create-medical-file",
-  nursePatientsList: "/nurse-home-page",
+  nursePatientsList: "/nurse-patient-list",
   nurseDoctorsList: "/nurse-home-page",
   nurseMessages: "/nurse-home-page",
   //Doctor routes

@@ -3,6 +3,9 @@ import {
   MedicalFile,
   Nurse,
   Patient,
+  Patients,
+  TheMedicalFile,
+  ThePatientInfo
 } from "@/interfaces/nurse/nurse.interface";
 import { ThePatient } from "@/interfaces/patient/patient.interface";
 import { fetchAPI } from "@/utils/api";
@@ -34,4 +37,16 @@ export const createMedicalFile = async (medicalFile: MedicalFile) => {
   } catch (error) {
     console.error(error);
   }
+};
+export const getPatients = async () => {
+  const data = await fetchAPI<Patients[]>("/patient", "GET");
+  return data;
+};
+export const getPatientMedicalFile = async (nationalId: string) => {
+  const data = await fetchAPI<TheMedicalFile>(`/medical-file/patient/${nationalId}`, "GET");
+  return data;
+};
+export const getPatientInfo = async (nationalId: string) => {
+  const data = await fetchAPI<ThePatientInfo>(`/patient/${nationalId}`, "GET");
+  return data;
 };
