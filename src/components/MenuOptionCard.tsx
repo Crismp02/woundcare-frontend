@@ -26,7 +26,7 @@ function MenuOptionCard({
         alignItems="center"
       >
         <CardHeader height={90} width={"35%"} minWidth={24} position="relative">
-          <Image src={imageSrc} alt="title" layout="fill" objectFit="contain" />
+          <Image src={imageSrc} alt="title" fill />
         </CardHeader>
         <CardBody
           textAlign={"center"}

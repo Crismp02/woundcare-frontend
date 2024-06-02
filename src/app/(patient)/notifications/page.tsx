@@ -69,7 +69,7 @@ function NotificationsPage() {
     <Box as="main" flex={1}>
       <Arrow />
       <Flex
-        marginTop={-16}
+        marginTop={-20}
         marginRight={6}
         flexDirection="column"
         alignItems="flex-end"

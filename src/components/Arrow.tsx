@@ -14,8 +14,8 @@ function Arrow() {
         sx={{ clipPath: "circle(66.4% at 1% 1%)" }}
       >
         <Box
-          w="5vh"
-          h="5vh"
+          w={12}
+          h={12}
           borderRadius="35px"
           bg="white"
           p="5px"

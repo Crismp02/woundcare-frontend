@@ -60,8 +60,7 @@ function NotificationCard({ notification }: { notification: Notification }) {
           <Image
             src={imageSrc}
             alt="Notification image"
-            layout="fill"
-            objectFit="contain"
+            fill
           ></Image>
         </CardHeader>
         <CardBody
@@ -131,8 +130,7 @@ function NotificationCard({ notification }: { notification: Notification }) {
         <Image
           src={imageSrc}
           alt="Notification image"
-          layout="fill"
-          objectFit="contain"
+          fill
         ></Image>
       </CardHeader>
       <CardBody

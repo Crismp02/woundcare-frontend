@@ -72,7 +72,7 @@ function navBar() {
           <DrawerBody style={{ marginTop: "20px" }}>
           <Link href={routes.patientProfile} onClick={onClose}>
             <Flex direction="row" align="center" mb="10px">
-              <Image src="/perfil/user.png" alt="user" width={35} height={25} />
+              <Image src="/profile/user.png" alt="user" width={35} height={25} />
               <Heading
                 as="h3"
                 fontWeight="bold"

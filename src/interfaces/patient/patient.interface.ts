@@ -10,7 +10,7 @@ type BloodType =
   | "O_POSITIVE"
   | "O_NEGATIVE";
 
-type Genre = "MALE" | "FEMALE";
+export type Genre = "MALE" | "FEMALE";
 
 interface User {
     fullname: string;
