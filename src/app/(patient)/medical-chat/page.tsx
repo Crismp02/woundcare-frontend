@@ -5,15 +5,15 @@ import Chat from "@/components/medical-chat/Chat";
 import PaginationLoader from "@/components/PaginationLoader";
 import { Conversation } from "@/interfaces/chat/conversation.interface";
 import { Message } from "@/interfaces/chat/messages.interface";
-import { GenreEnum, RoleEnum } from "@/interfaces/common/role.type";
 import { getMyConversation } from "@/services/patient/conversation.service";
 import { getMessages } from "@/services/patient/messages.service";
 import { socket } from "@/socket";
 import { Box, Flex, Heading, Input } from "@chakra-ui/react";
 import Image from "next/image";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useInView } from "react-intersection-observer";
 import { toast } from "react-toastify";
+import { text } from "stream/consumers";
 
 function MedicalChat() {
   const [message, setMessage] = useState("");
@@ -21,60 +21,9 @@ function MedicalChat() {
   const { ref, inView } = useInView();
   const [page, setPage] = useState(1);
   const [totalMessages, setTotalMessages] = useState(0);
-  const [conversation, setConversation] = useState<Conversation>({
-    id: 1,
-    userId: "28534711",
-    user: {
-      fullname: "John Doe",
-      role: RoleEnum.PATIENT,
-      patient: [
-        {
-          genre: GenreEnum.MALE,
-        },
-      ],
-      doctor: [],
-    },
-    nurseId: "nurse456",
-    nurse: {
-      genre: GenreEnum.FEMALE,
-      user: {
-        fullname: "Jane Smith",
-      },
-    },
-    medicalFileId: 789,
-  } as Conversation);
-  const [messages, setMessages] = useState<Message[]>([
-    {
-      id: 1,
-      conversationId: conversation.id,
-      userId: conversation.userId,
-      text: "Hello, how are you?",
-      image: null,
-      createdAt: new Date(),
-      owner: true,
-    },
-    {
-      id: 2,
-      conversationId: conversation.id,
-      userId: conversation.nurseId,
-      text: "I am fine, thank you!",
-      image: null,
-      createdAt: new Date(),
-      owner: false,
-    },
-    {
-      id: 3,
-      conversationId: conversation.id,
-      userId: conversation.userId,
-      text: "AYUDAAAA",
-      image: null,
-      createdAt: new Date(),
-      owner: true,
-    },
-  ]);
-  const chatBoxRef = useRef<HTMLDivElement>(null);
+  const [conversation, setConversation] = useState<Conversation | null>(null);
+  const [messages, setMessages] = useState<Message[]>([]);
   const [isConnected, setIsConnected] = useState(false);
-  const [transport, setTransport] = useState("N/A");
 
   const fetchConversation = async () => {
     try {
@@ -103,51 +52,59 @@ function MedicalChat() {
   };
 
   const addMessage = (data: any) => {
-    console.log(data)
     setMessages((prevMessages) => {
-      if (prevMessages.some((message) => message.id === data.incremental))
+      if (prevMessages.some((message) => message.id === data.message.id))
         return prevMessages;
       return [
-        ...prevMessages,
         {
           text: data.message.text,
-          conversationId: 1,
-          createdAt: new Date(),
-          id: data.incremental,
-          owner: true,
-          userId: "28534711",
-          image: null,
+          conversationId: data.message.conversationId,
+          createdAt: data.message.createdAt,
+          id: data.message.id,
+          owner: data.message.userId === conversation?.userId,
+          userId: data.message.userId,
+          image: data.message.image,
         },
+        ...prevMessages,
       ];
     });
-    goDown()
   };
 
   const sendMessage = () => {
     socket.emit("send-message", {
+      conversationId: conversation?.id,
       text: message,
-      conversationId: conversation.id,
     });
     setMessage("");
   };
 
   useEffect(() => {
-    fetchConversation();
-    socket.on("connect", () => {
-      console.log("Conectado");
+    if (!conversation) {
+      fetchConversation();
+      return;
+    }
+
+    socket.on("connection", () => {
+      setIsConnected(true);
     });
     socket.on("disconnect", () => {
-      console.log("Desconectado");
+      setIsConnected(false);
     });
     socket.on("on-message", (data) => {
-      console.log(data);
-      console.log(messages);
       addMessage(data);
+      setTotalMessages(totalMessages + 1);
     });
-    /*
+
     socket.on("messages", (message: Message) => {
-      setMessages((prevMessages) => [...prevMessages, message]);
-    })*/
+      setMessages((prevMessages) => [
+        {
+          ...message,
+          owner: message.userId === conversation.userId,
+        },
+        ...prevMessages,
+      ]);
+      setTotalMessages(totalMessages + 1);
+    });
 
     return () => {
       socket.off("connect", () => {
@@ -156,35 +113,13 @@ function MedicalChat() {
       socket.off("disconnect", () => {
         console.log("Cleaning");
       });
-      //socket.off("messages")
+      socket.off("messages");
     };
-  }, []);
+  }, [conversation]);
 
   useEffect(() => {
     if (inView || page === 1) fetchMessages();
   }, [inView]);
-
-  useEffect(() => {
-    const chatBox = chatBoxRef.current;
-    if (chatBox) {
-      const isAtBottom =
-        chatBox.scrollHeight - chatBox.scrollTop === chatBox.clientHeight;
-      if (isAtBottom) {
-        chatBox.scrollTop = chatBox.scrollHeight;
-      }
-    }
-  }, [messages]);
-
-  const goDown = () => {
-    const chatBox = chatBoxRef.current;
-    if (chatBox) {
-      const isAtBottom =
-        chatBox.scrollHeight - chatBox.scrollTop === chatBox.clientHeight;
-      if (isAtBottom) {
-        chatBox.scrollTop = chatBox.scrollHeight;
-      }
-    }
-  }
 
   return loading ? (
     <Box width={"100vw"} flexGrow={1} position={"relative"}>
@@ -218,21 +153,22 @@ function MedicalChat() {
           </Heading>
         </Flex>
         <Box
-          ref={chatBoxRef}
           flexGrow={1}
-          maxHeight={"70vh"}
+          maxHeight={"65vh"}
           paddingY={4}
           marginY={4}
           overflowY={"scroll"}
         >
-          {
-            /*!(totalMessages === messages.length)*/ false && (
-              <Box ref={ref} display={"flex"} justifyContent={"center"}>
-                <PaginationLoader />
-              </Box>
-            )
-          }
-          <Chat conversation={conversation} messages={messages} />
+          {!(totalMessages <= messages.length) && (
+            <Box ref={ref} display={"flex"} justifyContent={"center"}>
+              <PaginationLoader />
+            </Box>
+          )}
+          <Chat
+            conversation={conversation}
+            messages={messages}
+            inView={inView}
+          />
         </Box>
         <Flex gap={4}>
           <Input
