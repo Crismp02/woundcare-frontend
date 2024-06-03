@@ -123,3 +123,13 @@ export interface ThePatientInfo {
   medicalRecords: string[];
   user: User;
 }
+
+export interface TheDoctor {
+  nationalId: string;
+  fullname: string;
+  email: string;
+  password: string;
+  genre: Genre;
+  birthDate: string;
+  medicalCenter: string;
+}
