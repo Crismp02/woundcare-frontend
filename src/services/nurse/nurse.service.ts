@@ -4,6 +4,7 @@ import {
   Nurse,
   Patient,
   Patients,
+  TheDoctor,
   TheMedicalFile,
   ThePatientInfo
 } from "@/interfaces/nurse/nurse.interface";
@@ -50,3 +51,7 @@ export const getPatientInfo = async (nationalId: string) => {
   const data = await fetchAPI<ThePatientInfo>(`/patient/${nationalId}`, "GET");
   return data;
 };
+export const createDoctor = async (doctor: TheDoctor) => {
+  const data = await fetchAPI<TheDoctor>("/doctor", "POST", doctor);
+  return data;
+}
