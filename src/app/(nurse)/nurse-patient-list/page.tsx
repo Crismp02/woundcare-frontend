@@ -3,7 +3,7 @@ import Arrow from '@/components/Arrow'
 import PatientCard from '@/components/patient-list-card/PatientCard'
 import { Patients } from '@/interfaces/nurse/nurse.interface'
 import { getPatients } from '@/services/nurse/nurse.service'
-import { Box, Flex, Heading, Text } from '@chakra-ui/react'
+import { Box, Flex, Heading, Text, useToast } from '@chakra-ui/react'
 import Link from 'next/link'
 import React, { useEffect, useState } from 'react'
 import routes from "@/utils/routes";
@@ -15,16 +15,21 @@ function PatientList() {
   const [totalPatients, setTotalPatients] = useState<number>(0);
   const [patients, setPatients] = useState<Patients[]>([]);
   const { ref, inView } = useInView();
+  const toast = useToast();
 
   const fetchPatients = async () => {
     try {
-      console.log("this")
       const patientsList = await getPatients(page, 10);
       setPatients([...patients, ...patientsList.items]);
       if (page === 1) setTotalPatients(patientsList.meta.totalItems);
       setPage(page + 1);
     } catch (error) {
-      console.error(error);
+      toast({
+        title: "Error al cargar los pacientes",
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+      });
     }
   }
 
