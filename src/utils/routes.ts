@@ -25,7 +25,7 @@ const routes = {
   nurseCreateMedicalFile: "/create-medical-file",
   nursePatientsList: "/nurse-home-page",
   nurseDoctorsList: "/nurse-home-page",
-  nurseMessages: "/nurse-home-page",
+  nurseMessages: "/nurse-conversations",
   //Doctor routes
   doctorHomePage: "/",
 };
