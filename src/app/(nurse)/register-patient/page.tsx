@@ -24,6 +24,7 @@ import {
 import { useRouter } from "next/navigation";
 
 function RegisterPatient() {
+  const [isLoading, setIsLoading] = useState(false);
   type Genre = "MALE" | "FEMALE";
   type BloodType =
     | "A_POSITIVE"
@@ -128,6 +129,7 @@ function RegisterPatient() {
 
   const handleSubmit = () => {
     setIsSubmitted(true);
+    setIsLoading(true);
     if (
       isFormValid &&
       isIdValid &&
@@ -166,6 +168,7 @@ function RegisterPatient() {
           duration: 3000,
           isClosable: true,
         });
+        setIsLoading(false);
         router.push(`/create-medical-file?id=${patient.nationalId}`);
       } catch (error: any) {
         if (error.response.status === 409) {
@@ -340,6 +343,7 @@ function RegisterPatient() {
           <SubmitButtonComponent
             isFormValid={!!isFormValid}
             handleSubmit={handleSubmit}
+            isLoading={isLoading}
           />
         </Flex>
       </Box>

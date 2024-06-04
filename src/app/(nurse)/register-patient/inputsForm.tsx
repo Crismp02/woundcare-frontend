@@ -37,6 +37,7 @@ interface TextFieldComponentProps2 {
   interface SubmitButtonComponentProps {
     isFormValid: boolean;
     handleSubmit: () => void;
+    isLoading: boolean;
   }
 export const TextFieldComponent: React.FC<TextFieldComponentProps> = ({ label, placeholder, isInvalid, value, onChange }) => (
   <>
@@ -148,7 +149,7 @@ export const SelectComponent: React.FC<SelectComponentProps> = ({ label, placeho
   };
 
   // SubmitButtonComponent.jsx
-export const SubmitButtonComponent: React.FC<SubmitButtonComponentProps> = ({ isFormValid, handleSubmit }) => (
+export const SubmitButtonComponent: React.FC<SubmitButtonComponentProps> = ({ isFormValid, handleSubmit, isLoading }) => (
     <Button
       w="100%"
       h="6vh"
@@ -166,6 +167,8 @@ export const SubmitButtonComponent: React.FC<SubmitButtonComponentProps> = ({ is
       }}
       isDisabled={!isFormValid}
       onClick={handleSubmit}
+      isLoading={isLoading}
+      loadingText="Cargando..."
     >
       Registrar paciente
     </Button>
