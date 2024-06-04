@@ -127,7 +127,7 @@ function RegisterPatient() {
     weight &&
     height;
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     setIsSubmitted(true);
     setIsLoading(true);
     if (
@@ -160,7 +160,7 @@ function RegisterPatient() {
         photo: "a",
       };
       try {
-        createPatient(patient);
+        await createPatient(patient);
         toast({
           title: "Success",
           description: "Paciente registrado con éxito",
@@ -171,7 +171,7 @@ function RegisterPatient() {
         setIsLoading(false);
         router.push(`/create-medical-file?id=${patient.nationalId}`);
       } catch (error: any) {
-        if (error.response.status === 409) {
+        if (error.status === 409) {
           toast({
             title: "Error",
             description: "Ya existe un usuario con esa cédula de identidad",
@@ -179,6 +179,7 @@ function RegisterPatient() {
             duration: 3000,
             isClosable: true,
           });
+          setIsLoading(false);
         } else {
           toast({
             title: "Error",
@@ -187,6 +188,7 @@ function RegisterPatient() {
             duration: 3000,
             isClosable: true,
           });
+          setIsLoading(false);
         }
       }
     } else {
@@ -197,6 +199,7 @@ function RegisterPatient() {
         duration: 3000,
         isClosable: true,
       });
+      setIsLoading(false);
     }
   };
   return (
