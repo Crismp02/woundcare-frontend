@@ -14,7 +14,6 @@ function page() {
   const [medicalFile, setMedicalFile] = useState<TheMedicalFile>();
   const [patientInfo, setPatientInfo] = useState<ThePatientInfo>();
   const [isOpen, setIsOpen] = useState(false);
-  const [onClose, setOnClosed] = useState(false);
   const [nurse, setNurse] = useState<Nurse>();
 
   useEffect(() => {

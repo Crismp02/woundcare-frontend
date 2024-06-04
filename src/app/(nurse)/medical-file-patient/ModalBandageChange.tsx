@@ -34,6 +34,15 @@ const ModalBandageChange: React.FC<ModalBandageChangeProps> = ({
   const toast = useToast();
 
   const handleSubmit = async () => {
+    if (!date) {
+      toast({
+        title: "Debe seleccionar una fecha",
+        status: "error",
+        duration: 9000,
+        isClosable: true,
+      });
+      return;
+    }
     if (date && idNurse && idPatient) {
       if (selectedDate < currentDate) {
         toast({
@@ -58,18 +67,27 @@ const ModalBandageChange: React.FC<ModalBandageChangeProps> = ({
           isClosable: true,
         });
         setDate("");
-      } catch (error) {
-        console.log(error);
+        onClose();
+      } catch (error: any) {
+        if (error.status === 400) {
+          toast({
+            title: "Error al asignar cambio de vendaje",
+            description: "Ya hay un cambio de vendaje asignado para esta fecha",
+            status: "error",
+            duration: 9000,
+            isClosable: true,
+          });
+        } else{
         toast({
           title: "Error al asignar cambio de vendaje",
           status: "error",
           duration: 9000,
           isClosable: true,
         });
-      }
+        onClose();
+        setDate("");
+      }}
     }
-    onClose();
-    setDate("");
   };
 
   const handleClose = () => {
