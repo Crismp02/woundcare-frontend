@@ -52,55 +52,55 @@ const router = useRouter();
   }, [id, fullName, email, birthDate]);
 
   //Function
-  const handleSubmit =  () => {
+  const handleSubmit = async () => {
     setIsSubmitted(true);
-    if (isFormValid && isIdValid && isFullNameValid && isEmailValid && isBirthDateValid){
-        const Doctor ={
-            nationalId: id,
-            fullname: fullName,
-            email: email,
-            password: password,
-            genre: genre as Genre,
-            birthDate: formattedBirthDate,
-            medicalCenter: medicalCenter,
-          }
-        try {
-            createDoctor(Doctor);
-            toast({
-                title: "Success",
-                description: "Especialista registrado con éxito",
-                status: "success",
-                duration: 3000,
-                isClosable: true,
-              });
-              router.push(`/nurse-home-page`);
-        } catch (error: any) {
-            if (error.response.status === 409) {
-                toast({
-                  title: "Error",
-                  description: "Ya existe un usuario con esa cédula de identidad",
-                  status: "error",
-                  duration: 3000,
-                  isClosable: true,
-                });
-              } else {
-                toast({
-                  title: "Error",
-                  description: "Ha ocurrido un error al registrar el especialista",
-                  status: "error",
-                  duration: 3000,
-                  isClosable: true,
-                });
-              }
-        }
-    } else{
+    if (isFormValid && isIdValid && isFullNameValid && isEmailValid && isBirthDateValid) {
+      const Doctor = {
+        nationalId: id,
+        fullname: fullName,
+        email: email,
+        password: password,
+        genre: genre as Genre,
+        birthDate: formattedBirthDate,
+        medicalCenter: medicalCenter,
+      }
+      try {
+        await createDoctor(Doctor);
         toast({
+          title: "Success",
+          description: "Especialista registrado con éxito",
+          status: "success",
+          duration: 3000,
+          isClosable: true,
+        });
+        router.push(`/nurse-home-page`);
+      } catch (error: any) {
+        if (error.status === 409) {
+          toast({
             title: "Error",
-            description: "Debe completar todos los campos",
+            description: "Ya existe un usuario con esa cédula de identidad",
             status: "error",
             duration: 3000,
             isClosable: true,
           });
+        } else {
+          toast({
+            title: "Error",
+            description: "Ha ocurrido un error al registrar el especialista",
+            status: "error",
+            duration: 3000,
+            isClosable: true,
+          });
+        }
+      }
+    } else {
+      toast({
+        title: "Error",
+        description: "Debe completar todos los campos",
+        status: "error",
+        duration: 3000,
+        isClosable: true,
+      });
     }
   };
   return (
