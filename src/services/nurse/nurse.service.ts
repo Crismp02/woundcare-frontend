@@ -65,8 +65,17 @@ export const getDoctorsConversations = async (
   );
   return data;
 };
-export const getPatients = async () => {
-  const data = await fetchAPI<Patients[]>("/patient", "GET");
+export const getPatients = async (
+  page?: number,
+  perPage?: number
+): Promise<PaginatedResponse<Patients>> => {
+  const data = await fetchAPI<PaginatedResponse<Patients>>(
+    `/patient/nurse?${page ? `page=${page}&` : ""}${
+      perPage ? `per-page=${perPage}` : ""
+    }`,
+    "GET"
+  );
+  console.log(data);
   return data;
 };
 export const getPatientMedicalFile = async (nationalId: string) => {
@@ -83,4 +92,4 @@ export const getPatientInfo = async (nationalId: string) => {
 export const createDoctor = async (doctor: TheDoctor) => {
   const data = await fetchAPI<TheDoctor>("/doctor", "POST", doctor);
   return data;
-}
+};
