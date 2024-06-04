@@ -1,5 +1,6 @@
 import { PaginatedResponse } from "@/interfaces/common/responses.interface";
 import {
+  BandageChange,
   Doctor,
   MedicalFile,
   Nurse,
@@ -59,4 +60,12 @@ export const getPatientInfo = async (nationalId: string) => {
 export const createDoctor = async (doctor: TheDoctor) => {
   const data = await fetchAPI<TheDoctor>("/doctor", "POST", doctor);
   return data;
+};
+export const createBandageChange = async (bandageChange: BandageChange) => {
+  try {
+    const data = await fetchAPI(`/bandage-change`, "POST", bandageChange);
+    return data;
+  } catch (error) {
+    console.error(error);
+  }
 }

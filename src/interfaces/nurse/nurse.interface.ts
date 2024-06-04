@@ -133,3 +133,9 @@ export interface TheDoctor {
   birthDate: string;
   medicalCenter: string;
 }
+
+export interface BandageChange{
+  date: string;
+  nurseId: string;
+  patientId: string;
+}
