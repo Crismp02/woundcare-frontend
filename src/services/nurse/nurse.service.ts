@@ -1,3 +1,4 @@
+import { PaginatedResponse } from "@/interfaces/common/responses.interface";
 import {
   Doctor,
   MedicalFile,
@@ -39,8 +40,12 @@ export const createMedicalFile = async (medicalFile: MedicalFile) => {
     console.error(error);
   }
 };
-export const getPatients = async () => {
-  const data = await fetchAPI<Patients[]>("/patient", "GET");
+export const getPatients = async (page?: number, perPage?: number): Promise<PaginatedResponse<Patients>> => {
+  const data = await fetchAPI<PaginatedResponse<Patients>>(`/patient/nurse?${page ? `page=${page}&` : ""}${
+    perPage ? `per-page=${perPage}` : ""
+  }`,
+  "GET");
+  console.log(data);
   return data;
 };
 export const getPatientMedicalFile = async (nationalId: string) => {
