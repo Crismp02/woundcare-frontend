@@ -53,7 +53,7 @@ function NurseHomePage() {
           gap={2}
           textColor={"#4F1964"}
         >
-          <Image
+          {nurse?.genre === "FEMALE" ? (<><Image
             src={"/nurseHomePage/nursePhoto.png"}
             width={90}
             height={90}
@@ -66,7 +66,20 @@ function NurseHomePage() {
             <Heading as={"h1"} fontSize={16}>
               Centro Médico: {nurse?.medicalCenter}
             </Heading>
-          </Flex>
+          </Flex></>) :(<><Image
+            src={"/nurseHomePage/male_nurse.png"}
+            width={90}
+            height={90}
+            alt="nurse"
+          />
+          <Flex flexDirection={"column"} gap={2}>
+            <Heading as={"h2"} fontSize={24}>
+              Enfermero {nurse?.user.fullname}
+            </Heading>
+            <Heading as={"h1"} fontSize={16}>
+              Centro Médico: {nurse?.medicalCenter}
+            </Heading>
+          </Flex></>)}
         </Box>
         <Box w="100%" h="2px" bg="#AD8EB1" marginBottom={6} />
         <Box
