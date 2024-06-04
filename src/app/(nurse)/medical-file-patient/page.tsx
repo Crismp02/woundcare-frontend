@@ -1,6 +1,6 @@
 "use client"
 import Arrow from '@/components/Arrow'
-import { Box, Flex, Heading, Text } from '@chakra-ui/react'
+import { Box, Button, Flex, Heading, Text } from '@chakra-ui/react'
 import Image from 'next/image'
 import React, { useEffect, useState } from 'react'
 import { useSearchParams } from 'next/navigation';
@@ -73,6 +73,8 @@ function page() {
           <Text color="#4F1964" marginTop={"4px"}>
             Nº Historia: {medicalFile?.id}
           </Text>
+          <Button borderRadius="15px"
+          color="white" bg={"#AD8EB1"} fontSize={"14px"} mt={"10px"} mb={"-10px"} boxShadow="0px 4px 4px rgba(0, 0, 0, 0.25)">+ Asignar cambio de vendaje</Button>
         </Flex>
         <Flex w="100vw" h="13vh" align="center" pr="6vw" pl="6vw">
           <Image
@@ -248,6 +250,17 @@ function page() {
           ) : (
             <p>No hay plan de cuidados.</p>
           )}
+          <Button  w="100%"
+          h="6vh"
+          bg="#4F1964"
+          borderRadius="15px"
+          mt="20px"
+          color="white"
+          fontSize="24px"
+          fontWeight="bold"
+          boxShadow="0px 4px 4px rgba(0, 0, 0, 0.25)">
+            Dar de alta
+          </Button>
         </Flex>
       </Box>
     </>
