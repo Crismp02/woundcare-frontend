@@ -34,19 +34,14 @@ export const getMe = async () => {
   return data;
 };
 export const createMedicalFile = async (medicalFile: MedicalFile) => {
-  try {
     const data = await fetchAPI(`/medical-file`, "POST", medicalFile);
     return data;
-  } catch (error) {
-    console.error(error);
-  }
 };
 export const getPatients = async (page?: number, perPage?: number): Promise<PaginatedResponse<Patients>> => {
   const data = await fetchAPI<PaginatedResponse<Patients>>(`/patient/nurse?${page ? `page=${page}&` : ""}${
     perPage ? `per-page=${perPage}` : ""
   }`,
   "GET");
-  console.log(data);
   return data;
 };
 export const getPatientMedicalFile = async (nationalId: string) => {
@@ -62,10 +57,6 @@ export const createDoctor = async (doctor: TheDoctor) => {
   return data;
 };
 export const createBandageChange = async (bandageChange: BandageChange) => {
-  try {
     const data = await fetchAPI(`/bandage-change`, "POST", bandageChange);
     return data;
-  } catch (error) {
-    console.error(error);
-  }
 }
