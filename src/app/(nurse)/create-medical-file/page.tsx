@@ -9,7 +9,7 @@ import { Doctor, Nurse } from '@/interfaces/nurse/nurse.interface';
 function CreateMadicalFile() {
   const searchParams = useSearchParams()
   const id = searchParams.get('id')
-
+  const router = useRouter();
   const toast = useToast();
 
     const [description, setDescription] = useState("");
@@ -97,6 +97,7 @@ function CreateMadicalFile() {
           duration: 3000,
           isClosable: true,
         });
+        router.push(`/nurse-home-page`);
       } catch (error: any) {
         toast({
           title: "Error",
@@ -112,9 +113,8 @@ function CreateMadicalFile() {
   return (
     <>
       <Box as="main" flex={1}>
-        <Arrow />
         <Flex
-          marginTop={-16}
+          marginTop={16}
           marginRight={6}
           flexDirection="column"
           alignItems="flex-end"
