@@ -4,8 +4,8 @@ import { Box, Button, Flex, Heading, Text } from '@chakra-ui/react'
 import Image from 'next/image'
 import React, { useEffect, useState } from 'react'
 import { useSearchParams } from 'next/navigation';
-import { MedicalFile, TheMedicalFile, ThePatientInfo } from '@/interfaces/nurse/nurse.interface'
-import { getPatient, getPatientInfo, getPatientMedicalFile } from '@/services/nurse/nurse.service'
+import { TheMedicalFile, ThePatientInfo } from '@/interfaces/nurse/nurse.interface'
+import { getPatientInfo, getPatientMedicalFile } from '@/services/nurse/nurse.service'
 
 function page() {
   const searchParams = useSearchParams()
@@ -77,12 +77,22 @@ function page() {
           color="white" bg={"#AD8EB1"} fontSize={"14px"} mt={"10px"} mb={"-10px"} boxShadow="0px 4px 4px rgba(0, 0, 0, 0.25)">+ Asignar cambio de vendaje</Button>
         </Flex>
         <Flex w="100vw" h="13vh" align="center" pr="6vw" pl="6vw">
-          <Image
+          {patientInfo?.genre === 'FEMALE' ? (
+            <Image
             src="/profile/female_user.png"
             alt="female_user"
             width={80}
             height={80}
           />
+            ) : (
+              <Image
+            src="/profile/male_user.png"
+            alt="male_user"
+            width={80}
+            height={80}
+          />
+            )}
+          
           <Heading
             as="h2"
             fontSize="x-large"
