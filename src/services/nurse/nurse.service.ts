@@ -1,3 +1,5 @@
+import { ConversationListItem } from "@/interfaces/chat/conversation.interface";
+import { PaginatedResponse } from "@/interfaces/common/responses.interface";
 import {
   Doctor,
   MedicalFile,
@@ -34,4 +36,28 @@ export const createMedicalFile = async (medicalFile: MedicalFile) => {
   } catch (error) {
     console.error(error);
   }
+};
+export const getPatientsConversations = async (
+  page?: number,
+  perPage?: number
+) => {
+  const data = await fetchAPI<PaginatedResponse<ConversationListItem>>(
+    `/conversations/nurse/patient?${page ? `page=${page}&` : ""}${
+      perPage ? `per-page=${perPage}` : ""
+    }`,
+    "GET"
+  );
+  return data;
+};
+export const getDoctorsConversations = async (
+  page?: number,
+  perPage?: number
+) => {
+  const data = await fetchAPI<PaginatedResponse<ConversationListItem>>(
+    `/conversations/nurse/doctor?${page ? `page=${page}&` : ""}${
+      perPage ? `per-page=${perPage}` : ""
+    }`,
+    "GET"
+  );
+  return data;
 };
