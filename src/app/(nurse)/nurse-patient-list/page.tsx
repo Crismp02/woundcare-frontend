@@ -7,18 +7,32 @@ import { Box, Flex, Heading, Text } from '@chakra-ui/react'
 import Link from 'next/link'
 import React, { useEffect, useState } from 'react'
 import routes from "@/utils/routes";
+import { useInView } from 'react-intersection-observer'
+import PaginationLoader from '@/components/PaginationLoader'
 
 function PatientList() {
-  const [patients, setPatients] = useState<Patients[]>();
+  const [page, setPage] = useState(1);
+  const [totalPatients, setTotalPatients] = useState<number>(0);
+  const [patients, setPatients] = useState<Patients[]>([]);
+  const { ref, inView } = useInView();
+
+  const fetchPatients = async () => {
+    try {
+      console.log("this")
+      const patientsList = await getPatients(page, 10);
+      setPatients([...patients, ...patientsList.items]);
+      if (page === 1) setTotalPatients(patientsList.meta.totalItems);
+      setPage(page + 1);
+    } catch (error) {
+      console.error(error);
+    }
+  }
 
   useEffect(() => {
-   const fetchPatients = async () => {
-        const response = await getPatients(); 
-        setPatients(response);
-      };
+    if (inView || page === 1) {
       fetchPatients();
-  }
-  , [])
+    }
+  }, [inView, page]);
 
   return (
     <Box as="main" flex={1}>
@@ -52,6 +66,16 @@ function PatientList() {
           {patients?.map((patient) => (
             <PatientCard key={patient.nationalId} fullName={patient.user.fullname} nationalId={patient.nationalId}/>
           ))}
+          {!(totalPatients === patients.length) && (
+            <Box ref={ref}>
+            <PaginationLoader />
+          </Box>
+          )}
+          {!(patients.length > 0) && (
+            <Flex justifyContent="center" marginTop={4}>
+              <Text color="#4F1964">No hay pacientes registrados</Text>
+              </Flex>
+          )}
         </Flex>
         </Box>
   )
