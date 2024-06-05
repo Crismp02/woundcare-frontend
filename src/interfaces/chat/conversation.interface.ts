@@ -30,6 +30,9 @@ export interface ConversationListItem {
   lastMessageText: string | null;
   medicalFileId: number;
   nurseId: string;
+  nurse: {
+    fullname: string;
+  };
   user: {
     fullname: string;
   };
