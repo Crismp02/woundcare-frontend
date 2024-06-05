@@ -1,14 +1,14 @@
 "use client";
 import { Box, Text } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
-import ConversationsCard from "./ConversationsCard";
+import ConversationsCard from "../nurse-conversations/ConversationsCard";
+import PaginationLoader from "../PaginationLoader";
 import { ConversationListItem } from "@/interfaces/chat/conversation.interface";
 import { useInView } from "react-intersection-observer";
-import { getPatientsConversations } from "@/services/nurse/nurse.service";
 import { toast } from "react-toastify";
-import PaginationLoader from "../PaginationLoader";
+import { getNursesConversations } from "@/services/doctor/doctor.service";
 
-function PatientsConversationsTab() {
+function NurseConversations() {
   const [conversationList, setConversationList] = useState<
     ConversationListItem[]
   >([]);
@@ -18,7 +18,7 @@ function PatientsConversationsTab() {
 
   const fetchConversations = async () => {
     try {
-      const newConversations = await getPatientsConversations(page, 10);
+      const newConversations = await getNursesConversations(page, 10);
       setConversationList([...conversationList, ...newConversations.items]);
       if (page === 1) setTotalConversations(newConversations.meta.totalItems);
       setPage(page + 1);
@@ -37,8 +37,8 @@ function PatientsConversationsTab() {
           key={conversation.id}
           date={conversation.lastMessageDate}
           message={conversation.lastMessageText}
-          name={conversation.user.fullname}
-          link={`/medical-conversation/${conversation.id}`}
+          name={conversation.nurse.fullname}
+          link={`/nurse-conversation/${conversation.id}`}
         />
       ))}
       {!(totalConversations === conversationList.length) && (
@@ -59,4 +59,4 @@ function PatientsConversationsTab() {
   );
 }
 
-export default PatientsConversationsTab;
+export default NurseConversations;

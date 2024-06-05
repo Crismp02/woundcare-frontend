@@ -24,10 +24,12 @@ const routes = {
   nurseMedicalFilePatient: "/medical-file-patient",
   nurseCreateMedicalFile: "/create-medical-file",
   nursePatientsList: "/nurse-patient-list",
+  nurseMessages: "/nurse-conversations",
   nurseDoctorsList: "/nurse-doctor-list",
   nurseRegisterDoctor: "/nurse-register-doctor",
-  nurseMessages: "/nurse-conversations",
   //Doctor routes
-  doctorHomePage: "/",
+  doctorHomePage: "/doctor-home-page",
+  doctorPatientsList: "/doctor-home-page",
+  doctorMessages: "/doctor-conversations",
 };
 export default routes;
