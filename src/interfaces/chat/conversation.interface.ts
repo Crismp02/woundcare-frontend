@@ -23,3 +23,15 @@ export interface Conversation {
   };
   medicalFileId: number;
 }
+
+export interface ConversationListItem {
+  id: number;
+  lastMessageDate: string | null;
+  lastMessageText: string | null;
+  medicalFileId: number;
+  nurseId: string;
+  user: {
+    fullname: string;
+  };
+  userId: string;
+}

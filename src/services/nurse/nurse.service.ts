@@ -1,3 +1,4 @@
+import { ConversationListItem } from "@/interfaces/chat/conversation.interface";
 import { PaginatedResponse } from "@/interfaces/common/responses.interface";
 import {
   Doctor,
@@ -7,7 +8,7 @@ import {
   Patients,
   TheDoctor,
   TheMedicalFile,
-  ThePatientInfo
+  ThePatientInfo,
 } from "@/interfaces/nurse/nurse.interface";
 import { ThePatient } from "@/interfaces/patient/patient.interface";
 import { fetchAPI } from "@/utils/api";
@@ -40,16 +41,24 @@ export const createMedicalFile = async (medicalFile: MedicalFile) => {
     console.error(error);
   }
 };
-export const getPatients = async (page?: number, perPage?: number): Promise<PaginatedResponse<Patients>> => {
-  const data = await fetchAPI<PaginatedResponse<Patients>>(`/patient/nurse?${page ? `page=${page}&` : ""}${
-    perPage ? `per-page=${perPage}` : ""
-  }`,
-  "GET");
+export const getPatients = async (
+  page?: number,
+  perPage?: number
+): Promise<PaginatedResponse<Patients>> => {
+  const data = await fetchAPI<PaginatedResponse<Patients>>(
+    `/patient/nurse?${page ? `page=${page}&` : ""}${
+      perPage ? `per-page=${perPage}` : ""
+    }`,
+    "GET"
+  );
   console.log(data);
   return data;
 };
 export const getPatientMedicalFile = async (nationalId: string) => {
-  const data = await fetchAPI<TheMedicalFile>(`/medical-file/patient/${nationalId}`, "GET");
+  const data = await fetchAPI<TheMedicalFile>(
+    `/medical-file/patient/${nationalId}`,
+    "GET"
+  );
   return data;
 };
 export const getPatientInfo = async (nationalId: string) => {
@@ -59,4 +68,28 @@ export const getPatientInfo = async (nationalId: string) => {
 export const createDoctor = async (doctor: TheDoctor) => {
   const data = await fetchAPI<TheDoctor>("/doctor", "POST", doctor);
   return data;
-}
+};
+export const getPatientsConversations = async (
+  page?: number,
+  perPage?: number
+) => {
+  const data = await fetchAPI<PaginatedResponse<ConversationListItem>>(
+    `/conversations/nurse/patient?${page ? `page=${page}&` : ""}${
+      perPage ? `per-page=${perPage}` : ""
+    }`,
+    "GET"
+  );
+  return data;
+};
+export const getDoctorsConversations = async (
+  page?: number,
+  perPage?: number
+) => {
+  const data = await fetchAPI<PaginatedResponse<ConversationListItem>>(
+    `/conversations/nurse/doctor?${page ? `page=${page}&` : ""}${
+      perPage ? `per-page=${perPage}` : ""
+    }`,
+    "GET"
+  );
+  return data;
+};

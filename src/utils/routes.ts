@@ -26,7 +26,7 @@ const routes = {
   nursePatientsList: "/nurse-patient-list",
   nurseDoctorsList: "/nurse-doctor-list",
   nurseRegisterDoctor: "/nurse-register-doctor",
-  nurseMessages: "/nurse-home-page",
+  nurseMessages: "/nurse-conversations",
   //Doctor routes
   doctorHomePage: "/",
 };
