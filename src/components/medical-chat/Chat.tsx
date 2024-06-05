@@ -18,7 +18,8 @@ function Chat({
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (!inView || messages.length <= 10) ref?.current?.lastElementChild?.scrollIntoView();
+    if (!inView || messages.length <= 10)
+      ref?.current?.lastElementChild?.scrollIntoView();
   }, [messages]);
 
   return (
@@ -31,6 +32,11 @@ function Chat({
             if (conversation.user.role === RoleEnum.PATIENT) {
               img =
                 conversation.user.patient[0].genre === GenreEnum.MALE
+                  ? "/chat/malePhoto.png"
+                  : "/chat/femalePhoto.png";
+            } else if (conversation.user.role === RoleEnum.DOCTOR) {
+              img =
+                conversation.user.doctor[0].genre === GenreEnum.MALE
                   ? "/chat/malePhoto.png"
                   : "/chat/femalePhoto.png";
             }
