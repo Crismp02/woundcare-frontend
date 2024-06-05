@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Loader from "@/components/Loader";
 import { Box } from "@chakra-ui/react";
+import NavBarNurse from "@/components/NavBarNurse";
 
 export default function RootLayout({
   children,
@@ -36,6 +37,14 @@ export default function RootLayout({
       <Loader />
     </Box>
   ) : (
-    <>{children}</>
+    <Box
+      display={"flex"}
+      flexDirection={"column"}
+      minHeight={"100vh"}
+      width={"100vw"}
+    >
+      <NavBarNurse />
+      {children}
+    </Box>
   );
 }
