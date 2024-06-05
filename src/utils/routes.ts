@@ -28,6 +28,8 @@ const routes = {
   nurseDoctorsList: "/nurse-doctor-list",
   nurseRegisterDoctor: "/nurse-register-doctor",
   //Doctor routes
-  doctorHomePage: "/",
+  doctorHomePage: "/doctor-home-page",
+  doctorPatientsList: "/doctor-home-page",
+  doctorMessages: "/doctor-conversations",
 };
 export default routes;
