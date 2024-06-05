@@ -8,7 +8,7 @@ import { Doctor } from '@/interfaces/nurse/nurse.interface'
 import { getDoctors } from '@/services/nurse/nurse.service'
 import DoctorCard from '@/components/doctor-list-card/page'
 
-function doctorList() {
+function DoctorList() {
     const [doctors, setDoctors] = useState<Doctor[]>();
 
   useEffect(() => {
@@ -57,4 +57,4 @@ function doctorList() {
   )
 }
 
-export default doctorList
+export default DoctorList

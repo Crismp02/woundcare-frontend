@@ -7,7 +7,7 @@ import { useSearchParams } from 'next/navigation';
 import { TheMedicalFile, ThePatientInfo } from '@/interfaces/nurse/nurse.interface'
 import { getPatientInfo, getPatientMedicalFile } from '@/services/nurse/nurse.service'
 
-function page() {
+function MedicalFilePatient() {
   const searchParams = useSearchParams()
   const id = searchParams.get('id')
   const [medicalFile, setMedicalFile] = useState<TheMedicalFile>();
@@ -277,4 +277,4 @@ function page() {
   );
 }
 
-export default page
+export default MedicalFilePatient

@@ -16,7 +16,7 @@ import {
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 
-function page() {
+function RegisterDoctor() {
 const router = useRouter();
 
   type Genre = "MALE" | "FEMALE";
@@ -251,4 +251,4 @@ const router = useRouter();
   );
 }
 
-export default page;
+export default RegisterDoctor;
