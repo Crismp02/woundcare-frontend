@@ -53,7 +53,7 @@ function PatientsConversationsTab() {
         </Box>
       )}
       {!(conversationList.length > 0) && (
-        <Text textColor={"white"}>No hay notificaciones</Text>
+        <Text textColor={"white"}>No hay conversaciones</Text>
       )}
     </Box>
   );
