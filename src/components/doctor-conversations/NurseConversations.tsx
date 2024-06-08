@@ -7,6 +7,7 @@ import { ConversationListItem } from "@/interfaces/chat/conversation.interface";
 import { useInView } from "react-intersection-observer";
 import { toast } from "react-toastify";
 import { getNursesConversations } from "@/services/doctor/doctor.service";
+import Loader from "../Loader";
 
 function NurseConversations() {
   const [conversationList, setConversationList] = useState<
@@ -15,6 +16,7 @@ function NurseConversations() {
   const [page, setPage] = useState(1);
   const [totalConversations, setTotalConversations] = useState<number>(0);
   const { ref, inView } = useInView();
+  const [loading, setLoading] = useState(true);
 
   const fetchConversations = async () => {
     try {
@@ -24,13 +26,24 @@ function NurseConversations() {
       setPage(page + 1);
     } catch (error) {
       toast.error("Ha ocurrido un error inesperado");
+    } finally {
+      setLoading(false);
     }
   };
 
   useEffect(() => {
     if (inView || page === 1) fetchConversations();
   }, [inView]);
-  return (
+  return loading ? (
+    <Box
+      display="flex"
+      justifyContent="center"
+      alignItems="center"
+      height="60vh"
+    >
+      <Loader />
+    </Box>
+  ) : (
     <Box as="section" maxHeight={"60vh"} overflow={"scroll"}>
       {conversationList.map((conversation) => (
         <ConversationsCard
