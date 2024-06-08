@@ -1,28 +1,44 @@
-"use client"
-import Arrow from '@/components/Arrow'
-import PatientCard from '@/components/patient-list-card/PatientCard'
-import { Patients } from '@/interfaces/nurse/nurse.interface'
-import { getPatients } from '@/services/nurse/nurse.service'
-import { Box, Flex, Heading, Text, useToast } from '@chakra-ui/react'
-import Link from 'next/link'
-import React, { useEffect, useState } from 'react'
+"use client";
+import Arrow from "@/components/Arrow";
+import PatientCard from "@/components/patient-list-card/PatientCard";
+import { Patients } from "@/interfaces/nurse/nurse.interface";
+import { getDoctors, getPatientsActive, getPatientsInactive } from "@/services/nurse/nurse.service";
+import {
+  Box,
+  Flex,
+  Heading,
+  Text,
+  useToast,
+  SystemStyleObject,
+  TabList,
+  Tab,
+  TabPanels,
+  TabPanel,
+  Tabs,
+} from "@chakra-ui/react";
+import Link from "next/link";
+import React, { useEffect, useState } from "react";
 import routes from "@/utils/routes";
-import { useInView } from 'react-intersection-observer'
-import PaginationLoader from '@/components/PaginationLoader'
+import { useInView } from "react-intersection-observer";
+import PaginationLoader from "@/components/PaginationLoader";
 
 function PatientList() {
-  const [page, setPage] = useState(1);
-  const [totalPatients, setTotalPatients] = useState<number>(0);
-  const [patients, setPatients] = useState<Patients[]>([]);
+  const [pageA, setPageA] = useState(1);
+  const [totalPatientsA, setTotalPatientsA] = useState<number>(0);
+  const [patientsA, setPatientsA] = useState<Patients[]>([]);
+  const [pageI, setPageI] = useState(1);
+  const [totalPatientsI, setTotalPatientsI] = useState<number>(0);
+  const [patientsI, setPatientsI] = useState<Patients[]>([]);
   const { ref, inView } = useInView();
   const toast = useToast();
 
-  const fetchPatients = async () => {
+
+  const fetchPatientsA = async () => {
     try {
-      const patientsList = await getPatients(page, 10);
-      setPatients([...patients, ...patientsList.items]);
-      if (page === 1) setTotalPatients(patientsList.meta.totalItems);
-      setPage(page + 1);
+      const patientsList = await getPatientsActive(pageA, 10);
+      setPatientsA([...patientsA, ...patientsList.items]);
+      if (pageA === 1) setTotalPatientsA(patientsList.meta.totalItems);
+      setPageA(pageA + 1);
     } catch (error) {
       toast({
         title: "Error al cargar los pacientes",
@@ -31,59 +47,142 @@ function PatientList() {
         isClosable: true,
       });
     }
-  }
+  };
 
   useEffect(() => {
-    if (inView || page === 1) {
-      fetchPatients();
+    if (inView || pageA === 1) {
+      fetchPatientsA();
     }
-  }, [inView, page]);
+  }, [inView, pageA]);
+
+  const fetchPatientsI = async () => {
+    try {
+      const patientsList = await getPatientsInactive(pageI, 10);
+      setPatientsI([...patientsI, ...patientsList.items]);
+      if (pageI === 1) setTotalPatientsI(patientsList.meta.totalItems);
+      setPageI(pageI + 1);
+    } catch (error) {
+      toast({
+        title: "Error al cargar los pacientes",
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+      });
+    }
+  };
+
+  useEffect(() => {
+    if (inView || pageI === 1) {
+      fetchPatientsI();
+    }
+  }, [inView, pageI]);
+
+  const tabStyle: SystemStyleObject = {
+    border: "2px solid #AD8EB1",
+    borderRadius: 10,
+    width: "40%",
+    color: "#AD8EB1",
+    fontWeight: 500,
+    fontSize: "1.1rem",
+    padding: "0",
+  };
+  const selectedTabStyle: SystemStyleObject = {
+    ...tabStyle,
+    color: "white",
+    backgroundColor: "#AD8EB1",
+  };
 
   return (
     <Box as="main" flex={1}>
-        <Arrow />
-        <Flex
-          marginTop={-16}
-          marginRight={6}
-          flexDirection="column"
-          alignItems="flex-end"
+      <Arrow />
+      <Flex
+        marginTop={-16}
+        marginRight={6}
+        flexDirection="column"
+        alignItems="flex-end"
+      >
+        <Heading
+          as="h1"
+          color="#4F1964"
+          borderBottom={"2px solid #AD8EB1"}
+          paddingX="10px"
         >
-          <Heading
-            as="h1"
-            color="#4F1964"
-            borderBottom={"2px solid #AD8EB1"}
-            paddingX="10px"
-          >
-            Lista de pacientes 
-          </Heading>
-        </Flex>
+          Lista de pacientes
+        </Heading>
+      </Flex>
+      <Flex
+        direction={"column"}
+        paddingX={"30px"}
+        paddingBottom={"30px"}
+        marginTop={"20px"}
+      >
         <Flex
-          direction={"column"}
-          paddingX={"30px"}
-          paddingBottom={"30px"}
-          marginTop={"20px"}
+          direction={"row"}
+          marginBottom={"10px"}
+          justifyContent={"flex-end"}
         >
-          <Flex direction={"row"} marginBottom={"10px"} justifyContent={"flex-end"}>
           <Link href={routes.nurseRegisterPatient}>
-          <Text color="#4F1964">+ Registrar paciente</Text>
+            <Text color="#4F1964">+ Registrar paciente nuevo</Text>
           </Link>
-          </Flex>      
-          {patients?.map((patient) => (
-            <PatientCard key={patient.nationalId} fullName={patient.user.fullname} nationalId={patient.nationalId}/>
-          ))}
-          {!(totalPatients === patients.length) && (
-            <Box ref={ref}>
-            <PaginationLoader />
-          </Box>
-          )}
-          {!(patients.length > 0) && (
-            <Flex justifyContent="center" marginTop={4}>
-              <Text color="#4F1964">No hay pacientes registrados</Text>
-              </Flex>
-          )}
         </Flex>
+        <Box as="article">
+          <Tabs variant="unstyled">
+            <TabList display={"flex"} justifyContent={"center"} gap={6}>
+              <Tab sx={tabStyle} _selected={selectedTabStyle}>
+                Activos
+              </Tab>
+              <Tab sx={tabStyle} _selected={selectedTabStyle}>
+                Inactivos
+              </Tab>
+            </TabList>
+            <TabPanels>
+              <TabPanel>
+                {patientsA?.map((patient) => (
+                  <PatientCard
+                    key={patient.nationalId}
+                    fullName={patient.user.fullname}
+                    nationalId={patient.nationalId}
+                    status={patient.status}
+                  />
+                ))}
+                {!(totalPatientsA === patientsA.length) && (
+                  <Box ref={ref}>
+                    <PaginationLoader />
+                  </Box>
+                )}
+                {!(patientsA.length > 0) && (
+                  <Flex justifyContent="center" marginTop={4}>
+                    <Text color="#4F1964">No hay pacientes activos</Text>
+                  </Flex>
+                )}
+              </TabPanel>
+              <TabPanel>
+                <Text fontWeight="500" marginBottom={"15px"} fontSize={"14px"}>Haz click en la flecha para crearle un nuevo caso médico al paciente</Text>
+                {patientsI?.map((patient) => (
+                  <PatientCard
+                    key={patient.nationalId}
+                    fullName={patient.user.fullname}
+                    nationalId={patient.nationalId}
+                    status={patient.status}
+                  />
+                ))}
+                {!(totalPatientsI === patientsI.length) && (
+                  <Box ref={ref}>
+                    <PaginationLoader />
+                  </Box>
+                )}
+                {!(patientsI.length > 0) && (
+                  <Flex justifyContent="center" marginTop={4}>
+                    <Text color="#4F1964">No hay pacientes inactivos</Text>
+                  </Flex>
+                )}
+              </TabPanel>
+            </TabPanels>
+          </Tabs>
         </Box>
-  )
+      </Flex>
+    </Box>
+  );
 }
 
-export default PatientList
+export default PatientList;

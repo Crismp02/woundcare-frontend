@@ -21,8 +21,11 @@ export const getPatient = async (nationalId: string) => {
   const data = await fetchAPI<ThePatient>(`/patient/${nationalId}`, "GET");
   return data;
 };
-export const getDoctors = async () => {
-  const data = await fetchAPI<Doctor[]>("/doctor", "GET");
+export const getDoctors = async (page?: number, perPage?: number): Promise<PaginatedResponse<Doctor>> => {
+  const data = await fetchAPI<PaginatedResponse<Doctor>>(`/doctor?${page ? `page=${page}&` : ""}${
+    perPage ? `per-page=${perPage}` : ""
+  }`,
+  "GET");
   return data;
 };
 export const getDoctor = async (nationalId: string) => {
@@ -37,8 +40,15 @@ export const createMedicalFile = async (medicalFile: MedicalFile) => {
     const data = await fetchAPI(`/medical-file`, "POST", medicalFile);
     return data;
 };
-export const getPatients = async (page?: number, perPage?: number): Promise<PaginatedResponse<Patients>> => {
-  const data = await fetchAPI<PaginatedResponse<Patients>>(`/patient/nurse?${page ? `page=${page}&` : ""}${
+export const getPatientsActive = async (page?: number, perPage?: number): Promise<PaginatedResponse<Patients>> => {
+  const data = await fetchAPI<PaginatedResponse<Patients>>(`/patient/active/nurse?${page ? `page=${page}&` : ""}${
+    perPage ? `per-page=${perPage}` : ""
+  }`,
+  "GET");
+  return data;
+};
+export const getPatientsInactive = async (page?: number, perPage?: number): Promise<PaginatedResponse<Patients>> => {
+  const data = await fetchAPI<PaginatedResponse<Patients>>(`/patient/inactive/nurse?${page ? `page=${page}&` : ""}${
     perPage ? `per-page=${perPage}` : ""
   }`,
   "GET");
@@ -59,4 +69,8 @@ export const createDoctor = async (doctor: TheDoctor) => {
 export const createBandageChange = async (bandageChange: BandageChange) => {
     const data = await fetchAPI(`/bandage-change`, "POST", bandageChange);
     return data;
+}
+export const dischargePatient = async (nationalId: string) => {
+  const data = await fetchAPI(`/medical-file/patient/${nationalId}/discharge`, "PATCH");
+  return data;
 }
