@@ -35,7 +35,6 @@ function Login() {
       } else {
         toast.error("Error inesperado");
       }
-    } finally {
       setLoading(false);
     }
   };
