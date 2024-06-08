@@ -18,6 +18,7 @@ import {
   getMe,
 } from "@/services/nurse/nurse.service";
 import { Doctor, Nurse } from "@/interfaces/nurse/nurse.interface";
+import { useInView } from "react-intersection-observer";
 
 function CreateMadicalFile() {
   const searchParams = useSearchParams();
@@ -52,18 +53,34 @@ function CreateMadicalFile() {
     },
   ]);
 
-  const [doctors, setDoctors] = useState<Doctor[]>([]);
   const [selectedDoctor, setSelectedDoctor] = useState("");
   const [nurse, setNurse] = useState<Nurse>();
+  
+  const [page, setPage] = useState(1);
+  const [totalDoctor, setTotalPatientsA] = useState<number>(0);
+  const [doctors, setDoctors] = useState<Doctor[]>([]);
+  const { ref, inView } = useInView();
 
+  const fetchDoctors = async () => {
+    try {
+      const response = await getDoctors(page, 10);
+      setDoctors([...doctors, ...response.items]);
+      if (page === 1) setTotalPatientsA(response.meta.totalItems);
+      setPage(page + 1);
+    } catch (error) {
+      toast({
+        title: "Error al cargar los doctores",
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+      });
+    }
+  };
   useEffect(() => {
-    const fetchDoctors = async () => {
-      const response = await getDoctors();
-      setDoctors(response);
-    };
-
-    fetchDoctors();
-  }, []);
+    if (inView || page === 1) {
+      fetchDoctors();
+    }
+  }, [inView, page]);
 
   useEffect(() => {
     const fetchNurse = async () => {
