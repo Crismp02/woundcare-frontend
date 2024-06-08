@@ -1,12 +1,13 @@
 "use client"
 import Arrow from '@/components/Arrow'
-import { Box, Button, Flex, Heading, Text } from '@chakra-ui/react'
+import { AlertDialog, Box, Button, Flex, Heading, Text } from '@chakra-ui/react'
 import Image from 'next/image'
 import React, { useEffect, useState } from 'react'
 import { useSearchParams } from 'next/navigation';
 import { Nurse, TheMedicalFile, ThePatientInfo } from '@/interfaces/nurse/nurse.interface'
 import { getMe, getPatientInfo, getPatientMedicalFile } from '@/services/nurse/nurse.service'
 import ModalBandageChange from './ModalBandageChange'
+import AlertDialogDischarge from './AlertDialogDischarge'
 
 function page() {
   const searchParams = useSearchParams()
@@ -93,6 +94,8 @@ function page() {
           <Text color="#4F1964" marginTop={"4px"}>
             Nº Historia: {medicalFile?.id}
           </Text>
+          <Button borderRadius="15px"
+          color="white" bg={"#AD8EB1"} fontSize={"14px"} mt={"10px"} mb={"5px"} boxShadow="0px 4px 4px rgba(0, 0, 0, 0.25)" onClick={handleOpenModal}>+ Asignar medicamentos</Button>
           <Button borderRadius="15px"
           color="white" bg={"#AD8EB1"} fontSize={"14px"} mt={"10px"} mb={"-10px"} boxShadow="0px 4px 4px rgba(0, 0, 0, 0.25)" onClick={handleOpenModal}>+ Asignar cambio de vendaje</Button>
         </Flex>
@@ -280,17 +283,7 @@ function page() {
           ) : (
             <p>No hay plan de cuidados.</p>
           )}
-          <Button  w="100%"
-          h="6vh"
-          bg="#4F1964"
-          borderRadius="15px"
-          mt="20px"
-          color="white"
-          fontSize="24px"
-          fontWeight="bold"
-          boxShadow="0px 4px 4px rgba(0, 0, 0, 0.25)">
-            Dar de alta
-          </Button>
+          <AlertDialogDischarge idPatient={patientInfo?.nationalId}/>
           <ModalBandageChange isOpen={isOpen} onClose={handleCloseModal} idNurse={nurse?.nationalId} idPatient={patientInfo?.nationalId}/>
         </Flex>
       </Box>
