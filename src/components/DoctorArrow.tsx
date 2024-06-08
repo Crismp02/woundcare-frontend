@@ -1,9 +1,8 @@
-import routes from "@/utils/routes";
 import { Box, Image } from "@chakra-ui/react";
 import Link from "next/link";
 import React from "react";
 
-function DoctorArrow() {
+function DoctorArrow({ link }: { link: string }) {
   return (
     <Box
       w="18vh"
@@ -22,7 +21,7 @@ function DoctorArrow() {
         boxShadow="0px 4px 4px rgba(0, 0, 0, 0.25)"
         justifyContent="center"
       >
-        <Link href={routes.doctorHomePage}>
+        <Link href={link}>
           <Image
             src="/arrow.png"
             alt="arrow"

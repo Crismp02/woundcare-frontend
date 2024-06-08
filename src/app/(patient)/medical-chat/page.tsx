@@ -97,19 +97,12 @@ function MedicalChat() {
       setIsConnected(false);
     });
     socket.on("on-message", (data) => {
-      addMessage(data);
-      setTotalMessages(totalMessages + 1);
-    });
-
-    socket.on("messages", (message: Message) => {
-      setMessages((prevMessages) => [
-        {
-          ...message,
-          owner: message.userId === conversation.userId,
-        },
-        ...prevMessages,
-      ]);
-      setTotalMessages(totalMessages + 1);
+      if (data.message.conversationId !== conversation.id) {
+        toast.info("Ha llegado un nuevo mensaje");
+      } else {
+        addMessage(data);
+        setTotalMessages(totalMessages + 1);
+      }
     });
 
     return () => {
@@ -119,7 +112,7 @@ function MedicalChat() {
       socket.off("disconnect", () => {
         console.log("Cleaning");
       });
-      socket.off("messages");
+      socket.off("on-message");
     };
   }, [conversation]);
 

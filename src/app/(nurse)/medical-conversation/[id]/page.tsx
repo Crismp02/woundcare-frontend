@@ -1,5 +1,5 @@
 "use client";
-import Arrow from "@/components/Arrow";
+import DoctorArrow from "@/components/DoctorArrow";
 import Loader from "@/components/Loader";
 import Chat from "@/components/medical-chat/Chat";
 import PaginationLoader from "@/components/PaginationLoader";
@@ -8,6 +8,7 @@ import { Message } from "@/interfaces/chat/messages.interface";
 import { getConversation } from "@/services/nurse/conversation.service";
 import { getMessages } from "@/services/nurse/messages.service";
 import { manager } from "@/socket";
+import routes from "@/utils/routes";
 import { Box, Flex, Heading, Input } from "@chakra-ui/react";
 import Image from "next/image";
 import { useParams } from "next/navigation";
@@ -100,19 +101,12 @@ function MedicalConversation() {
       setIsConnected(false);
     });
     socket.on("on-message", (data) => {
-      addMessage(data);
-      setTotalMessages(totalMessages + 1);
-    });
-
-    socket.on("messages", (message: Message) => {
-      setMessages((prevMessages) => [
-        {
-          ...message,
-          owner: message.userId === conversation.userId,
-        },
-        ...prevMessages,
-      ]);
-      setTotalMessages(totalMessages + 1);
+      if (data.message.conversationId !== id) {
+        toast.info("Ha llegado un nuevo mensaje");
+      } else {
+        addMessage(data);
+        setTotalMessages(totalMessages + 1);
+      }
     });
 
     return () => {
@@ -122,7 +116,7 @@ function MedicalConversation() {
       socket.off("disconnect", () => {
         console.log("Cleaning");
       });
-      socket.off("messages");
+      socket.off("on-message");
     };
   }, [conversation]);
 
@@ -143,7 +137,7 @@ function MedicalConversation() {
       maxHeight={"100vh"}
       flexGrow={1}
     >
-      <Arrow />
+      <DoctorArrow link={routes.nurseMessages} />
       <Flex as="section" flexDirection={"column"} paddingX={6} flexGrow={1}>
         <Flex
           marginTop={-20}

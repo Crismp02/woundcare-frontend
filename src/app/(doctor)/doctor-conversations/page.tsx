@@ -1,12 +1,13 @@
 import NurseConversations from "@/components/doctor-conversations/NurseConversations";
 import DoctorArrow from "@/components/DoctorArrow";
+import routes from "@/utils/routes";
 import { Box, Flex, Heading } from "@chakra-ui/react";
 import React from "react";
 
 function DoctorConversations() {
   return (
     <Box as="main" flex={1}>
-      <DoctorArrow />
+      <DoctorArrow link={routes.doctorHomePage} />
       <Flex
         marginTop={-16}
         marginRight={6}
