@@ -42,6 +42,6 @@ export const editAddress = async (adress: string) => {
 }
 
 export const getPrescriptions = async () => {
-    const data = await fetchAPI<Prescription>("/prescription/me", "GET");
+    const data = await fetchAPI<Prescription[]>("/prescription/me", "GET");
     return data;
 }

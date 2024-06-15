@@ -56,5 +56,10 @@ interface User {
     lapse: number;
   }
   export interface Prescription{
-    medicines: Medicine[];
+    id: number;
+    medicalFile: number;
+    medicineName: string;
+    medicineDescription: string;
+    dose: number;
+    lapse: number;
   }

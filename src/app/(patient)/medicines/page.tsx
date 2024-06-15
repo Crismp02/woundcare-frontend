@@ -6,13 +6,13 @@ import { Prescription } from "@/interfaces/patient/patient.interface";
 import Arrow from "@/components/Arrow";
 
 function Medicines() {
-  const [prescriptions, setPrescriptions] = useState<Prescription | null>(null);
+  const [prescriptions, setPrescriptions] = useState<Prescription[]>([]);
 
 useEffect(() => {
   const fetchPrescriptions = async () => {
     const data = await getPrescriptions();
     setPrescriptions(data);
-    console.log(data.medicines);
+    console.log(data);
   };
 
   fetchPrescriptions();
@@ -36,9 +36,7 @@ useEffect(() => {
           <Box w="55vw" h="2px" bg="#AD8EB1" />
         </Flex>
       </Flex>
-      {prescriptions?.medicines?.length === undefined ? (<>
-      <p style={{marginLeft: "30px"}}>No hay medicamentos registrados</p></>): (<>
-        {prescriptions?.medicines?.map((medicine, index) => (
+        {prescriptions?.map((medicine, index) => (
         <Flex
           key={index}
           w="100vw"
@@ -74,7 +72,7 @@ useEffect(() => {
               </Flex>
               <Flex direction="column" ml="20px" color="#3B3B3B">
                 <Text fontWeight="bold" fontSize="large">
-                  {medicine.medicine}
+                  {medicine.medicineName}
                 </Text>
                 <Text fontWeight="300" fontSize="large">
                   {medicine.dose} mg
@@ -87,7 +85,7 @@ useEffect(() => {
           </Flex>
           <Box w="100%" h="2px" bg="#AD8EB1" mb="5px" />
         </Flex>
-      ))}</>)}
+      ))}
       
     </>
   );
