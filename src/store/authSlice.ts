@@ -1,10 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
-import type { PayloadAction } from "@reduxjs/toolkit";
+import type { ActionReducerMapBuilder, PayloadAction } from "@reduxjs/toolkit";
 
 export interface IAuthState {
   authState: boolean;
   token: string;
   role: string;
+  rehydrated: boolean;
 }
 
 export interface IAuthPayload {
@@ -16,6 +17,7 @@ const initialState: IAuthState = {
   authState: false,
   token: "",
   role: "",
+  rehydrated: false,
 };
 
 export const authSlice = createSlice({
@@ -31,8 +33,17 @@ export const authSlice = createSlice({
       state.authState = false;
       state.token = "";
       state.role = "";
-      localStorage.removeItem("persist:auth");
     },
+  },
+  extraReducers: (builder: ActionReducerMapBuilder<IAuthState>) => {
+    builder.addCase("persist/REHYDRATE", (state, action: any) => {
+      state.rehydrated = true; // Set it to true when the state is rehydrated
+      if (action.payload) {
+        state.authState = action.payload.authState === "true";
+        state.token = action.payload.token.replace(/"/g, "");
+        state.role = action.payload.role.replace(/"/g, "");
+      }
+    });
   },
 });
 

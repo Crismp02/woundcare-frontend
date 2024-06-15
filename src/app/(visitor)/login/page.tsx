@@ -1,6 +1,6 @@
 "use client";
 import { login } from "@/services/auth/login.service";
-import { useAppDispatch } from "@/store/store";
+import { useAppDispatch, useAppSelector } from "@/store/store";
 import {
   Box,
   Heading,
@@ -9,10 +9,9 @@ import {
   Checkbox,
   Button,
   InputGroup,
-  InputRightElement,
 } from "@chakra-ui/react";
 import Image from "next/image";
-import React, { FormEvent, useState } from "react";
+import React, { FormEvent, useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { login as sliceLogin } from "@/store/authSlice";
 import { useRoleRouter } from "@/hooks/useRoleRouter";
@@ -29,6 +28,7 @@ function Login() {
 
   const dispatch = useAppDispatch();
   const roleRouter = useRoleRouter();
+  const { token, role, rehydrated } = useAppSelector((state) => state.auth);
 
   const signIn = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -36,10 +36,6 @@ function Login() {
       setLoading(true);
       const { token, role } = await login(nationalId, password);
       dispatch(sliceLogin({ token, role }));
-      const redirectFunction = roleRouter.get(role);
-      if (redirectFunction) {
-        redirectFunction();
-      }
     } catch (error: any) {
       if (error.status === 401) {
         toast.error("Credenciales incorrectas");
@@ -49,6 +45,16 @@ function Login() {
       setLoading(false);
     }
   };
+
+  useEffect(() => {
+    if (rehydrated && token) {
+      const redirectFunction = roleRouter.get(role);
+      if (redirectFunction) {
+        redirectFunction();
+      }
+    }
+  }, [token, rehydrated]);
+
   return (
     <Box
       as="main"
