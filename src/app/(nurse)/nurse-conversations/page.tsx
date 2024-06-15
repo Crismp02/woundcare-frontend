@@ -1,3 +1,4 @@
+"use client";
 import Arrow from "@/components/Arrow";
 import DoctorsConversationsTab from "@/components/nurse-conversations/DoctorsConversationsTab";
 import PatientsConversationsTab from "@/components/nurse-conversations/PatientsConversationsTab";
@@ -12,7 +13,7 @@ import {
   TabPanels,
   Tabs,
 } from "@chakra-ui/react";
-import React from "react";
+import React, { useState } from "react";
 
 function NurseConversationsPage() {
   const tabStyle: SystemStyleObject = {
@@ -30,6 +31,8 @@ function NurseConversationsPage() {
     color: "white",
     backgroundColor: "#AD8EB1",
   };
+
+  const [tabIndex, setTabIndex] = useState(0);
   return (
     <Box as="main" flex={1}>
       <Arrow />
@@ -50,7 +53,11 @@ function NurseConversationsPage() {
         </Heading>
       </Flex>
       <Box as="article" padding={6}>
-        <Tabs variant="unstyled">
+        <Tabs
+          variant="unstyled"
+          index={tabIndex}
+          onChange={(index) => setTabIndex(index)}
+        >
           <TabList display={"flex"} justifyContent={"center"} gap={6}>
             <Tab sx={tabStyle} _selected={selectedTabStyle}>
               Pacientes
@@ -64,7 +71,7 @@ function NurseConversationsPage() {
               <PatientsConversationsTab />
             </TabPanel>
             <TabPanel>
-              <DoctorsConversationsTab />
+              <DoctorsConversationsTab key={tabIndex} />
             </TabPanel>
           </TabPanels>
         </Tabs>

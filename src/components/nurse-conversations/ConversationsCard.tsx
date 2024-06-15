@@ -58,8 +58,17 @@ function ConversationsCard({
           paddingY={0}
           width={"100%"}
         >
-          <Heading as={"h3"} fontSize={20}>
-            {name}
+          <Heading as={"h3"} fontSize={18}>
+            <LinesEllipsis
+              text={name}
+              maxLine="2"
+              ellipsis="..."
+              trimRight
+              basedOn="letters"
+              style={{
+                width: "100%",
+              }}
+            />
           </Heading>
           {message ? (
             <LinesEllipsis
@@ -69,7 +78,7 @@ function ConversationsCard({
               trimRight
               basedOn="letters"
               style={{
-                fontSize: "18px",
+                fontSize: "16px",
                 color: "#3B3B3B",
                 width: "100%",
               }}
