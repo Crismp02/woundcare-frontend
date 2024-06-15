@@ -1,7 +1,16 @@
 "use client";
 import { login } from "@/services/auth/login.service";
 import { useAppDispatch } from "@/store/store";
-import { Box, Heading, Text, Input, Checkbox, Button } from "@chakra-ui/react";
+import {
+  Box,
+  Heading,
+  Text,
+  Input,
+  Checkbox,
+  Button,
+  InputGroup,
+  InputRightElement,
+} from "@chakra-ui/react";
 import Image from "next/image";
 import React, { FormEvent, useState } from "react";
 import { toast } from "react-toastify";
@@ -9,12 +18,14 @@ import { login as sliceLogin } from "@/store/authSlice";
 import { useRoleRouter } from "@/hooks/useRoleRouter";
 import Link from "next/link";
 import routes from "@/utils/routes";
+import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 
 function Login() {
   const [nationalId, setNationalId] = useState("");
   const [password, setPassword] = useState("");
   const [acceptTerms, setAcceptTerms] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
   const dispatch = useAppDispatch();
   const roleRouter = useRoleRouter();
@@ -92,7 +103,7 @@ function Login() {
         as="form"
         display="flex"
         flexDirection="column"
-        gap="28px"
+        gap="22px"
         alignItems="center"
         flexGrow={1}
         onSubmit={signIn}
@@ -106,18 +117,40 @@ function Login() {
           height="55px"
           border="none"
           focusBorderColor="transparent"
+          backgroundColor={"white"}
         />
-        <Input
-          placeholder="Clave de seguridad"
-          type="password"
-          value={password}
-          onChange={(event) => setPassword(event.target.value)}
+        <InputGroup
+          width={"80%"}
+          height={"55px"}
+          backgroundColor={"white"}
           maxWidth="311px"
-          width="80%"
-          height="55px"
-          border="none"
-          focusBorderColor="transparent"
-        />
+          display={"flex"}
+          alignItems={"center"}
+          gap={5}
+          borderRadius={5}
+        >
+          <Input
+            type={showPassword ? "text" : "password"}
+            placeholder="Clave de seguridad"
+            value={password}
+            onChange={(event) => setPassword(event.target.value)}
+            border="none"
+            focusBorderColor="transparent"
+          />
+          <Button
+            size="lg"
+            padding={0}
+            backgroundColor={"transparent"}
+            _hover={{
+              backgroundColor: "transparent",
+            }}
+            onClick={() => {
+              setShowPassword(!showPassword);
+            }}
+          >
+            {showPassword ? <ViewOffIcon /> : <ViewIcon />}
+          </Button>
+        </InputGroup>
         <Box display="flex" gap={1}>
           <Checkbox
             colorScheme="purple"
