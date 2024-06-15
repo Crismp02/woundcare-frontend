@@ -6,13 +6,17 @@ import { useRouter } from "next/navigation";
 interface PatientCardProps {
     fullName: string;
     nationalId: string;
+    status: string;
   }
 
-const PatientCard: React.FC<PatientCardProps> = ({ fullName, nationalId }) => {
+const PatientCard: React.FC<PatientCardProps> = ({ fullName, nationalId, status }) => {
     const router = useRouter();
 
     const handleViewMedicalFile = () => {
         router.push(`/medical-file-patient?id=${nationalId}`);
+    }
+    const handleCreateMedicalFile = () => {
+        router.push(`/create-medical-file?id=${nationalId}`);
     }
   return (
     <Flex direction={"column"}>
@@ -36,7 +40,7 @@ const PatientCard: React.FC<PatientCardProps> = ({ fullName, nationalId }) => {
           width={10}
           height={10}
           style={{ cursor: "pointer" }}
-          onClick={handleViewMedicalFile}
+          onClick={ status === "ACTIVE" ? handleViewMedicalFile : handleCreateMedicalFile}
         />
           </Box>
           </Flex> 

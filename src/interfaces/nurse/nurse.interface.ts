@@ -93,7 +93,7 @@ export interface Patients{
 }
 
 export interface TheMedicalFile {
-  id: string;
+  id: number;
   patientId: string;
   doctorId: string;
   nurseId: string;
@@ -132,4 +132,18 @@ export interface TheDoctor {
   genre: Genre;
   birthDate: string;
   medicalCenter: string;
+}
+
+export interface BandageChange{
+  date: string;
+  nurseId: string;
+  patientId: string;
+}
+
+export interface PrescriptionMedicine{
+  medicalFileId: number;
+  medicineName: string;
+  medicineDescription: string;
+  dose: number;
+  lapse: number;
 }
