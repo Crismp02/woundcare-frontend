@@ -29,7 +29,8 @@ const routes = {
   nurseRegisterDoctor: "/nurse-register-doctor",
   //Doctor routes
   doctorHomePage: "/doctor-home-page",
-  doctorPatientsList: "/doctor-home-page",
+  doctorPatientsList: "/doctor-patient-list",
+  doctorMedicalFilePatient: "/doctor-medical-file-patient",
   doctorMessages: "/doctor-conversations",
 };
 export default routes;
