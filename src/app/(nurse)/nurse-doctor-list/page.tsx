@@ -11,7 +11,7 @@ import { useInView } from "react-intersection-observer";
 import PaginationLoader from "@/components/PaginationLoader";
 import Loader from "@/components/Loader";
 
-function doctorList() {
+function DoctorList() {
   const [page, setPage] = useState(1);
   const [totalDoctor, setTotalPatientsA] = useState<number>(0);
   const [doctors, setDoctors] = useState<Doctor[]>([]);
@@ -97,4 +97,4 @@ function doctorList() {
   );
 }
 
-export default doctorList;
+export default DoctorList;
