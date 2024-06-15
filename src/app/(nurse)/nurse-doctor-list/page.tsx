@@ -9,6 +9,7 @@ import { getDoctors } from "@/services/nurse/nurse.service";
 import DoctorCard from "@/components/doctor-list-card/page";
 import { useInView } from "react-intersection-observer";
 import PaginationLoader from "@/components/PaginationLoader";
+import Loader from "@/components/Loader";
 
 function doctorList() {
   const [page, setPage] = useState(1);
@@ -16,11 +17,13 @@ function doctorList() {
   const [doctors, setDoctors] = useState<Doctor[]>([]);
   const { ref, inView } = useInView();
   const toast = useToast();
+  const [isLoading, setIsLoading] = useState(true);
 
   const fetchDoctors = async () => {
     try {
       const response = await getDoctors(page, 10);
       setDoctors([...doctors, ...response.items]);
+      setIsLoading(false);
       if (page === 1) setTotalPatientsA(response.meta.totalItems);
       setPage(page + 1);
     } catch (error) {
@@ -37,7 +40,11 @@ function doctorList() {
       fetchDoctors();
     }
   }, [inView, page]);
-  return (
+  return isLoading ? (
+    <Box width={"100vw"} flexGrow={1} position={"relative"}>
+      <Loader/>
+    </Box>
+  ) : (
     <Box as="main" flex={1}>
       <Arrow />
       <Flex

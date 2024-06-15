@@ -21,6 +21,7 @@ import React, { useEffect, useState } from "react";
 import routes from "@/utils/routes";
 import { useInView } from "react-intersection-observer";
 import PaginationLoader from "@/components/PaginationLoader";
+import Loader from "@/components/Loader";
 
 function PatientList() {
   const [pageA, setPageA] = useState(1);
@@ -31,12 +32,23 @@ function PatientList() {
   const [patientsI, setPatientsI] = useState<Patients[]>([]);
   const { ref, inView } = useInView();
   const toast = useToast();
+  const [isLoading, setIsLoading] = useState(true);
 
 
   const fetchPatientsA = async () => {
+    const fetchDoctors = await getDoctors();
+    if (fetchDoctors.items.length === 0) {
+      toast({
+        title: "Debe registrar un médico antes de registrar a los pacientes",
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+      });
+    } else{
     try {
       const patientsList = await getPatientsActive(pageA, 10);
       setPatientsA([...patientsA, ...patientsList.items]);
+      setIsLoading(false);
       if (pageA === 1) setTotalPatientsA(patientsList.meta.totalItems);
       setPageA(pageA + 1);
     } catch (error) {
@@ -47,6 +59,7 @@ function PatientList() {
         isClosable: true,
       });
     }
+  }
   };
 
   useEffect(() => {
@@ -59,6 +72,7 @@ function PatientList() {
     try {
       const patientsList = await getPatientsInactive(pageI, 10);
       setPatientsI([...patientsI, ...patientsList.items]);
+      setIsLoading(false);
       if (pageI === 1) setTotalPatientsI(patientsList.meta.totalItems);
       setPageI(pageI + 1);
     } catch (error) {
@@ -92,7 +106,11 @@ function PatientList() {
     backgroundColor: "#AD8EB1",
   };
 
-  return (
+  return isLoading ? (
+    <Box width={"100vw"} flexGrow={1} position={"relative"}>
+      <Loader />
+    </Box>
+  ) : (
     <Box as="main" flex={1}>
       <Arrow />
       <Flex
