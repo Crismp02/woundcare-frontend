@@ -90,7 +90,7 @@ const ModalComponent: React.FC<ModalComponentProps> = ({
           <Box w="100%" h="2px" bg="#4F1964" mt="-10px" mb="10px" />
           {type === "Alergias conocidas" ? (
             <>
-              <AllergyList allergies={allergies} setAllergies={setAllergies} />
+              <AllergyList allergies={allergies}/>
             </>
           ) : type === "Grupo sanguíneo" ? (
             <>
@@ -128,7 +128,7 @@ const ModalComponent: React.FC<ModalComponentProps> = ({
             </>
           ) : type === "Enfermedades existentes" ? (
             <>
-            <MedicalRecordsList diseases={diseases} setDiseases={setDiseases} />
+            <MedicalRecordsList diseases={diseases}/>
             </>
           ) : type === "Número de teléfono" ? (
             <>
