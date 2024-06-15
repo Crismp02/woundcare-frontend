@@ -8,6 +8,7 @@ import { Nurse, TheMedicalFile, ThePatientInfo } from '@/interfaces/nurse/nurse.
 import { getMe, getPatientInfo, getPatientMedicalFile } from '@/services/nurse/nurse.service'
 import ModalBandageChange from './ModalBandageChange'
 import AlertDialogDischarge from './AlertDialogDischarge'
+import ModalMedicine from './ModalMedicine'
 
 function page() {
   const searchParams = useSearchParams()
@@ -15,6 +16,7 @@ function page() {
   const [medicalFile, setMedicalFile] = useState<TheMedicalFile>();
   const [patientInfo, setPatientInfo] = useState<ThePatientInfo>();
   const [isOpen, setIsOpen] = useState(false);
+  const [isOpenM, setIsOpenM] = useState(false);
   const [nurse, setNurse] = useState<Nurse>();
 
   useEffect(() => {
@@ -73,6 +75,14 @@ function page() {
     setIsOpen(false);
   };
 
+  const handleOpenModalM = () => {
+    setIsOpenM(true);
+  };
+
+  const handleCloseModalM = () => {
+    setIsOpenM(false);
+  };
+
   return (
     <>
       <Box as="main" flex={1}>
@@ -94,10 +104,18 @@ function page() {
           <Text color="#4F1964" marginTop={"4px"}>
             Nº Historia: {medicalFile?.id}
           </Text>
+          <Flex direction={"row"} justifyContent={"flex-end"} mt={"10px"} mb={"5px"}>
           <Button borderRadius="15px"
-          color="white" bg={"#AD8EB1"} fontSize={"14px"} mt={"10px"} mb={"5px"} boxShadow="0px 4px 4px rgba(0, 0, 0, 0.25)" onClick={handleOpenModal}>+ Asignar medicamentos</Button>
+          color="white" bg={"#AD8EB1"} fontSize={"14px"} mr={"10px"} boxShadow="0px 4px 4px rgba(0, 0, 0, 0.25)" onClick={handleOpenModalM}>+<Image
+          src="/medicine/capsule.png"
+          alt="menu"
+          width={20}
+          height={20}
+          style={{ cursor: "pointer" }}
+        /></Button>
           <Button borderRadius="15px"
-          color="white" bg={"#AD8EB1"} fontSize={"14px"} mt={"10px"} mb={"-10px"} boxShadow="0px 4px 4px rgba(0, 0, 0, 0.25)" onClick={handleOpenModal}>+ Asignar cambio de vendaje</Button>
+          color="white" bg={"#AD8EB1"} fontSize={"14px"} boxShadow="0px 4px 4px rgba(0, 0, 0, 0.25)" onClick={handleOpenModal}>+ Asignar cambio de vendaje</Button>
+          </Flex>  
         </Flex>
         <Flex w="100vw" h="13vh" align="center" pr="6vw" pl="6vw">
           {patientInfo?.genre === 'FEMALE' ? (
@@ -198,7 +216,7 @@ function page() {
           </Text>
           {medicalFile?.medicalHistory ? (
             medicalFile.medicalHistory.length > 0 ? (
-              medicalFile.medicalHistory.map((record, index) => <li key={index}>{record}</li>)
+              medicalFile.medicalHistory.map((record, index) => <li key={index} style={{marginTop: "5px"}}>{record}</li>)
             ) : (
               <p>No hay historia de enfermedad actual.</p>
             )
@@ -276,7 +294,7 @@ function page() {
           </Text>
           {medicalFile?.carePlan ? (
             medicalFile.carePlan.length > 0 ? (
-              medicalFile.carePlan.map((record, index) => <li key={index}>{record}</li>)
+              medicalFile.carePlan.map((record, index) => <li key={index} style={{marginTop: "5px"}}>{record}</li>)
             ) : (
               <p>No hay plan de cuidados.</p>
             )
@@ -285,6 +303,7 @@ function page() {
           )}
           <AlertDialogDischarge idPatient={patientInfo?.nationalId}/>
           <ModalBandageChange isOpen={isOpen} onClose={handleCloseModal} idNurse={nurse?.nationalId} idPatient={patientInfo?.nationalId}/>
+          <ModalMedicine isOpen={isOpenM} onClose={handleCloseModalM} idMedicalFile={medicalFile?.id}/>
         </Flex>
       </Box>
     </>

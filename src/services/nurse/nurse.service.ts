@@ -6,9 +6,10 @@ import {
   Nurse,
   Patient,
   Patients,
+  PrescriptionMedicine,
   TheDoctor,
   TheMedicalFile,
-  ThePatientInfo
+  ThePatientInfo,
 } from "@/interfaces/nurse/nurse.interface";
 import { ThePatient } from "@/interfaces/patient/patient.interface";
 import { fetchAPI } from "@/utils/api";
@@ -72,5 +73,9 @@ export const createBandageChange = async (bandageChange: BandageChange) => {
 }
 export const dischargePatient = async (nationalId: string) => {
   const data = await fetchAPI(`/medical-file/patient/${nationalId}/discharge`, "PATCH");
+  return data;
+}
+export const createPrescription = async (prescription: PrescriptionMedicine) => {
+  const data = await fetchAPI(`/prescription`, "POST", prescription);
   return data;
 }
