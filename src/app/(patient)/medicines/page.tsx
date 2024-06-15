@@ -12,6 +12,7 @@ useEffect(() => {
   const fetchPrescriptions = async () => {
     const data = await getPrescriptions();
     setPrescriptions(data);
+    console.log(data.medicines);
   };
 
   fetchPrescriptions();
@@ -35,7 +36,9 @@ useEffect(() => {
           <Box w="55vw" h="2px" bg="#AD8EB1" />
         </Flex>
       </Flex>
-      {prescriptions?.medicines?.map((medicine, index) => (
+      {prescriptions?.medicines?.length === undefined ? (<>
+      <p style={{marginLeft: "30px"}}>No hay medicamentos registrados</p></>): (<>
+        {prescriptions?.medicines?.map((medicine, index) => (
         <Flex
           key={index}
           w="100vw"
@@ -84,7 +87,8 @@ useEffect(() => {
           </Flex>
           <Box w="100%" h="2px" bg="#AD8EB1" mb="5px" />
         </Flex>
-      ))}
+      ))}</>)}
+      
     </>
   );
 }
