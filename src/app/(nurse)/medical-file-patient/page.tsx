@@ -1,6 +1,6 @@
 "use client"
 import Arrow from '@/components/Arrow'
-import { AlertDialog, Box, Button, Flex, Heading, Text } from '@chakra-ui/react'
+import { Box, Button, Flex, Heading, Text } from '@chakra-ui/react'
 import Image from 'next/image'
 import React, { useEffect, useState } from 'react'
 import { useSearchParams } from 'next/navigation';
@@ -9,6 +9,7 @@ import { getMe, getPatientInfo, getPatientMedicalFile } from '@/services/nurse/n
 import ModalBandageChange from './ModalBandageChange'
 import AlertDialogDischarge from './AlertDialogDischarge'
 import ModalMedicine from './ModalMedicine'
+import Loader from '@/components/Loader'
 
 function MedicalFilePatient() {
   const searchParams = useSearchParams()
@@ -18,13 +19,14 @@ function MedicalFilePatient() {
   const [isOpen, setIsOpen] = useState(false);
   const [isOpenM, setIsOpenM] = useState(false);
   const [nurse, setNurse] = useState<Nurse>();
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const fetchMedicalFile = async () => {
       if (id !== null) {
         const response = await getPatientMedicalFile(id); 
         setMedicalFile(response);
-
+        setIsLoading(false);
       }
     };
     fetchMedicalFile();
@@ -83,7 +85,11 @@ function MedicalFilePatient() {
     setIsOpenM(false);
   };
 
-  return (
+  return isLoading ? (
+    <Box width={"100vw"} flexGrow={1} position={"relative"}>
+      <Loader />
+    </Box>
+  ) : (
     <>
       <Box as="main" flex={1}>
         <Arrow />
