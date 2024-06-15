@@ -31,6 +31,7 @@ export const authSlice = createSlice({
       state.authState = false;
       state.token = "";
       state.role = "";
+      localStorage.removeItem("authState");
     },
   },
 });
