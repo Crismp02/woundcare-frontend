@@ -4,6 +4,7 @@ import { useRoleRouter } from "@/hooks/useRoleRouter";
 import { useEffect, useState } from "react";
 import Loader from "@/components/Loader";
 import { Box } from "@chakra-ui/react";
+import Working from "@/components/Working";
 
 export default function RootLayout({
   children,
@@ -13,6 +14,8 @@ export default function RootLayout({
   const auth = useAppSelector((state) => state.auth);
   const roleRouter = useRoleRouter();
   const [isLoading, setIsLoading] = useState(true);
+  const [width, setWidth] = useState(0);
+  const breakpoint = 1400;
 
   useEffect(() => {
     if (auth.authState) {
@@ -23,6 +26,16 @@ export default function RootLayout({
     } else {
       setIsLoading(false);
     }
+
+    const handleResize = () => {
+      setWidth(window.innerWidth);
+    };
+
+    window.addEventListener("resize", handleResize);
+
+    handleResize();
+
+    return () => window.removeEventListener("resize", handleResize);
   }, []);
 
   return isLoading ? (
@@ -30,6 +43,6 @@ export default function RootLayout({
       <Loader />
     </Box>
   ) : (
-    <>{children}</>
+    <>{width < breakpoint ? children : <Working />}</>
   );
 }

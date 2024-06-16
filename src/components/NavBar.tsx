@@ -30,7 +30,7 @@ function NavBar() {
     <>
       <Flex
         w="100vw"
-        h="8vh"
+        h="60px"
         align="flex-end"
         justify="space-between"
         p="10px"
