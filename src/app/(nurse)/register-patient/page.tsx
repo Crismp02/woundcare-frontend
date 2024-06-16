@@ -68,8 +68,8 @@ function RegisterPatient() {
     return !isNaN(date.getTime()) && date <= now;
   };
   const isBirthDateValid = isDateValid(birthDate);
-  const isPhoneNumberValid = /^[0-9]{7,9}$/.test(phoneNumber);
-  const isCellPhoneNumberValid = /^\+?[0-9]{10,13}$/.test(cellPhoneNumber);
+  const isPhoneNumberValid = /^[0-9-\s]{7,11}$/.test(phoneNumber);
+  const isCellPhoneNumberValid = /^\+?[0-9-\s]{9,16}$/.test(cellPhoneNumber);
   const isWeightValid = (weight: string) => {
     const weightNumber = Number(weight);
     return !isNaN(weightNumber) && weightNumber > 0 && weightNumber < 500;
