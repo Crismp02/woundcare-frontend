@@ -57,7 +57,8 @@ function NavBar() {
         finalFocusRef={btnRef}
       >
         <DrawerOverlay />
-        <DrawerContent p="20px" bg="#4F1964" h="min-content">
+        <DrawerContent p="20px" bg="#4F1964" h={"min-content"}>
+          <Box h="auto">
           <DrawerCloseButton
             display="flex"
             alignSelf="flex-end"
@@ -128,6 +129,7 @@ function NavBar() {
               </Heading>
             </Flex>
           </DrawerBody>
+          </Box>
         </DrawerContent>
       </Drawer>
     </>

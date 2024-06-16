@@ -7,7 +7,7 @@ import {
   readNotification,
 } from "@/services/notifications/notifications.service";
 import routes from "@/utils/routes";
-import { Box, Heading } from "@chakra-ui/react";
+import { Box, Heading, Text } from "@chakra-ui/react";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
@@ -84,6 +84,26 @@ function HomePage() {
               <NotificationCard notification={notification} />
             </Box>
           ))}
+          {!(notifications.length > 0) && (
+            <Box
+              height={"100%"}
+              width={"100%"}
+              backgroundColor={"#F9EDEF"}
+              paddingX={2}
+              paddingY={2}
+              borderRadius={5}
+              display="flex"
+              flexDir="row"
+              alignItems="center"
+              justifyContent="center"
+              _hover={{
+                boxShadow: "0 0 10px 2px #4F1964",
+                transition: "box-shadow 0.3s",
+              }}
+            >
+              <Text textColor={"grey"}>No hay notificaciones</Text>
+            </Box>
+          )}
           <Link
             href={routes.notifications}
             style={{
