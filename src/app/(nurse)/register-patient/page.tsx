@@ -58,7 +58,7 @@ function RegisterPatient() {
   const [medicalRecord, setMedicalRecord] = useState<string[]>([]);
 
   //Validations
-  const isIdValid = /^[0-9]+$/.test(id);
+  const isIdValid = /^[0-9]{9,11}$/.test(id);
   const isFullNameValid = fullname.trim().split(" ").length >= 3;
   const isEmailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
   const isDateValid = (dateString: string) => {

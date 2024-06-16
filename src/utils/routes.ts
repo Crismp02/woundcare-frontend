@@ -17,7 +17,8 @@ const routes = {
   //General routes
   termsAndConditions: "/terms-&-conditions",
   //Admin routes
-  adminHomePage: "/adminHomePage",
+  adminHomePage: "/admin-home-page",
+  adminRegisterNurse: "/admin-register-nurse",
   //Nurse routes
   nurseHomePage: "/nurse-home-page",
   nurseRegisterPatient: "/register-patient",

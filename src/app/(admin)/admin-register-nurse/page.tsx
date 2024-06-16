@@ -1,6 +1,4 @@
 "use client";
-import Arrow from "@/components/Arrow";
-import { createDoctor } from "@/services/nurse/nurse.service";
 import {
   Box,
   Button,
@@ -15,8 +13,10 @@ import {
 } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import { createNurse } from "@/services/admin/admin.service";
+import Arrow from "@/components/Arrow";
 
-function RegisterDoctor() {
+function AdminRegisterNurse() {
 const router = useRouter();
 
   type Genre = "MALE" | "FEMALE";
@@ -55,7 +55,7 @@ const router = useRouter();
   const handleSubmit = async () => {
     setIsSubmitted(true);
     if (isFormValid && isIdValid && isFullNameValid && isEmailValid && isBirthDateValid) {
-      const Doctor = {
+      const Nurse = {
         nationalId: id,
         fullname: fullName,
         email: email,
@@ -65,15 +65,15 @@ const router = useRouter();
         medicalCenter: medicalCenter,
       }
       try {
-        await createDoctor(Doctor);
+        await createNurse(Nurse);
         toast({
           title: "Success",
-          description: "Especialista registrado con éxito",
+          description: "Enfermero registrado con éxito",
           status: "success",
           duration: 3000,
           isClosable: true,
         });
-        router.push(`/nurse-home-page`);
+        router.push(`/admin-home-page`);
       } catch (error: any) {
         if (error.status === 409) {
           toast({
@@ -86,7 +86,7 @@ const router = useRouter();
         } else {
           toast({
             title: "Error",
-            description: "Ha ocurrido un error al registrar el especialista",
+            description: "Ha ocurrido un error al registrar el enfermero",
             status: "error",
             duration: 3000,
             isClosable: true,
@@ -118,7 +118,7 @@ const router = useRouter();
           borderBottom={"2px solid #AD8EB1"}
           paddingX="10px"
         >
-          Registrar especialista
+          Registrar enfermero
         </Heading>
       </Flex>
       <Flex
@@ -244,11 +244,11 @@ const router = useRouter();
           onClick={handleSubmit}
           isDisabled={!isFormValid}
         >
-          Registrar especialista
+          Registrar enfermero
         </Button>
       </Flex>
     </Box>
   );
 }
 
-export default RegisterDoctor;
+export default AdminRegisterNurse;
