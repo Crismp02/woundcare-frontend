@@ -7,7 +7,7 @@ export default function NotFound() {
     <Box
       as="main"
       width={"100vw"}
-      height={"100vh"}
+      minHeight={"100vh"}
       display={"flex"}
       flexDirection={"column"}
       alignItems={"center"}
@@ -24,7 +24,7 @@ export default function NotFound() {
         maxHeight={"500px"}
         as="section"
       >
-        <Image src={"/confused-nurse.png"} alt="nurse" fill></Image>
+        <Image src={"/confused-nurse.png"} alt="nurse" fill />
       </Box>
       <Text textAlign={"center"} fontSize={18} fontWeight={500}>
         No hemos encontrado la página que buscas.
