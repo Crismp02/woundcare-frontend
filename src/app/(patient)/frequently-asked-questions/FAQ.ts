@@ -13,7 +13,7 @@ const FAQ = [
     },
     {
         question: '¿Qué debo hacer si creo que mi herida está infectada?',
-        answer: 'Si sospechas qu etu herida está infectada, lávala con agua y jabón suave, si los síntomas persisten, busca atención médica.'
+        answer: 'Si sospechas que tu herida está infectada, lávala con agua y jabón suave, si los síntomas persisten, busca atención médica.'
     },
     {
         question: '¿Hay algo que pueda hacer para que mi herida sane más rápido?',
