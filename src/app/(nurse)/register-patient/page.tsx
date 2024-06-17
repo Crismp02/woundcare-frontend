@@ -156,7 +156,7 @@ function RegisterPatient() {
         height: Number(height),
         allergies,
         medicalRecord,
-        status: "ACTIVE" as PatientStatus,
+        status: "INACTIVE" as PatientStatus,
         photo: "a",
       };
       try {
