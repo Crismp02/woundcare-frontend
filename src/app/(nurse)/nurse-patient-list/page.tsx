@@ -43,7 +43,7 @@ function PatientList() {
     const fetchDoctors = await getDoctors();
     if (fetchDoctors.items.length === 0) {
       toast({
-        title: "Debe registrar un médico antes de registrar a los pacientes",
+        title: "Debe registrar un especialista antes de registrar a los pacientes",
         status: "error",
         duration: 5000,
         isClosable: true,

@@ -28,7 +28,7 @@ function DoctorList() {
       setPage(page + 1);
     } catch (error) {
       toast({
-        title: "Error al cargar los doctores",
+        title: "Error al cargar los especialistas",
         status: "error",
         duration: 5000,
         isClosable: true,
@@ -85,7 +85,7 @@ function DoctorList() {
             />
           ))
         ) : (
-          <Text marginTop="10px">No hay doctores registrados</Text>
+          <Text marginTop="10px">No hay especialistas registrados</Text>
         )}
         {!(totalDoctor === doctors.length) && (
           <Box ref={ref}>
