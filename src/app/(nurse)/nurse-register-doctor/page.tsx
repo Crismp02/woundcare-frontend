@@ -31,6 +31,7 @@ const router = useRouter();
   const formattedBirthDate = birthDate ? new Date(birthDate).toISOString() : "";
   const isFormValid = id && fullName && email && password && genre && birthDate && medicalCenter;
   const [isSubmitted, setIsSubmitted] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(false);
 
   //Validations
   const [isIdValid, setIsIdValid] = useState<boolean>(true);
@@ -65,6 +66,7 @@ const router = useRouter();
         medicalCenter: medicalCenter,
       }
       try {
+        setLoading(true);
         await createDoctor(Doctor);
         toast({
           title: "Success",
@@ -75,6 +77,7 @@ const router = useRouter();
         });
         router.push(`/nurse-home-page`);
       } catch (error: any) {
+        setLoading(false);
         if (error.status === 409) {
           toast({
             title: "Error",
@@ -243,6 +246,7 @@ const router = useRouter();
           }}
           onClick={handleSubmit}
           isDisabled={!isFormValid}
+          isLoading={loading}
         >
           Registrar especialista
         </Button>
