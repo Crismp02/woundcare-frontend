@@ -32,7 +32,7 @@ function Working() {
         </Heading>
         <Text fontSize={22} fontWeight={500} textAlign={"center"}>
           Nuestra plataforma aún no se encuentra disponible para computadoras.
-          Sin embargo puede acceder a ella desde su dispotivo móvil Android o
+          Sin embargo puede acceder a ella desde su dispositivo móvil Android o
           iOS
         </Text>
       </Box>
