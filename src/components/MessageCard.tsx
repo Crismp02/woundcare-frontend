@@ -1,4 +1,4 @@
-import { Box, Flex, Text } from "@chakra-ui/react";
+import { Box, Flex, Text, Image as ChakraImage } from "@chakra-ui/react";
 import Image from "next/image";
 import React from "react";
 
@@ -28,15 +28,19 @@ function MessageCard({
         padding={2}
         borderRadius={10}
         maxWidth={"75%"}
-        width={messageImage ? "75%" : ""}
         wordBreak={"break-word"}
         position={"relative"}
       >
-        {messageImage && <img src={messageImage} alt="imagen" width={"100%"} />}
+        {messageImage && <ChakraImage src={messageImage} alt="imagen" />}
         {message && (
           <Text>
-            <strong>{name}: </strong>
-            {message}
+            <strong>{name} </strong>
+            {message.split(/(?=\d+\.)/).map((line, index) => (
+              <React.Fragment key={index}>
+                {line}
+                <br />
+              </React.Fragment>
+            ))}
           </Text>
         )}
       </Box>
