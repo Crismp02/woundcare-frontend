@@ -62,7 +62,7 @@ function ConversationsCard({
         >
           <Heading as={"h3"} fontSize={18}>
             <LinesEllipsis
-              text={`${medicalFileId} - ${name}`}
+              text={`HC ${medicalFileId} - ${name}`}
               maxLine="2"
               ellipsis="..."
               trimRight
