@@ -174,7 +174,8 @@ function RegisterPatient() {
         if (error.status === 409) {
           toast({
             title: "Error",
-            description: "Ya existe un usuario con esa cédula de identidad",
+            description:
+              "Ya existe un usuario con esa cédula de identidad o ese correo electrónico",
             status: "error",
             duration: 3000,
             isClosable: true,
