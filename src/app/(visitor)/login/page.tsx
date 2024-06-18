@@ -144,6 +144,11 @@ function Login() {
             onChange={(event) => setPassword(event.target.value)}
             border="none"
             focusBorderColor="transparent"
+            sx={{
+              "::-ms-reveal": {
+                display: "none",
+              },
+            }}
           />
           <Button
             size="lg"
