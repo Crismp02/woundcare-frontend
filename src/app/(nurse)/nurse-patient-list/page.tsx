@@ -2,7 +2,11 @@
 import Arrow from "@/components/Arrow";
 import PatientCard from "@/components/patient-list-card/PatientCard";
 import { Patients } from "@/interfaces/nurse/nurse.interface";
-import { getDoctors, getPatientsActive, getPatientsInactive } from "@/services/nurse/nurse.service";
+import {
+  getDoctors,
+  getPatientsActive,
+  getPatientsInactive,
+} from "@/services/nurse/nurse.service";
 import {
   Box,
   Flex,
@@ -33,7 +37,7 @@ function PatientList() {
   const { ref, inView } = useInView();
   const toast = useToast();
   const [isLoading, setIsLoading] = useState(true);
-
+  const [doctorExist, setDoctorExist] = useState<boolean>(false);
 
   const fetchPatientsA = async () => {
     const fetchDoctors = await getDoctors();
@@ -44,22 +48,23 @@ function PatientList() {
         duration: 5000,
         isClosable: true,
       });
-    } else{
-    try {
-      const patientsList = await getPatientsActive(pageA, 10);
-      setPatientsA([...patientsA, ...patientsList.items]);
-      setIsLoading(false);
-      if (pageA === 1) setTotalPatientsA(patientsList.meta.totalItems);
-      setPageA(pageA + 1);
-    } catch (error) {
-      toast({
-        title: "Error al cargar los pacientes",
-        status: "error",
-        duration: 5000,
-        isClosable: true,
-      });
+    } else {
+      try {
+        setDoctorExist(true);
+        const patientsList = await getPatientsActive(pageA, 10);
+        setPatientsA([...patientsA, ...patientsList.items]);
+        setIsLoading(false);
+        if (pageA === 1) setTotalPatientsA(patientsList.meta.totalItems);
+        setPageA(pageA + 1);
+      } catch (error) {
+        toast({
+          title: "Error al cargar los pacientes",
+          status: "error",
+          duration: 5000,
+          isClosable: true,
+        });
+      }
     }
-  }
   };
 
   useEffect(() => {
@@ -139,9 +144,15 @@ function PatientList() {
           marginBottom={"10px"}
           justifyContent={"flex-end"}
         >
-          <Link href={routes.nurseRegisterPatient}>
-            <Text color="#4F1964">+ Registrar paciente nuevo</Text>
-          </Link>
+          {doctorExist ? (
+            <Link href={routes.nurseRegisterPatient}>
+              <Text color="#4F1964">+ Registrar paciente nuevo</Text>
+            </Link>
+          ) : (
+            <span>
+              <Text color="#8e8e8e">+ Registrar paciente nuevo</Text>
+            </span>
+          )}
         </Flex>
         <Box as="article">
           <Tabs variant="unstyled">
@@ -175,7 +186,10 @@ function PatientList() {
                 )}
               </TabPanel>
               <TabPanel>
-                <Text fontWeight="500" marginBottom={"15px"} fontSize={"14px"}>Haz click en la flecha para crearle un nuevo caso médico al paciente</Text>
+                <Text fontWeight="500" marginBottom={"15px"} fontSize={"14px"}>
+                  Haz click en la flecha para crearle un nuevo caso médico al
+                  paciente
+                </Text>
                 {patientsI?.map((patient) => (
                   <PatientCard
                     key={patient.nationalId}
