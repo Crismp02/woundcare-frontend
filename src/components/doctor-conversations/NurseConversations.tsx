@@ -52,6 +52,7 @@ function NurseConversations() {
           message={conversation.lastMessageText}
           name={conversation.nurse.fullname}
           link={`/nurse-conversation/${conversation.id}`}
+          medicalFileId={conversation.medicalFileId}
         />
       ))}
       {!(totalConversations === conversationList.length) && (

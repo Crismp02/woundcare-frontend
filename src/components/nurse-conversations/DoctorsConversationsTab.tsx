@@ -52,6 +52,7 @@ function DoctorsConversationsTab() {
           message={conversation.lastMessageText}
           name={conversation.user.fullname}
           link={`/medical-conversation/${conversation.id}`}
+          medicalFileId={conversation.medicalFileId}
         />
       ))}
       {!(totalConversations === conversationList.length) && (

@@ -18,11 +18,13 @@ function ConversationsCard({
   message,
   date,
   link,
+  medicalFileId,
 }: {
   name: string;
   message: string | null;
   date: Date | null | string;
   link: string;
+  medicalFileId: number;
 }) {
   return (
     <Link href={link}>
@@ -60,7 +62,7 @@ function ConversationsCard({
         >
           <Heading as={"h3"} fontSize={18}>
             <LinesEllipsis
-              text={name}
+              text={`${medicalFileId} - ${name}`}
               maxLine="2"
               ellipsis="..."
               trimRight
