@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Box,
   Button,
@@ -11,9 +11,21 @@ import {
   TagCloseButton,
   TagLabel,
   Text,
+  Image as ChakraImage,
 } from "@chakra-ui/react";
 import Image from "next/image";
 import Arrow from "@/components/Arrow";
+import { CloseIcon } from "@chakra-ui/icons";
+import { Conversation } from "@/interfaces/chat/conversation.interface";
+import { getMyConversation } from "@/services/patient/conversation.service";
+import { toast } from "react-toastify";
+import { useRouter } from "next/navigation";
+import routes from "@/utils/routes";
+import {
+  createImageMessage,
+  createTextMessage,
+} from "@/services/messages/messages.service";
+import { answerMessage } from "@/utils/dailyCaresAnswers";
 
 function DailyCares() {
   const [answer1, setAnswer1] = useState<string>("");
@@ -22,36 +34,80 @@ function DailyCares() {
   const [answer4, setAnswer4] = useState<string>("");
   const [answer5, setAnswer5] = useState<string>("");
   const [files, setFiles] = useState<File[]>([]);
+  const [filesToShow, setFilesToShow] = useState<string[]>([]);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [conversation, setConversation] = useState<Conversation | null>(null);
+  const router = useRouter();
+
+  useEffect(() => {
+    const fetchConversation = async () => {
+      try {
+        const conversation = await getMyConversation();
+        setConversation(conversation);
+      } catch (error) {
+        toast.error("Usted no tiene un caso médico activo.");
+        router.push(routes.patientHomePage);
+      }
+    };
+    fetchConversation();
+  }, []);
 
   const allAnswersProvided =
     answer1 && answer2 && answer3 && answer4 && answer5;
   const allFilesUploaded = files.length > 0;
-  const canSubmit = allAnswersProvided && allFilesUploaded;
+  const uploadPhoto =
+    [answer1, answer2, answer3, answer4, answer5].filter(
+      (answer) => answer === "Si"
+    ).length >= 2;
+  const canSubmit =
+    allAnswersProvided && (uploadPhoto ? allFilesUploaded : true);
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const selectedFiles = Array.from(event.target.files as FileList);
-    setFiles([...files, ...selectedFiles]);
+    if (!event.target.files) return;
+    const selectedFiles = event.target.files[0];
+    setFiles([...files, selectedFiles]);
+
+    const reader = new FileReader();
+    reader.onload = () => {
+      setFilesToShow([...filesToShow, reader.result as string]);
+    };
+    reader.readAsDataURL(selectedFiles);
   };
 
   const handleFileRemove = (index: number) => {
     setFiles(files.filter((file, i) => i !== index));
+    setFilesToShow(filesToShow.filter((file, i) => i !== index));
   };
 
-  const handleSubmit = () => {
-    const answers = {
+  const handleSubmit = async () => {
+    setLoading(true);
+    if (!conversation || !canSubmit) {
+      setLoading(false);
+      return;
+    }
+    const message = answerMessage({
       answer1: answer1,
       answer2: answer2,
       answer3: answer3,
       answer4: answer4,
       answer5: answer5,
-      files: files,
-    };
+    });
 
+    try {
+      await createTextMessage(message, conversation.id);
+      files.forEach(async (file) => {
+        await createImageMessage(file, conversation.id);
+      });
+      router.push(routes.patientHomePage);
+    } catch (error: any) {
+      toast.error("Hubo un error al enviar el formulario");
+      setLoading(false);
+    }
   };
   return (
     <>
       <Flex w="100vw" h="13vh" justify="space-between" pr="3vh">
-        <Arrow/>
+        <Arrow />
         <Flex w="65vw" direction="column" align="flex-end" justify="center">
           <Heading
             fontWeight="bold"
@@ -233,55 +289,79 @@ function DailyCares() {
             </RadioGroup>
           </Box>
         </Flex>
-        <Box w="100%" h="2px" bg="#AD8EB1" />
-        <Text
-          fontSize="22px"
-          fontWeight="bold"
-          paddingTop="20px"
-          paddingLeft="20px"
-          color="#3B3B3B"
-        >
-          Toma fotos de tu herida desde diferentes ángulos
-        </Text>
-        <input
-          style={{ display: "none" }}
-          id="fileUpload"
-          type="file"
-          accept="image/jpeg, image/jpg, image/png"
-          capture="environment"
-          multiple
-          onChange={handleFileChange}
-        />
-        <label
-          htmlFor="fileUpload"
-          style={{
-            display: "flex",
-            marginTop: "20px",
-            backgroundColor: "#AD8EB1",
-            width: "80vw",
-            height: "20vh",
-            borderRadius: "15px",
-            justifyContent: "center",
-            alignItems: "center",
-            marginBottom: "20px",
-            boxShadow: "0px 4px 4px rgba(0,0,0,0.25)",
-          }}
-        >
-          <Image
-            src="/dailyCare/camera.png"
-            alt="upload"
-            width={120}
-            height={120}
-          />
-        </label>
-        <ul>
-          {files.map((file, index) => (
-            <Tag key={index} mt="10px" mr="10px" backgroundColor={"#AD8EB1"}>
-              <TagLabel>{file.name}</TagLabel>
-              <TagCloseButton onClick={() => handleFileRemove(index)} />
-            </Tag>
-          ))}
-        </ul>
+        {uploadPhoto && (
+          <>
+            <Box w="100%" h="2px" bg="#AD8EB1" />
+            <Text
+              fontSize="22px"
+              fontWeight="bold"
+              paddingTop="20px"
+              paddingLeft="20px"
+              color="#3B3B3B"
+            >
+              Toma fotos de tu herida desde diferentes ángulos
+            </Text>
+            <input
+              style={{ display: "none" }}
+              id="fileUpload"
+              type="file"
+              accept="image/jpeg, image/jpg, image/png"
+              capture="environment"
+              multiple
+              onChange={handleFileChange}
+            />
+            <label
+              htmlFor="fileUpload"
+              style={{
+                display: "flex",
+                marginTop: "20px",
+                backgroundColor: "#AD8EB1",
+                width: "80vw",
+                height: "20vh",
+                borderRadius: "15px",
+                justifyContent: "center",
+                alignItems: "center",
+                marginBottom: "20px",
+                boxShadow: "0px 4px 4px rgba(0,0,0,0.25)",
+              }}
+            >
+              <Image
+                src="/dailyCare/camera.png"
+                alt="upload"
+                width={120}
+                height={120}
+              />
+            </label>
+            <Box width={"100vw"} overflowX={"scroll"} whiteSpace={"nowrap"}>
+              {filesToShow.map((file, index) => (
+                <Box
+                  key={index}
+                  display={"inline-block"}
+                  marginX={2}
+                  position={"relative"}
+                >
+                  <Box
+                    position={"absolute"}
+                    right={2}
+                    width={8}
+                    height={8}
+                    top={0}
+                    padding={2}
+                    backgroundColor={"white"}
+                    borderRadius={9999}
+                    display={"flex"}
+                    justifyContent={"center"}
+                    alignItems={"center"}
+                    onClick={() => handleFileRemove(index)}
+                  >
+                    <CloseIcon />
+                  </Box>
+                  <ChakraImage boxSize={"150px"} src={`${file}`} alt="Image" />
+                </Box>
+              ))}
+            </Box>
+          </>
+        )}
         <Button
           w="80vw"
           h="6vh"
@@ -292,9 +372,14 @@ function DailyCares() {
           fontSize="24px"
           fontWeight="bold"
           boxShadow="0px 4px 4px rgba(0, 0, 0, 0.25)"
-          _disabled={{ bg: "#cccccc", color: "#666666", cursor: "not-allowed" }}
+          _disabled={{
+            bg: "#cccccc",
+            color: "#666666",
+            cursor: "not-allowed",
+          }}
           isDisabled={!canSubmit}
           onClick={handleSubmit}
+          isLoading={loading}
         >
           Enviar
         </Button>
