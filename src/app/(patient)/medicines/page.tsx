@@ -12,7 +12,6 @@ useEffect(() => {
   const fetchPrescriptions = async () => {
     const data = await getPrescriptions();
     setPrescriptions(data);
-    console.log(data);
   };
 
   fetchPrescriptions();
