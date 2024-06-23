@@ -10,6 +10,7 @@ import PaginationLoader from "@/components/PaginationLoader";
 import Loader from "@/components/Loader";
 import { Nurses } from "@/interfaces/admin/admin.interface";
 import { getNurses } from "@/services/admin/admin.service";
+import NurseCard from "@/components/nurse-list-card/page";
 
 function AdminHomePage() {
   const [page, setPage] = useState(1);
@@ -78,7 +79,7 @@ function AdminHomePage() {
         </Flex>
         {nurses?.length > 0 ? (
           nurses.map((nurse) => (
-            <DoctorCard
+            <NurseCard
               key={nurse.nationalId}
               fullName={nurse.user.fullname}
             />

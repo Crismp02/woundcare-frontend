@@ -107,3 +107,7 @@ export const createPrescription = async (prescription: PrescriptionMedicine) => 
   const data = await fetchAPI(`/prescription`, "POST", prescription);
   return data;
 }
+export const getDoctorInfo = async (nationalId: string) => {
+  const data = await fetchAPI<Doctor>(`/doctor/${nationalId}`, "GET");
+  return data;
+}

@@ -3,17 +3,13 @@ import Image from 'next/image'
 import React from 'react'
 import { useRouter } from "next/navigation";
 
-interface DoctorCardProps {
+interface NurseCardProps {
     fullName: string;
-    nationalId: string;
   }
 
-const DoctorCard: React.FC<DoctorCardProps> = ({nationalId, fullName }) => {
+const NurseCard: React.FC<NurseCardProps> = ({ fullName }) => {
   const router = useRouter();
 
-  const handleViewDoctorInfo = () => {
-      router.push(`/doctor-info?id=${nationalId}`);
-  }
   return (
     <Flex direction={"column"}>
           <Flex justifyContent={"space-between"}>
@@ -29,20 +25,10 @@ const DoctorCard: React.FC<DoctorCardProps> = ({nationalId, fullName }) => {
           </Box>
           <Text color="#3B3B3B" alignSelf={"center"} marginLeft={"10px"} fontWeight={"500"}>{fullName}</Text>
           </Flex>
-          <Box backgroundColor="#4F1964" width={"30px"} height={"30px"} borderRadius={"10px"} display={"flex"} justifyContent={"center"} alignItems={"center"} alignSelf={"center"}>
-          <Image
-          src="/profile/arrowRight.png"
-          alt="menu"
-          width={10}
-          height={10}
-          style={{ cursor: "pointer" }}
-          onClick={handleViewDoctorInfo}
-        />
-          </Box>
           </Flex> 
           <Box w="100%" h="2px" bg="#AD8EB1" marginBottom={3} marginTop={3}/>
           </Flex>
   )
 }
 
-export default DoctorCard
+export default NurseCard

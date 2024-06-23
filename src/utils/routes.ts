@@ -28,6 +28,7 @@ const routes = {
   nurseMessages: "/nurse-conversations",
   nurseDoctorsList: "/nurse-doctor-list",
   nurseRegisterDoctor: "/nurse-register-doctor",
+  nurseDoctorInfo: "/doctor-info",
   //Doctor routes
   doctorHomePage: "/doctor-home-page",
   doctorPatientsList: "/doctor-patient-list",

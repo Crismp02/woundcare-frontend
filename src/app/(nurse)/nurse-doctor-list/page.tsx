@@ -81,6 +81,7 @@ function DoctorList() {
           doctors.map((doctor) => (
             <DoctorCard
               key={doctor.nationalId}
+              nationalId={doctor.nationalId}
               fullName={doctor.user.fullname}
             />
           ))
